@@ -60,12 +60,32 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
-  </ItemGroup>
+      <Content Include="KhachThue.aspx" />
+    <Content Include="YeuCauNapTien.aspx" />
+    <Content Include="content\khachthue.css" />
+    <Content Include="content\yeucaunaptien.css" />
+    <Content Include="content\images\techcombank_qr.png" />
+    <Content Include="demo_fe_khachthue_naptien.html" />
+</ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
-  </ItemGroup>
+      <Compile Include="KhachThue.aspx.cs">
+      <DependentUpon>KhachThue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="KhachThue.aspx.designer.cs">
+      <DependentUpon>KhachThue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="YeuCauNapTien.aspx.cs">
+      <DependentUpon>YeuCauNapTien.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="YeuCauNapTien.aspx.designer.cs">
+      <DependentUpon>YeuCauNapTien.aspx</DependentUpon>
+    </Compile>
+</ItemGroup>
   <ItemGroup>
     <Content Include="Pages\InvoiceDetailPage.aspx" />
     <Content Include="Pages\PrintReceiptPage.aspx" />

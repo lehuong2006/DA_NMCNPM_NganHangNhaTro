@@ -1,0 +1,534 @@
+/* ==========================================================================
+   GIAO DIỆN VÍ VÀ GỬI YÊU CẦU NẠP TIỀN (Vi_Va_ycNapTien.psd)
+   Dự án: Hệ thống Quản lý và Kết nối Ngân hàng Nhà trọ
+   Phụ trách Frontend: Phan Trần Việt Anh (Nhóm RAI)
+   Tuân thủ 100% thiết kế Photoshop Drive (1280x900 responsive)
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f2;
+    color: #2d3748;
+    min-height: 100vh;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    width: 225px;
+    min-width: 225px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.brand-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1.3;
+}
+
+.brand-sub {
+    font-size: 12px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 16px 12px;
+    flex-grow: 1;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: #f7fafc;
+    color: #1a202c;
+}
+
+.menu-item.active {
+    background-color: #edf2f7;
+    color: #2d3748;
+    font-weight: 700;
+}
+
+.menu-item svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+}
+
+.user-profile {
+    padding: 16px 20px;
+    border-top: 1px solid #edf2f7;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #4a5568;
+}
+
+.user-info {
+    flex-grow: 1;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.logout-link {
+    font-size: 12px;
+    color: #e53e3e;
+    text-decoration: none;
+    display: block;
+    margin-top: 2px;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+    flex-grow: 1;
+    padding: 28px 36px;
+    max-width: 1350px;
+}
+
+.header-banner {
+    margin-bottom: 24px;
+}
+
+.page-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a202c;
+    letter-spacing: -0.5px;
+}
+
+.page-subtitle {
+    font-size: 14px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+/* ==================== TOP ROW: THẺ VÍ & THÔNG TIN CHUYỂN KHOẢN ==================== */
+.top-wallet-row {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 22px;
+    margin-bottom: 24px;
+}
+
+/* THẺ NGÂN HÀNG / VÍ NỘI BỘ */
+.bank-card {
+    background: linear-gradient(135deg, #274c9d 0%, #1e3a78 100%);
+    border-radius: 14px;
+    padding: 24px 28px;
+    color: #ffffff;
+    box-shadow: 0 10px 25px rgba(39, 76, 157, 0.28);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 200px;
+    position: relative;
+    overflow: hidden;
+}
+
+.bank-card::after {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+    right: -40px;
+    bottom: -40px;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-holder {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.card-chip {
+    width: 36px;
+    height: 26px;
+    background: #d4af37;
+    border-radius: 4px;
+    opacity: 0.9;
+}
+
+.card-balance-section {
+    margin-top: 20px;
+}
+
+.balance-label {
+    font-size: 13px;
+    color: #cbd5e0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.balance-amount {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-top: 4px;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: #a0aec0;
+    margin-top: 14px;
+}
+
+/* THÔNG TIN CHUYỂN KHOẢN CARD */
+.transfer-info-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 22px 28px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.qr-container {
+    width: 165px;
+    height: 165px;
+    min-width: 165px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.qr-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.transfer-details {
+    flex-grow: 1;
+}
+
+.transfer-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 12px;
+}
+
+.detail-line {
+    font-size: 14px;
+    color: #4a5568;
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+}
+
+.detail-line strong {
+    color: #1a202c;
+    min-width: 100px;
+    display: inline-block;
+}
+
+.copy-badge {
+    background-color: #edf2f7;
+    color: #2b6cb0;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-left: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.copy-badge:hover {
+    background-color: #e2e8f0;
+}
+
+/* ==================== BOTTOM ROW: FORM NẠP TIỀN & LỊCH SỬ ==================== */
+.bottom-content-row {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 22px;
+}
+
+/* KHUNG GỬI YÊU CẦU NẠP TIỀN */
+.topup-form-panel {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e9ecef;
+}
+
+.form-panel-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #1a202c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+
+.section-sublabel {
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 10px;
+}
+
+.quick-chips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.quick-chip {
+    background-color: #809d73;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 8px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.quick-chip:hover {
+    background-color: #6b8760;
+    transform: translateY(-1px);
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 6px;
+    text-transform: capitalize;
+}
+
+.form-control-input {
+    width: 100%;
+    height: 44px;
+    background-color: #e6e6e6;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a202c;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-control-input:focus {
+    border-color: #809d73;
+    background-color: #ffffff;
+}
+
+.btn-submit-topup {
+    width: 100%;
+    height: 46px;
+    background-color: #809d73;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-submit-topup:hover {
+    background-color: #6b8760;
+    box-shadow: 0 4px 12px rgba(128, 157, 115, 0.35);
+}
+
+.alert-message {
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.alert-success {
+    background-color: #f0fff4;
+    color: #276749;
+    border: 1px solid #c6f6d5;
+}
+
+.alert-danger {
+    background-color: #fff5f5;
+    color: #9b2c2c;
+    border: 1px solid #fed7d7;
+}
+
+/* LỊCH SỬ GIAO DỊCH PANEL */
+.history-table-panel {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e9ecef;
+}
+
+.history-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 18px;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.history-table th {
+    background-color: #f8fafc;
+    color: #4a5568;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 2px solid #edf2f7;
+}
+
+.history-table td {
+    padding: 14px;
+    font-size: 14px;
+    color: #2d3748;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* TRẠNG THÁI BADGES */
+.status-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    display: inline-block;
+    text-align: center;
+}
+
+.badge-success {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.badge-pending {
+    background-color: #a3a3a3;
+    color: #ffffff;
+}
+
+.badge-rejected {
+    background-color: #ffffff;
+    color: #e53e3e;
+    border: 1px solid #e53e3e;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .top-wallet-row,
+    .bottom-content-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+    }
+    .transfer-info-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .main-content {
+        padding: 20px 16px;
+    }
+}

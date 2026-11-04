@@ -1,0 +1,409 @@
+/* ==========================================================================
+   GIAO DIỆN TRANG CHỦ KHÁCH THUÊ (KhachThue 1.psd)
+   Dự án: Hệ thống Quản lý và Kết nối Ngân hàng Nhà trọ
+   Phụ trách Frontend: Phan Trần Việt Anh (Nhóm RAI)
+   Tuân thủ 100% thiết kế Photoshop Drive (1280x900 responsive)
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f4f4f2;
+    color: #2d3748;
+    min-height: 100vh;
+}
+
+.app-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* ==================== SIDEBAR ==================== */
+.sidebar {
+    width: 225px;
+    min-width: 225px;
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.brand-header {
+    padding: 24px 20px;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.brand-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a202c;
+    line-height: 1.3;
+}
+
+.brand-sub {
+    font-size: 12px;
+    color: #718096;
+    margin-top: 4px;
+}
+
+.menu-list {
+    list-style: none;
+    padding: 16px 12px;
+    flex-grow: 1;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    margin-bottom: 6px;
+    border-radius: 8px;
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.menu-item:hover {
+    background-color: #f7fafc;
+    color: #1a202c;
+}
+
+.menu-item.active {
+    background-color: #edf2f7;
+    color: #2d3748;
+    font-weight: 700;
+}
+
+.menu-item svg {
+    width: 18px;
+    height: 18px;
+    stroke-width: 2;
+}
+
+.user-profile {
+    padding: 16px 20px;
+    border-top: 1px solid #edf2f7;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    color: #4a5568;
+}
+
+.user-info {
+    flex-grow: 1;
+}
+
+.user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.logout-link {
+    font-size: 12px;
+    color: #e53e3e;
+    text-decoration: none;
+    display: block;
+    margin-top: 2px;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+    flex-grow: 1;
+    padding: 28px 36px;
+    max-width: 1350px;
+}
+
+.greeting-banner {
+    margin-bottom: 24px;
+}
+
+.greeting-title {
+    font-size: 26px;
+    font-weight: 800;
+    color: #1a202c;
+    letter-spacing: -0.5px;
+}
+
+/* ==================== STAT CARDS ==================== */
+.stat-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 18px 22px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e9ecef;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #718096;
+}
+
+.stat-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon-blue { background-color: #ebf8ff; color: #3182ce; }
+.stat-icon-purple { background-color: #faf5ff; color: #805ad5; }
+.stat-icon-green { background-color: #f0fff4; color: #38a169; }
+.stat-icon-orange { background-color: #fffaf0; color: #dd6b20; }
+
+.stat-value {
+    font-size: 24px;
+    font-weight: 800;
+    color: #1a202c;
+    line-height: 1.2;
+}
+
+.stat-subtext {
+    font-size: 12px;
+    color: #a0aec0;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+/* ==================== CONTENT LAYOUT GRID ==================== */
+.content-grid-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.card-panel {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+    border: 1px solid #e9ecef;
+}
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+}
+
+.panel-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a202c;
+}
+
+/* ==================== BẢNG HÓA ĐƠN ==================== */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.custom-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.custom-table th {
+    background-color: #dcd6d6;
+    color: #2d3748;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 12px 14px;
+    text-align: left;
+    border: none;
+}
+
+.custom-table th:first-child { border-top-left-radius: 6px; border-bottom-left-radius: 6px; }
+.custom-table th:last-child { border-top-right-radius: 6px; border-bottom-right-radius: 6px; }
+
+.custom-table td {
+    padding: 14px;
+    font-size: 14px;
+    color: #2d3748;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.custom-table tr:last-child td {
+    border-bottom: none;
+}
+
+.badge-unpaid {
+    background-color: #f99292;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+.badge-paid {
+    background-color: #9ae6b4;
+    color: #22543d;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 20px;
+    display: inline-block;
+}
+
+/* ==================== THAO TÁC NHANH ==================== */
+.quick-action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background-color: #f7fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 14px 18px;
+    color: #2d3748;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.quick-action-btn:hover {
+    background-color: #edf2f7;
+    border-color: #cbd5e0;
+    transform: translateY(-1px);
+}
+
+.quick-action-btn svg {
+    width: 20px;
+    height: 20px;
+    color: #4a5568;
+}
+
+/* ==================== THÔNG BÁO ==================== */
+.notice-box {
+    background-color: #fffaf0;
+    border-left: 4px solid #dd6b20;
+    border-radius: 6px;
+    padding: 16px 20px;
+    color: #744210;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* ==================== DỊCH VỤ ĐANG DÙNG ==================== */
+.service-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.service-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background-color: #f8fafc;
+    border-radius: 8px;
+    border: 1px solid #edf2f7;
+}
+
+.service-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    background-color: #ebf8ff;
+    color: #3182ce;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.service-status {
+    margin-left: auto;
+    font-size: 12px;
+    color: #38a169;
+    font-weight: 600;
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 1024px) {
+    .stat-cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .content-grid-row {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-layout {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        min-width: 100%;
+    }
+    .stat-cards-grid {
+        grid-template-columns: 1fr;
+    }
+    .main-content {
+        padding: 20px 16px;
+    }
+}
