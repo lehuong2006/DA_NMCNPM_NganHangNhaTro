@@ -1,0 +1,138 @@
+﻿@model BTL_NganHangNhaTro.Models.ViewModels.RegisterViewModel
+
+@{
+    Layout = null;
+    ViewData["Title"] = "Đăng ký tài khoản";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/register.css" />
+</head>
+<body>
+
+    <div class="register-container">
+
+        <div class="register-header">
+            Nhà trọ số 8 Nguyễn An Ninh
+        </div>
+
+        <div class="register-content">
+
+            <h2>Đăng ký tài khoản</h2>
+
+            <form asp-controller="Account"
+                  asp-action="Register"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="validation-summary"></div>
+
+                <!-- Họ và tên -->
+                <div class="form-group">
+                    <label asp-for="FullName">
+                        <span class="field-icon"></span>
+                        Họ và tên
+                    </label>
+
+                    <input asp-for="FullName"
+                           type="text"
+                           id="fullName"
+                           autocomplete="name" />
+
+                    <span asp-validation-for="FullName"
+                          class="validation-message"></span>
+                </div>
+
+                <!-- Số điện thoại -->
+                <div class="form-group">
+                    <label asp-for="PhoneNumber">
+                        <span class="field-icon"></span>
+                        Số điện thoại
+                    </label>
+
+                    <input asp-for="PhoneNumber"
+                           type="tel"
+                           id="phoneNumber"
+                           autocomplete="tel" />
+
+                    <span asp-validation-for="PhoneNumber"
+                          class="validation-message"></span>
+                </div>
+
+                <!-- Mật khẩu -->
+                <div class="form-group">
+                    <label asp-for="Password">
+                        <span class="field-icon"></span>
+                        Mật khẩu
+                    </label>
+
+                    <div class="password-wrapper">
+                        <input asp-for="Password"
+                               type="password"
+                               id="password"
+                               autocomplete="new-password" />
+
+                        <button type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('password')">
+                        </button>
+                    </div>
+
+                    <small>Mật khẩu phải có ít nhất 8 ký tự</small>
+
+                    <span asp-validation-for="Password"
+                          class="validation-message"></span>
+                </div>
+
+                <!-- Xác nhận mật khẩu -->
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword">
+                        <span class="field-icon"></span>
+                        Xác nhận mật khẩu
+                    </label>
+
+                    <div class="password-wrapper">
+                        <input asp-for="ConfirmPassword"
+                               type="password"
+                               id="confirmPassword"
+                               autocomplete="new-password" />
+
+                        <button type="button"
+                                class="toggle-password"
+                                onclick="togglePassword('confirmPassword')">
+                        </button>
+                    </div>
+
+                    <small>Nhập lại mật khẩu đã tạo</small>
+
+                    <span asp-validation-for="ConfirmPassword"
+                          class="validation-message"></span>
+                </div>
+
+                <!-- Nút đăng ký -->
+                <button type="submit" class="register-button">
+                    Đăng ký
+                </button>
+
+                <div class="login-link">
+                    Đã có tài khoản?
+                    <a href="/Account/Login">Đăng nhập</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <script src="~/js/register.js"></script>
+
+</body>
+</html>

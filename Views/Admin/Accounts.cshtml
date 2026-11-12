@@ -1,0 +1,157 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Quản lý tài khoản";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/admin-accounts.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Admin/Accounts" class="nav-item active">
+                    <span></span>
+                    Quản lý tài khoản
+                </a>
+
+                <a href="/Admin/Roles" class="nav-item">
+                    <span></span>
+                    Phân quyền
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Quản Trị Viên</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content admin-accounts-content">
+
+            <!-- Tiêu đề -->
+            <div class="admin-page-header">
+
+                <div>
+                    <h1>Quản lý tài khoản</h1>
+                    <p>Tình hình nhà trọ tháng hiện tại</p>
+                </div>
+
+                <a href="#" class="add-account-button">
+                    + Thêm tài khoản
+                </a>
+
+            </div>
+
+
+            <!-- Tìm kiếm và bộ lọc -->
+            <section class="account-toolbar">
+
+                <div class="account-search">
+
+                    <span class="search-icon"></span>
+
+                    <input type="search"
+                           id="accountSearch"
+                           placeholder="Tìm theo họ tên hoặc tên đăng nhập">
+
+                </div>
+
+
+                <div class="account-role-filters">
+
+                    <button type="button"
+                            class="role-filter active"
+                            data-role="">
+                        Tất cả
+                    </button>
+
+                    <button type="button"
+                            class="role-filter"
+                            data-role="ADMIN">
+                        Quản trị viên
+                    </button>
+
+                    <button type="button"
+                            class="role-filter"
+                            data-role="LANDLORD">
+                        Chủ trọ
+                    </button>
+
+                    <button type="button"
+                            class="role-filter"
+                            data-role="TENANT">
+                        Khách thuê
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- Bảng tài khoản -->
+            <section class="account-table-panel">
+
+                <div class="account-table-wrapper">
+
+                    <table class="account-table">
+
+                        <thead>
+                            <tr>
+                                <th>Họ và tên</th>
+                                <th>Số điện thoại</th>
+                                <th>Vai trò</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="accountTableBody">
+                            <!-- Dữ liệu tài khoản sẽ được tích hợp từ database -->
+                        </tbody>
+
+                    </table>
+
+                    <div class="account-empty">
+                        Chưa có tài khoản.
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/admin-accounts.js"></script>
+
+</body>
+</html>

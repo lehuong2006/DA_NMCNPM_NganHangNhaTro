@@ -1,0 +1,448 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Lập phiếu thu cọc";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/landlord-deposit-receipt.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item active">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content deposit-content">
+
+            <div class="breadcrumb">
+                <a href="/Landlord/Dashboard">Tổng quan</a>
+                <span>/</span>
+                <span>Lập phiếu thu cọc</span>
+            </div>
+
+            <div class="page-header">
+                <h1>Lập phiếu thu cọc</h1>
+                <p>Ghi nhận khoản tiền khách đã cọc để giữ phòng. Phòng sẽ chuyển sang trạng thái đã cọc sau khi lưu.</p>
+            </div>
+
+
+            <div class="deposit-layout">
+
+                <!-- =================================
+                     FORM LẬP PHIẾU THU
+                ================================== -->
+                <section class="deposit-form-panel">
+
+                    <form id="depositForm">
+
+                        <!-- 1. Phòng cần cọc -->
+                        <div class="form-section">
+
+                            <h3>1. Phòng cần cọc</h3>
+
+                            <div class="form-group">
+                                <label for="roomSelect">
+                                    Phòng <span class="required">*</span>
+                                </label>
+
+                                <select id="roomSelect" required>
+                                    <option value="">Chọn phòng</option>
+                                </select>
+                            </div>
+
+                            <div class="room-information" id="roomInformation">
+
+                                <span class="room-status">Chưa chọn phòng</span>
+
+                                <div class="room-details">
+                                    <span>Giá thuê: <strong id="roomPrice">—</strong></span>
+                                    <span>Diện tích: <strong id="roomArea">—</strong></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 2. Người đặt cọc -->
+                        <div class="form-section">
+
+                            <h3>2. Người đặt cọc</h3>
+
+                            <div class="tenant-mode">
+
+                                <button type="button"
+                                        class="tenant-mode-button active"
+                                        data-mode="existing">
+                                    Chọn người đã có
+                                </button>
+
+                                <button type="button"
+                                        class="tenant-mode-button"
+                                        data-mode="new">
+                                    Thêm người mới
+                                </button>
+
+                            </div>
+
+
+                            <!-- Chọn người thuê đã tồn tại -->
+                            <div id="existingTenantSection">
+
+                                <div class="form-group">
+                                    <label for="tenantSelect">Người thuê</label>
+
+                                    <select id="tenantSelect">
+                                        <option value="">Chọn người thuê</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Nhập người thuê mới -->
+                            <div id="newTenantSection" hidden>
+
+                                <div class="form-group">
+                                    <label for="newTenantName">
+                                        Họ và tên <span class="required">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           id="newTenantName"
+                                           maxlength="100"
+                                           placeholder="Nhập họ và tên">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="newTenantIdentity">
+                                        CCCD <span class="required">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           id="newTenantIdentity"
+                                           inputmode="numeric"
+                                           maxlength="12"
+                                           placeholder="Nhập số CCCD">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="newTenantPhone">
+                                        Số điện thoại <span class="required">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           id="newTenantPhone"
+                                           inputmode="numeric"
+                                           maxlength="10"
+                                           placeholder="Nhập số điện thoại">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="newTenantAddress">
+                                        Địa chỉ thường trú <span class="required">*</span>
+                                    </label>
+
+                                    <input type="text"
+                                           id="newTenantAddress"
+                                           maxlength="255"
+                                           placeholder="Nhập địa chỉ thường trú">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- 3. Khoản cọc -->
+                        <div class="form-section">
+
+                            <h3>3. Khoản cọc</h3>
+
+                            <div class="deposit-input-grid">
+
+                                <div class="form-group">
+                                    <label for="depositAmount">
+                                        Số tiền cọc <span class="required">*</span>
+                                    </label>
+
+                                    <div class="money-input">
+                                        <input type="text"
+                                               id="depositAmount"
+                                               inputmode="numeric"
+                                               placeholder="Nhập số tiền"
+                                               required>
+                                        <span>VNĐ</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="depositDate">
+                                        Ngày thu <span class="required">*</span>
+                                    </label>
+
+                                    <input type="date"
+                                           id="depositDate"
+                                           required>
+                                </div>
+
+                            </div>
+
+                            <p class="deposit-hint">
+                                Gợi ý: Số tiền cọc theo thỏa thuận giữa chủ trọ và người thuê.
+                                Đơn vị: VNĐ.
+                            </p>
+
+
+                            <div class="form-group">
+                                <label>Hình thức thu</label>
+
+                                <div class="payment-methods">
+
+                                    <label class="payment-method active">
+                                        <input type="radio"
+                                               name="paymentMethod"
+                                               value="cash"
+                                               checked>
+                                        Tiền mặt
+                                    </label>
+
+                                    <label class="payment-method">
+                                        <input type="radio"
+                                               name="paymentMethod"
+                                               value="transfer">
+                                        Chuyển khoản
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="deposit-input-grid">
+
+                                <div class="form-group">
+                                    <label for="moveInDate">
+                                        Ngày dự kiến vào ở
+                                    </label>
+
+                                    <input type="date" id="moveInDate">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="holdUntilDate">
+                                        Giữ phòng đến hết ngày
+                                    </label>
+
+                                    <input type="date" id="holdUntilDate">
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-group note-group">
+                                <label for="depositNote">Ghi chú</label>
+
+                                <textarea id="depositNote"
+                                          maxlength="500"
+                                          placeholder="Ví dụ: Hẹn giữ phòng, hẹn ngày chữa hợp đồng..."></textarea>
+                            </div>
+
+                        </div>
+
+
+                        <!-- Nút thao tác -->
+                        <div class="deposit-actions">
+
+                            <a href="/Landlord/Dashboard" class="cancel-button">
+                                Hủy
+                            </a>
+
+                            <button type="button" class="save-draft-button">
+                                Lưu phiếu
+                            </button>
+
+                            <button type="button" class="save-print-button">
+                                Lưu và in phiếu
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </section>
+
+
+                <!-- =================================
+                     XEM TRƯỚC PHIẾU THU
+                ================================== -->
+                <section class="receipt-preview-panel">
+
+                    <div class="preview-header">
+                        <h3>Xem trước phiếu thu</h3>
+                        <span class="draft-label">Bản nháp</span>
+                    </div>
+
+                    <div class="receipt-paper">
+
+                        <div class="receipt-property">
+                            <strong>Nhà trọ số 8 Nguyễn An Ninh</strong>
+                            <p>Địa chỉ: ....................................</p>
+                        </div>
+
+                        <div class="receipt-title">
+                            <h2>PHIẾU THU TIỀN ĐẶT CỌC</h2>
+                            <p>Số: Chưa cấp</p>
+                        </div>
+
+
+                        <div class="receipt-information">
+
+                            <div class="receipt-row">
+                                <span>Người nộp tiền:</span>
+                                <strong id="previewTenantName">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>CCCD:</span>
+                                <strong id="previewTenantIdentity">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Số điện thoại:</span>
+                                <strong id="previewTenantPhone">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Phòng:</span>
+                                <strong id="previewRoom">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Giá thuê phòng:</span>
+                                <strong id="previewRoomPrice">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Hình thức thu:</span>
+                                <strong id="previewPaymentMethod">Tiền mặt</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Ngày thu:</span>
+                                <strong id="previewDepositDate">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Dự kiến vào ở:</span>
+                                <strong id="previewMoveInDate">—</strong>
+                            </div>
+
+                            <div class="receipt-row">
+                                <span>Giữ phòng đến:</span>
+                                <strong id="previewHoldDate">—</strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="receipt-total">
+                            <span>Số tiền đã nhận</span>
+                            <strong id="previewDepositAmount">0 VNĐ</strong>
+                        </div>
+
+                        <p class="receipt-note">
+                            Bằng chữ: <span id="previewAmountWords">Chưa có số tiền</span>
+                        </p>
+
+
+                        <div class="receipt-signatures">
+
+                            <div>
+                                <strong>Người nộp tiền</strong>
+                                <span>(Ký, ghi rõ họ tên)</span>
+                            </div>
+
+                            <div>
+                                <strong>Chủ trọ / Người thu</strong>
+                                <span>(Ký, ghi rõ họ tên)</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-deposit-receipt.js"></script>
+
+</body>
+</html>

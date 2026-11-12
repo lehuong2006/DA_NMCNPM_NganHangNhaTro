@@ -1,0 +1,184 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Hợp đồng và Hóa đơn";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/tenant-contracts-invoices.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Tenant/Dashboard" class="nav-item">
+                    <span></span>
+                    Trang Chủ
+                </a>
+
+                <a href="/Tenant/Wallet" class="nav-item">
+                    <span></span>
+                    Ví của tôi
+                </a>
+
+                <a href="/Tenant/ContractsAndInvoices" class="nav-item active">
+                    <span></span>
+                    Hợp đồng và Hóa đơn
+                </a>
+
+                <a href="/Tenant/TransactionHistory" class="nav-item">
+                    <span></span>
+                    Lịch sử giao dịch
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Khách thuê</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content tenant-contract-content">
+
+            <div class="contract-page-header">
+                <h1>Hợp đồng &amp; hóa đơn</h1>
+            </div>
+
+
+            <!-- Thông tin hợp đồng -->
+            <section class="contract-information-panel">
+
+                <div class="contract-main-information">
+
+                    <div class="contract-section-title">
+                        <span class="contract-title-icon"></span>
+                        <h2>Thông tin hợp đồng</h2>
+                    </div>
+
+
+                    <div class="contract-details-grid">
+
+                        <div class="contract-detail-item">
+                            <span class="detail-label">Mã hợp đồng</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="contract-detail-item">
+                            <span class="detail-label">Ngày bắt đầu</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="contract-detail-item">
+                            <span class="detail-label">Ngày kết thúc</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="contract-detail-item">
+                            <span class="detail-label">Phòng</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="contract-detail-item">
+                            <span class="detail-label">Loại phòng</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="contract-detail-item">
+                            <span class="detail-label">Giá phòng</span>
+                            <strong></strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Địa chỉ phòng -->
+                <div class="room-address-card">
+
+                    <div class="room-address-heading">
+                        <span class="room-address-icon"></span>
+                        <h3>Địa chỉ phòng</h3>
+                    </div>
+
+                    <strong class="room-address-number"></strong>
+
+                    <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Danh sách hóa đơn -->
+            <section class="tenant-invoices-panel">
+
+                <div class="invoice-section-title">
+                    <span class="invoice-title-icon"></span>
+                    <h2>Hóa Đơn</h2>
+                </div>
+
+
+                <div class="tenant-invoices-table-wrapper">
+
+                    <table class="tenant-invoices-table">
+
+                        <thead>
+                            <tr>
+                                <th>Ngày lập</th>
+                                <th>Kỳ thanh toán</th>
+                                <th>Loại đơn</th>
+                                <th>Số tiền</th>
+                                <th>Hạn thanh toán</th>
+                                <th>Trạng thái</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tenantInvoicesTableBody">
+                            <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                        </tbody>
+
+                    </table>
+
+                    <div class="tenant-invoices-empty">
+                        Chưa có hóa đơn.
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/tenant-contracts-invoices.js"></script>
+
+</body>
+</html>

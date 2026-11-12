@@ -1,0 +1,252 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Ví và Nạp tiền";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/tenant-wallet.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Tenant/Dashboard" class="nav-item">
+                    <span></span>
+                    Trang Chủ
+                </a>
+
+                <a href="/Tenant/Wallet" class="nav-item active">
+                    <span></span>
+                    Ví của tôi
+                </a>
+
+                <a href="/Tenant/ContractsAndInvoices" class="nav-item">
+                    <span></span>
+                    Hợp đồng và Hóa đơn
+                </a>
+
+                <a href="/Tenant/TransactionHistory" class="nav-item">
+                    <span></span>
+                    Lịch sử giao dịch
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Khách thuê</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content tenant-wallet-content">
+
+            <!-- Tiêu đề -->
+            <div class="wallet-page-header">
+                <h1>Ví Và Nạp Tiền</h1>
+                <p>Quản lý số dư ví và các yêu cầu nạp tiền</p>
+            </div>
+
+
+            <!-- Khu vực phía trên -->
+            <section class="tenant-wallet-top">
+
+                <!-- Thẻ số dư -->
+                <div class="wallet-balance-card">
+
+                    <div class="wallet-balance-user"></div>
+
+                    <div class="wallet-balance-label">
+                        Số dư hiện tại:
+                    </div>
+
+                    <div class="wallet-balance-amount">
+                        <span></span>
+                        <span>VNĐ</span>
+                    </div>
+
+                </div>
+
+
+                <!-- Thông tin chuyển khoản -->
+                <div class="bank-transfer-panel">
+
+                    <div class="bank-qr-area">
+
+                        <div class="bank-qr-placeholder">
+                            <span></span>
+                            <p>Mã QR chuyển khoản</p>
+                        </div>
+
+                    </div>
+
+                    <div class="bank-transfer-information">
+
+                        <h2>Thông tin chuyển khoản</h2>
+
+                        <div class="bank-information-row">
+                            <span>Ngân hàng:</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="bank-information-row">
+                            <span>STK:</span>
+                            <strong></strong>
+                        </div>
+
+                        <div class="bank-information-row">
+                            <span>Chủ TK:</span>
+                            <strong></strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Khu vực phía dưới -->
+            <section class="tenant-wallet-bottom">
+
+                <!-- Gửi yêu cầu nạp tiền -->
+                <div class="wallet-panel topup-panel">
+
+                    <h2>GỬI YÊU CẦU NẠP TIỀN</h2>
+
+                    <div class="topup-form">
+
+                        <div class="topup-field">
+
+                            <label>Số dư ví cần nạp</label>
+
+                            <div class="topup-amount-options">
+
+                                <button type="button" class="amount-option" data-amount="100000">
+                                    100k
+                                </button>
+
+                                <button type="button" class="amount-option" data-amount="200000">
+                                    200k
+                                </button>
+
+                                <button type="button" class="amount-option" data-amount="500000">
+                                    500k
+                                </button>
+
+                                <button type="button" class="amount-option" data-amount="1000000">
+                                    1000k
+                                </button>
+
+                                <button type="button" class="amount-option" data-amount="5000000">
+                                    5000k
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="topup-field">
+
+                            <label for="topupAmount">Số tiền nạp</label>
+
+                            <input type="text"
+                                   id="topupAmount"
+                                   inputmode="numeric"
+                                   placeholder="Nhập số tiền muốn nạp">
+
+                        </div>
+
+
+                        <div class="topup-field">
+
+                            <label for="topupContent">Nội dung</label>
+
+                            <input type="text"
+                                   id="topupContent"
+                                   maxlength="200"
+                                   placeholder="Nhập nội dung chuyển khoản">
+
+                        </div>
+
+
+                        <button type="button"
+                                class="topup-submit-button"
+                                id="topupSubmitButton">
+                            Gửi yêu cầu
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Lịch sử giao dịch -->
+                <div class="wallet-panel transaction-history-panel">
+
+                    <h2>Lịch Sử Giao Dịch</h2>
+
+                    <div class="transaction-table-wrapper">
+
+                        <table class="transaction-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Ngày giao dịch</th>
+                                    <th>Mã giao dịch</th>
+                                    <th>Loại</th>
+                                    <th>Số tiền</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tenantTransactionTableBody">
+                                <!-- Dữ liệu giao dịch sẽ được tích hợp từ database -->
+                            </tbody>
+
+                        </table>
+
+                        <div class="transaction-empty">
+                            Chưa có giao dịch.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/tenant-wallet.js"></script>
+
+</body>
+</html>

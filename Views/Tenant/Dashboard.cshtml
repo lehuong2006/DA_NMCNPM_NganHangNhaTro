@@ -1,0 +1,266 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Trang chủ khách thuê";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <!-- CSS Sidebar dùng chung -->
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+
+    <!-- CSS riêng trang khách thuê -->
+    <link rel="stylesheet" href="~/css/tenant-dashboard.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Tenant/Dashboard" class="nav-item active">
+                    <span></span>
+                    Trang Chủ
+                </a>
+
+                <a href="/Tenant/Wallet" class="nav-item">
+                    <span></span>
+                    Ví của tôi
+                </a>
+
+                <a href="/Tenant/ContractsAndInvoices" class="nav-item">
+                    <span></span>
+                    Hợp đồng và Hóa đơn
+                </a>
+
+                <a href="/Tenant/TransactionHistory" class="nav-item">
+                    <span></span>
+                    Lịch sử giao dịch
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Khách thuê</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content tenant-content">
+
+            <!-- Tiêu đề -->
+            <div class="tenant-welcome">
+                <h1>Xin chào bạn</h1>
+            </div>
+
+
+            <!-- Thống kê tổng quan -->
+            <section class="tenant-statistics">
+
+                <div class="tenant-stat-card">
+
+                    <div class="tenant-stat-heading">
+                        <span class="tenant-stat-icon room-icon"></span>
+                        <span>Phòng đang ở</span>
+                    </div>
+
+                    <h2></h2>
+                    <p></p>
+
+                </div>
+
+
+                <div class="tenant-stat-card">
+
+                    <div class="tenant-stat-heading">
+                        <span class="tenant-stat-icon invoice-icon"></span>
+                        <span>Hóa đơn tháng này</span>
+                    </div>
+
+                    <h2></h2>
+                    <p></p>
+
+                </div>
+
+
+                <div class="tenant-stat-card">
+
+                    <div class="tenant-stat-heading">
+                        <span class="tenant-stat-icon paid-icon"></span>
+                        <span>Đã thanh toán</span>
+                    </div>
+
+                    <h2></h2>
+                    <p></p>
+
+                </div>
+
+
+                <div class="tenant-stat-card">
+
+                    <div class="tenant-stat-heading">
+                        <span class="tenant-stat-icon service-icon"></span>
+                        <span>Dịch vụ đang dùng</span>
+                    </div>
+
+                    <h2></h2>
+                    <p></p>
+
+                </div>
+
+            </section>
+
+
+            <!-- Khu vực nội dung -->
+            <section class="tenant-dashboard-grid">
+
+                <!-- Hóa đơn -->
+                <div class="tenant-panel tenant-invoice-panel">
+
+                    <div class="tenant-panel-header">
+                        <div class="tenant-panel-title">
+                            <span class="panel-icon invoice-panel-icon"></span>
+                            <h3>Hóa Đơn</h3>
+                        </div>
+                    </div>
+
+
+                    <div class="tenant-table-wrapper">
+
+                        <table class="tenant-table">
+
+                            <thead>
+                                <tr>
+                                    <th>Tháng</th>
+                                    <th>Loại phí</th>
+                                    <th>Số tiền</th>
+                                    <th>Hạn thanh toán</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                            </tbody>
+
+                        </table>
+
+                        <div class="tenant-empty">
+                            Chưa có hóa đơn.
+                        </div>
+
+                    </div>
+
+
+                    <div class="tenant-invoice-action">
+                        <a href="#" class="pay-invoice-button">
+                            Thanh toán ngay
+                        </a>
+                    </div>
+
+                </div>
+
+
+                <!-- Cột bên phải -->
+                <div class="tenant-right-column">
+
+                    <!-- Thao tác nhanh -->
+                    <div class="tenant-panel quick-action-panel">
+
+                        <div class="tenant-panel-title">
+                            <h3>Thao tác nhanh</h3>
+                        </div>
+
+                        <div class="quick-action-list">
+
+                            <a href="#" class="tenant-shortcut-button primary">
+                                Thanh toán hóa đơn
+                            </a>
+
+                            <a href="#" class="tenant-shortcut-button">
+                                Đăng ký dịch vụ
+                            </a>
+
+                            <a href="#" class="tenant-shortcut-button">
+                                Góp ý / Khiếu nại
+                            </a>
+
+                            <a href="#" class="tenant-shortcut-button">
+                                Cập nhật thông tin
+                            </a>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- Dịch vụ đang sử dụng -->
+                    <div class="tenant-panel tenant-service-panel">
+
+                        <div class="tenant-panel-title">
+                            <span class="panel-icon service-panel-icon"></span>
+                            <h3>Dịch vụ đang dùng</h3>
+                        </div>
+
+                        <div class="tenant-service-list">
+                            <!-- Danh sách dịch vụ sẽ được tích hợp từ database -->
+                        </div>
+
+                        <div class="tenant-empty service-empty">
+                            Chưa có dịch vụ.
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Thông báo -->
+                <div class="tenant-panel tenant-notification-panel">
+
+                    <div class="tenant-panel-title">
+                        <h3>Thông Báo</h3>
+                    </div>
+
+                    <div class="tenant-notification-content">
+                        <!-- Nội dung thông báo sẽ được tích hợp từ backend -->
+                    </div>
+
+                    <div class="tenant-empty notification-empty">
+                        Chưa có thông báo.
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/tenant-dashboard.js"></script>
+
+</body>
+</html>

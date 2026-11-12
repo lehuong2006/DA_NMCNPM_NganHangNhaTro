@@ -1,0 +1,366 @@
+﻿/* ==============================
+   TRANG QUẢN LÝ TÀI KHOẢN
+================================ */
+
+.admin-accounts-content {
+    min-width: 0;
+    padding: 20px 18px;
+    background-color: #f4f5f3;
+}
+
+
+/* ==============================
+   TIÊU ĐỀ
+================================ */
+
+.admin-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+    .admin-page-header h1 {
+        margin: 0 0 5px;
+        color: #222c28;
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .admin-page-header p {
+        margin: 0;
+        color: #69766f;
+        font-size: 11px;
+    }
+
+
+/* ==============================
+   NÚT THÊM TÀI KHOẢN
+================================ */
+
+.add-account-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 120px;
+    height: 35px;
+    padding: 0 13px;
+    border: 1px solid #176b5d;
+    border-radius: 6px;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+    .add-account-button:hover {
+        border-color: #105448;
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   THANH TÌM KIẾM VÀ BỘ LỌC
+================================ */
+
+.account-toolbar {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.5fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.account-search {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 10px;
+    border: 1px solid #aeb9b2;
+    border-radius: 6px;
+    background-color: #ffffff;
+}
+
+.search-icon {
+    position: relative;
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    border: 1.5px solid #68766f;
+    border-radius: 50%;
+}
+
+    .search-icon::after {
+        position: absolute;
+        right: -5px;
+        bottom: -3px;
+        width: 6px;
+        height: 1.5px;
+        background-color: #68766f;
+        content: "";
+        transform: rotate(45deg);
+    }
+
+.account-search input {
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #46534c;
+    font-family: inherit;
+    font-size: 10px;
+}
+
+    .account-search input::placeholder {
+        color: #89958e;
+    }
+
+
+/* ==============================
+   LỌC VAI TRÒ
+================================ */
+
+.account-role-filters {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.role-filter {
+    min-width: 62px;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #aeb9b2;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #303d38;
+    font-family: inherit;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+    .role-filter:hover {
+        border-color: #176b5d;
+        color: #176b5d;
+    }
+
+    .role-filter.active {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+
+/* ==============================
+   BẢNG TÀI KHOẢN
+================================ */
+
+.account-table-panel {
+    min-width: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #dce4df;
+    border-radius: 9px;
+    background-color: #ffffff;
+}
+
+.account-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.account-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+    .account-table thead {
+        background-color: #ffffff;
+    }
+
+    .account-table th {
+        height: 35px;
+        padding: 8px 10px;
+        border-bottom: 1px solid #e0e6e2;
+        color: #59665f;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: left;
+    }
+
+    .account-table td {
+        height: 36px;
+        padding: 6px 10px;
+        border-bottom: 1px solid #edf0ed;
+        color: #46534c;
+        font-size: 10px;
+    }
+
+    .account-table tbody tr:hover {
+        background-color: #f6faf7;
+    }
+
+    .account-table th:last-child,
+    .account-table td:last-child {
+        text-align: center;
+    }
+
+
+/* ==============================
+   NHÃN VAI TRÒ
+================================ */
+
+.account-role-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 65px;
+    min-height: 20px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+    .account-role-badge.tenant {
+        background-color: #fff3a8;
+        color: #786514;
+    }
+
+    .account-role-badge.landlord {
+        background-color: #a9eee1;
+        color: #176b5d;
+    }
+
+    .account-role-badge.admin {
+        background-color: #f7d6ad;
+        color: #86521c;
+    }
+
+
+/* ==============================
+   NHÃN TRẠNG THÁI
+================================ */
+
+.account-status-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 62px;
+    min-height: 20px;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 9px;
+    font-weight: 500;
+}
+
+    .account-status-badge.active {
+        background-color: #fff0d2;
+        color: #946c24;
+    }
+
+    .account-status-badge.locked {
+        background-color: #f8dada;
+        color: #a83e3e;
+    }
+
+
+/* ==============================
+   NÚT THAO TÁC
+================================ */
+
+.account-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.account-action-button {
+    min-width: 39px;
+    height: 24px;
+    padding: 0 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: #f0f1f0;
+    color: #53625c;
+    font-family: inherit;
+    font-size: 9px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .account-action-button:hover {
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+
+/* ==============================
+   TRẠNG THÁI RỖNG
+================================ */
+
+.account-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+    color: #929e98;
+    font-size: 11px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1050px) {
+    .account-toolbar {
+        grid-template-columns: 1fr;
+    }
+
+    .account-role-filters {
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 750px) {
+    .admin-accounts-content {
+        padding: 15px 12px;
+    }
+
+    .admin-page-header h1 {
+        font-size: 22px;
+    }
+
+    .admin-page-header {
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .admin-page-header {
+        flex-direction: column;
+    }
+
+    .account-role-filters {
+        justify-content: flex-start;
+    }
+
+    .role-filter {
+        flex: 1;
+    }
+}

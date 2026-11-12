@@ -1,0 +1,1013 @@
+﻿/* ==============================
+   TRANG GIAO DỊCH VÍ
+================================ */
+
+.wallet-content {
+    min-width: 0;
+}
+
+    .wallet-content .page-header {
+        margin-bottom: 17px;
+    }
+
+        .wallet-content .page-header h1 {
+            margin-bottom: 5px;
+            font-size: 23px;
+        }
+
+        .wallet-content .page-header p {
+            margin: 0;
+            color: #7d8983;
+            font-size: 11px;
+        }
+
+
+/* ==============================
+   THỐNG KÊ
+================================ */
+
+.wallet-statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 13px;
+}
+
+.wallet-stat-card {
+    min-width: 0;
+    min-height: 86px;
+    padding: 10px 12px;
+    border: 1px solid #dce5e1;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.stat-label {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 20px;
+    font-size: 9px;
+}
+
+    .stat-label.pending {
+        background-color: #d8f0e2;
+        color: #28764b;
+    }
+
+    .stat-label.balance {
+        background-color: #ffebc9;
+        color: #946c24;
+    }
+
+    .stat-label.monthly {
+        background-color: #dce8ff;
+        color: #345db2;
+    }
+
+    .stat-label.debt {
+        background-color: #e8e8e5;
+        color: #68716c;
+    }
+
+.wallet-stat-card h2 {
+    min-height: 27px;
+    margin: 5px 0 3px;
+    color: #303d38;
+    font-size: 21px;
+    font-weight: 700;
+}
+
+.wallet-stat-card p {
+    margin: 0;
+    color: #87938d;
+    font-size: 10px;
+}
+
+
+/* ==============================
+   KHU VỰC CHỨC NĂNG
+================================ */
+
+.wallet-workspace {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(225px, 0.95fr);
+    align-items: start;
+    gap: 13px;
+}
+
+.wallet-main-section {
+    min-width: 0;
+}
+
+
+/* ==============================
+   TAB
+================================ */
+
+.wallet-tabs {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 0.75fr 1.1fr;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.wallet-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    min-height: 35px;
+    padding: 5px 8px;
+    border: 1px solid #d5dfda;
+    border-radius: 7px;
+    background-color: #ffffff;
+    color: #53625c;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .wallet-tab:hover:not(.active) {
+        background-color: #f0f6f3;
+    }
+
+    .wallet-tab.active {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+.tab-count {
+    display: none;
+    min-width: 15px;
+    height: 15px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: #ffe2b6;
+    color: #805a20;
+    font-size: 9px;
+}
+
+.wallet-tab-content[hidden] {
+    display: none;
+}
+
+.wallet-tab-content {
+    padding: 12px;
+    border: 1px solid #dce5e1;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.section-heading {
+    margin-bottom: 10px;
+}
+
+    .section-heading h3 {
+        margin: 0;
+        color: #35463f;
+        font-size: 13px;
+    }
+
+
+/* ==============================
+   BỘ LỌC LỊCH SỬ GIAO DỊCH
+================================ */
+
+.wallet-filter {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+    .wallet-filter select {
+        flex: 0 0 156px;
+        min-width: 0;
+        height: 36px;
+        padding: 0 10px;
+        border: 1px solid #d5dfda;
+        border-radius: 5px;
+        outline: none;
+        background-color: #ffffff;
+        color: #53625c;
+        font-family: inherit;
+        font-size: 11px;
+    }
+
+        .wallet-filter select:focus {
+            border-color: #176b5d;
+        }
+
+/* Khoảng thời gian */
+
+.transaction-date-range {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.date-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 150px;
+}
+
+    .date-filter-group label {
+        color: #53625c;
+        font-size: 10px;
+        font-weight: 600;
+        line-height: 1.2;
+    }
+
+    .date-filter-group input {
+        box-sizing: border-box;
+        width: 100%;
+        height: 36px;
+        padding: 0 8px;
+        border: 1px solid #d5dfda;
+        border-radius: 5px;
+        outline: none;
+        background-color: #ffffff;
+        color: #53625c;
+        font-family: inherit;
+        font-size: 11px;
+    }
+
+        .date-filter-group input:focus {
+            border-color: #176b5d;
+        }
+
+
+/* ==============================
+   BẢNG DỮ LIỆU
+================================ */
+
+.wallet-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.wallet-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+    .wallet-table th,
+    .wallet-table td {
+        height: 39px;
+        padding: 8px 7px;
+        border-bottom: 1px solid #e2e8e4;
+        color: #53625c;
+        font-size: 9px;
+        text-align: left;
+    }
+
+    .wallet-table th {
+        color: #68766f;
+        font-weight: 600;
+    }
+
+    .wallet-table td {
+        font-size: 10px;
+    }
+
+    .wallet-table tbody tr {
+        cursor: pointer;
+        transition: background-color 0.15s;
+    }
+
+        .wallet-table tbody tr:hover {
+            background-color: #f2f8f4;
+        }
+
+        .wallet-table tbody tr.selected {
+            background-color: #d8f0e2;
+        }
+
+        .wallet-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+.wallet-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100px;
+    color: #929e98;
+    font-size: 11px;
+}
+
+
+/* ==============================
+   TRẠNG THÁI
+================================ */
+
+.wallet-status {
+    display: inline-block;
+    padding: 4px 7px;
+    border-radius: 5px;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+    .wallet-status.pending {
+        background-color: #ffebc9;
+        color: #946c24;
+    }
+
+    .wallet-status.approved,
+    .wallet-status.resolved {
+        background-color: #d8f0e2;
+        color: #28764b;
+    }
+
+    .wallet-status.rejected,
+    .wallet-status.overdue {
+        background-color: #f9e0df;
+        color: #ad4545;
+    }
+
+
+/* ==============================
+   CHI TIẾT YÊU CẦU
+================================ */
+
+.wallet-detail-panel {
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #dce5e1;
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+
+.detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+    .detail-header h3 {
+        margin: 0;
+        color: #35463f;
+        font-size: 13px;
+    }
+
+.detail-status {
+    padding: 4px 7px;
+    border-radius: 15px;
+    background-color: #eeeeea;
+    color: #68716c;
+    font-size: 9px;
+}
+
+.detail-information {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 85px minmax(0, 1fr);
+    gap: 7px;
+    align-items: start;
+    font-size: 10px;
+}
+
+    .detail-row span {
+        color: #87938d;
+    }
+
+    .detail-row strong {
+        color: #35463f;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+
+/* ==============================
+   CHỨNG TỪ
+================================ */
+
+.receipt-image-section {
+    margin-bottom: 12px;
+}
+
+    .receipt-image-section h4 {
+        margin: 0 0 7px;
+        color: #53625c;
+        font-size: 10px;
+    }
+
+.receipt-image-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 90px;
+    padding: 10px;
+    border: 1px dashed #d5dfda;
+    border-radius: 7px;
+    background-color: #f6f8f6;
+    color: #929e98;
+    font-size: 10px;
+    text-align: center;
+}
+
+.receipt-image {
+    display: block;
+    width: 100%;
+    max-height: 190px;
+    object-fit: contain;
+    border: 1px solid #e1e8e4;
+    border-radius: 6px;
+    background-color: #f6f8f6;
+}
+
+    .receipt-image[hidden] {
+        display: none;
+    }
+
+
+/* ==============================
+   LÝ DO TỪ CHỐI
+================================ */
+
+.reject-reason-section {
+    margin-bottom: 10px;
+}
+
+    .reject-reason-section label {
+        display: block;
+        margin-bottom: 6px;
+        color: #68766f;
+        font-size: 9px;
+        font-weight: 600;
+    }
+
+    .reject-reason-section textarea {
+        display: block;
+        width: 100%;
+        min-height: 55px;
+        padding: 8px;
+        border: 1px solid #d5dfda;
+        border-radius: 5px;
+        outline: none;
+        resize: vertical;
+        color: #40534d;
+        font-family: inherit;
+        font-size: 10px;
+    }
+
+        .reject-reason-section textarea:focus {
+            border-color: #176b5d;
+        }
+
+        .reject-reason-section textarea::placeholder {
+            color: #a0aaa5;
+        }
+
+
+/* ==============================
+   DUYỆT / TỪ CHỐI
+================================ */
+
+.approval-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+    .approval-actions button {
+        height: 35px;
+        border-radius: 6px;
+        font-family: inherit;
+        font-size: 10px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+.reject-button {
+    border: 1px solid #e3b7a9;
+    background-color: #ffffff;
+    color: #b85a43;
+}
+
+    .reject-button:hover:not(:disabled) {
+        background-color: #fff0ec;
+    }
+
+.approve-button {
+    border: 1px solid #176b5d;
+    background-color: #176b5d;
+    color: #ffffff;
+}
+
+    .approve-button:hover:not(:disabled) {
+        background-color: #105448;
+    }
+
+.approval-actions button:disabled {
+    border-color: #dce3df;
+    background-color: #f0f2f0;
+    color: #a0aaa5;
+    cursor: not-allowed;
+}
+
+.approval-note {
+    margin: 10px 0 0;
+    color: #929e98;
+    font-size: 9px;
+    line-height: 1.5;
+}
+
+
+/* ==============================
+   TAB CÔNG NỢ
+================================ */
+
+.wallet-workspace.detail-hidden {
+    grid-template-columns: minmax(0, 1fr);
+}
+
+    .wallet-workspace.detail-hidden .wallet-main-section {
+        width: 100%;
+    }
+
+
+/* Bộ lọc công nợ */
+
+.debt-filter-bar {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr auto;
+    align-items: end;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding: 12px;
+    background-color: #f4f5f4;
+    border: 1px solid #e2e6e3;
+    border-radius: 6px;
+}
+
+.debt-filter-group {
+    min-width: 0;
+}
+
+    .debt-filter-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #53625c;
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .debt-filter-group input,
+    .debt-filter-group select {
+        width: 100%;
+        height: 33px;
+        padding: 0 8px;
+        border: 1px solid #d5dfda;
+        border-radius: 5px;
+        outline: none;
+        background-color: #ffffff;
+        color: #53625c;
+        font-family: inherit;
+        font-size: 10px;
+    }
+
+        .debt-filter-group input:focus,
+        .debt-filter-group select:focus {
+            border-color: #176b5d;
+        }
+
+
+/* Tổng công nợ */
+
+.debt-total {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 120px;
+    min-height: 33px;
+    padding: 5px 8px;
+    border-radius: 5px;
+    background-color: #f8e2e2;
+}
+
+    .debt-total span {
+        color: #a45b5b;
+        font-size: 9px;
+    }
+
+    .debt-total strong {
+        margin-top: 2px;
+        color: #c34e4e;
+        font-size: 10px;
+    }
+
+
+/* Bảng công nợ */
+
+.debt-table-panel {
+    width: 100%;
+    min-height: 230px;
+}
+
+.debt-table {
+    min-width: 760px;
+}
+
+    .debt-table th,
+    .debt-table td {
+        height: 43px;
+        padding: 9px 8px;
+    }
+
+    .debt-table td {
+        color: #35463f;
+    }
+
+    .debt-table tbody tr.selected {
+        background-color: #e5f2e9;
+    }
+
+
+/* Trạng thái công nợ */
+
+.wallet-status.pending {
+    background-color: #fff0d5;
+    color: #946c24;
+}
+
+.wallet-status.overdue {
+    background-color: #f9e0df;
+    color: #ad4545;
+}
+
+.wallet-status.resolved {
+    background-color: #d8f0e2;
+    color: #28764b;
+}
+
+
+/* Hành động công nợ */
+
+.debt-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.debt-action-button {
+    height: 26px;
+    padding: 0 7px;
+    border: 1px solid #d5dfda;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #53625c;
+    font-family: inherit;
+    font-size: 9px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .debt-action-button:hover:not(:disabled) {
+        background-color: #edf5f0;
+        border-color: #176b5d;
+        color: #176b5d;
+    }
+
+    .debt-action-button.retry {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+        .debt-action-button.retry:hover:not(:disabled) {
+            background-color: #105448;
+        }
+
+    .debt-action-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+
+/* ==============================
+   TAB TRỪ TIỀN TỰ ĐỘNG
+================================ */
+
+.auto-deduct-settings {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 1.2fr);
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 17px;
+    padding: 13px;
+    border: 1px solid #dce5e1;
+    border-radius: 7px;
+    background-color: #f2f3f2;
+}
+
+.auto-deduct-description h3 {
+    margin: 0 0 7px;
+    color: #35463f;
+    font-size: 13px;
+}
+
+.auto-deduct-description p {
+    margin: 0;
+    color: #68766f;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+
+/* Khu vực cấu hình */
+
+.auto-deduct-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #e0e6e2;
+    border-radius: 6px;
+}
+
+.auto-deduct-schedule {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+    .auto-deduct-schedule label {
+        color: #53625c;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .auto-deduct-schedule select {
+        width: 115px;
+        height: 31px;
+        padding: 0 8px;
+        border: 1px solid #d5dfda;
+        border-radius: 5px;
+        outline: none;
+        background-color: #ffffff;
+        color: #40534d;
+        font-family: inherit;
+        font-size: 10px;
+    }
+
+        .auto-deduct-schedule select:focus {
+            border-color: #176b5d;
+        }
+
+
+/* Nút bật tắt và chạy thủ công */
+
+.auto-deduct-actions {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+}
+
+.auto-deduct-toggle {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    user-select: none;
+}
+
+    .auto-deduct-toggle input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+    }
+
+.toggle-slider {
+    position: relative;
+    display: inline-block;
+    width: 43px;
+    height: 21px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background-color: #aeb8b2;
+    transition: background-color 0.2s;
+}
+
+    .toggle-slider::before {
+        position: absolute;
+        top: 3px;
+        left: 3px;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        background-color: #ffffff;
+        content: "";
+        transition: transform 0.2s;
+    }
+
+.auto-deduct-toggle input:checked + .toggle-slider {
+    background-color: #168b35;
+}
+
+    .auto-deduct-toggle input:checked + .toggle-slider::before {
+        transform: translateX(22px);
+    }
+
+.auto-deduct-toggle input:focus-visible + .toggle-slider {
+    outline: 2px solid #176b5d;
+    outline-offset: 3px;
+}
+
+.toggle-text {
+    color: #68766f;
+    font-size: 10px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.auto-deduct-toggle input:checked ~ .toggle-text {
+    color: #168b35;
+}
+
+
+/* Nút chạy thủ công */
+
+.run-deduct-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    min-width: 0;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid #4cba68;
+    border-radius: 5px;
+    background-color: #55bd6b;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .run-deduct-button:hover:not(:disabled) {
+        background-color: #319c4c;
+    }
+
+    .run-deduct-button span::before {
+        content: "▶";
+        font-size: 12px;
+    }
+
+    .run-deduct-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+
+/* Lịch sử chạy */
+
+.auto-deduct-history {
+    min-width: 0;
+}
+
+    .auto-deduct-history h3 {
+        margin: 0 0 12px;
+        color: #35463f;
+        font-size: 13px;
+    }
+
+.auto-deduct-table {
+    min-width: 700px;
+}
+
+    .auto-deduct-table th,
+    .auto-deduct-table td {
+        height: 38px;
+        padding: 8px 7px;
+    }
+
+    .auto-deduct-table td {
+        color: #53625c;
+        font-size: 10px;
+    }
+
+.auto-deduct-run-status {
+    display: inline-block;
+    padding: 4px 7px;
+    border-radius: 5px;
+    background-color: #d8f0e2;
+    color: #28764b;
+    font-size: 9px;
+}
+
+    .auto-deduct-run-status.failed {
+        background-color: #f9e0df;
+        color: #ad4545;
+    }
+
+    .auto-deduct-run-status.partial {
+        background-color: #fff0d5;
+        color: #946c24;
+    }
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+    .wallet-workspace {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-detail-panel {
+        max-width: 600px;
+    }
+}
+
+@media (max-width: 900px) {
+    .debt-filter-bar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .debt-total {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 850px) {
+    .auto-deduct-settings {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 750px) {
+    .wallet-statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .wallet-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 500px) {
+    .auto-deduct-actions {
+        grid-template-columns: 1fr;
+    }
+
+    .run-deduct-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .wallet-statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+        .wallet-filter select {
+            flex-basis: auto;
+            width: 100%;
+        }
+
+    .transaction-date-range {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .date-filter-group {
+        width: 100%;
+    }
+
+    .debt-filter-bar {
+        grid-template-columns: 1fr;
+    }
+}

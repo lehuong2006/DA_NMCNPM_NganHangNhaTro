@@ -1,0 +1,191 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Lịch sử giao dịch";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/tenant-transaction-history.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Tenant/Dashboard" class="nav-item">
+                    <span></span>
+                    Trang Chủ
+                </a>
+
+                <a href="/Tenant/Wallet" class="nav-item">
+                    <span></span>
+                    Ví của tôi
+                </a>
+
+                <a href="/Tenant/ContractsAndInvoices" class="nav-item">
+                    <span></span>
+                    Hợp đồng và Hóa đơn
+                </a>
+
+                <a href="/Tenant/TransactionHistory" class="nav-item active">
+                    <span></span>
+                    Lịch sử giao dịch
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Khách thuê</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content tenant-history-content">
+
+            <!-- Tiêu đề -->
+            <div class="history-page-header">
+                <h1>Lịch sử giao dịch</h1>
+            </div>
+
+
+            <!-- Thống kê -->
+            <section class="history-statistics">
+
+                <div class="history-stat-card">
+                    <span class="history-stat-label balance-label">
+                        Số tiền dư hiện tại
+                    </span>
+                    <h2></h2>
+                </div>
+
+                <div class="history-stat-card">
+                    <span class="history-stat-label deposit-label">
+                        Tổng nạp
+                    </span>
+                    <h2></h2>
+                </div>
+
+                <div class="history-stat-card">
+                    <span class="history-stat-label expense-label">
+                        Tổng chi
+                    </span>
+                    <h2></h2>
+                </div>
+
+                <div class="history-stat-card">
+                    <span class="history-stat-label count-label">
+                        Tổng giao dịch
+                    </span>
+                    <h2></h2>
+                </div>
+
+            </section>
+
+
+            <!-- Bộ lọc -->
+            <section class="history-filters">
+
+                <div class="history-date-filter">
+
+                    <label for="startDate">Từ ngày</label>
+
+                    <input type="date" id="startDate">
+
+                    <span>–</span>
+
+                    <label for="endDate">Đến ngày</label>
+
+                    <input type="date" id="endDate">
+
+                </div>
+
+
+                <select id="transactionTypeFilter">
+                    <option value="">Tất cả loại giao dịch</option>
+                    <option value="TOPUP">Nạp tiền</option>
+                    <option value="AUTO_DEDUCT">Thanh toán</option>
+                </select>
+
+
+                <select id="transactionStatusFilter">
+                    <option value="">Tất cả trạng thái</option>
+                    <option value="SUCCESS">Thành công</option>
+                    <option value="PENDING">Đang xử lý</option>
+                    <option value="REJECTED">Bị từ chối</option>
+                </select>
+
+
+                <input type="search"
+                       id="transactionSearch"
+                       placeholder="Tìm kiếm giao dịch">
+
+            </section>
+
+
+            <!-- Bảng giao dịch -->
+            <section class="history-table-panel">
+
+                <h2>Danh sách giao dịch</h2>
+
+                <div class="history-table-wrapper">
+
+                    <table class="history-table">
+
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Thời gian</th>
+                                <th>Loại giao dịch</th>
+                                <th>Nội dung</th>
+                                <th>Số tiền</th>
+                                <th>Trạng thái</th>
+                                <th>Chú thích</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="transactionTableBody">
+                            <!-- Dữ liệu giao dịch sẽ được tích hợp từ database -->
+                        </tbody>
+
+                    </table>
+
+                    <div class="history-empty">
+                        Chưa có giao dịch.
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/tenant-transaction-history.js"></script>
+
+</body>
+</html>

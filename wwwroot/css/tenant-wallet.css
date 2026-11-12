@@ -1,0 +1,429 @@
+﻿/* ==============================
+   TRANG VÍ KHÁCH THUÊ
+================================ */
+
+.tenant-wallet-content {
+    min-width: 0;
+    padding: 20px 18px;
+    background-color: #f4f5f3;
+}
+
+
+/* ==============================
+   TIÊU ĐỀ
+================================ */
+
+.wallet-page-header {
+    margin-bottom: 18px;
+}
+
+    .wallet-page-header h1 {
+        margin: 0 0 5px;
+        color: #222c28;
+        font-size: 29px;
+        font-weight: 700;
+    }
+
+    .wallet-page-header p {
+        margin: 0;
+        color: #7d8983;
+        font-size: 11px;
+    }
+
+
+/* ==============================
+   KHU VỰC PHÍA TRÊN
+================================ */
+
+.tenant-wallet-top {
+    display: grid;
+    grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.25fr);
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+
+/* ==============================
+   THẺ SỐ DƯ
+================================ */
+
+.wallet-balance-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0;
+    min-height: 128px;
+    padding: 13px;
+    overflow: hidden;
+    border-radius: 5px;
+    background: linear-gradient(125deg, #174c9b, #1764bd 55%, #153d83);
+    color: #ffffff;
+}
+
+.wallet-balance-user {
+    min-height: 22px;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.wallet-balance-label {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.wallet-balance-amount {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    min-height: 37px;
+    font-size: 26px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+    .wallet-balance-amount span:last-child {
+        font-size: 17px;
+    }
+
+
+/* ==============================
+   THÔNG TIN CHUYỂN KHOẢN
+================================ */
+
+.bank-transfer-panel {
+    display: grid;
+    grid-template-columns: 125px minmax(0, 1fr);
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    min-height: 128px;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+.bank-qr-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+}
+
+.bank-qr-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 112px;
+    height: 112px;
+    border: 1px dashed #cbd8d1;
+    border-radius: 5px;
+    background-color: #f7faf8;
+    color: #82918a;
+}
+
+    .bank-qr-placeholder span {
+        width: 65px;
+        height: 65px;
+        border: 2px solid #dce5e0;
+        border-radius: 4px;
+        background-color: #ffffff;
+    }
+
+    .bank-qr-placeholder p {
+        margin: 6px 0 0;
+        font-size: 9px;
+        text-align: center;
+    }
+
+.bank-transfer-information {
+    min-width: 0;
+}
+
+    .bank-transfer-information h2 {
+        margin: 0 0 8px;
+        color: #26342e;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+.bank-information-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-bottom: 9px;
+    color: #53625c;
+    font-size: 10px;
+}
+
+    .bank-information-row strong {
+        color: #303d38;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+
+/* ==============================
+   KHU VỰC PHÍA DƯỚI
+================================ */
+
+.tenant-wallet-bottom {
+    display: grid;
+    grid-template-columns: minmax(230px, 0.85fr) minmax(0, 1.25fr);
+    align-items: stretch;
+    gap: 12px;
+}
+
+.wallet-panel {
+    min-width: 0;
+    min-height: 270px;
+    padding: 11px;
+    background-color: #ffffff;
+}
+
+    .wallet-panel > h2 {
+        margin: 0 0 12px;
+        color: #303d38;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+
+/* ==============================
+   FORM NẠP TIỀN
+================================ */
+
+.topup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.topup-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+    .topup-field label {
+        color: #53625c;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+.topup-amount-options {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 7px;
+}
+
+.amount-option {
+    min-width: 0;
+    height: 28px;
+    padding: 0 5px;
+    border: 1px solid #c8edbc;
+    border-radius: 2px;
+    background-color: #c9f2bc;
+    color: #285a30;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+    .amount-option:hover {
+        border-color: #176b5d;
+        background-color: #a9e5a0;
+    }
+
+    .amount-option.active {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+.topup-field input {
+    box-sizing: border-box;
+    width: 100%;
+    height: 34px;
+    padding: 0 9px;
+    border: 1px solid #cbd5cf;
+    border-radius: 5px;
+    outline: none;
+    background-color: #ffffff;
+    color: #35463f;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+    .topup-field input:focus {
+        border-color: #176b5d;
+    }
+
+    .topup-field input::placeholder {
+        color: #a0aaa5;
+        font-size: 10px;
+    }
+
+
+/* Nút gửi yêu cầu */
+
+.topup-submit-button {
+    align-self: center;
+    width: 145px;
+    height: 35px;
+    margin-top: 1px;
+    border: 1px solid #176b5d;
+    border-radius: 5px;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+    .topup-submit-button:hover {
+        border-color: #105448;
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   LỊCH SỬ GIAO DỊCH
+================================ */
+
+.transaction-history-panel {
+    overflow: hidden;
+}
+
+.transaction-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+    .transaction-table th {
+        height: 34px;
+        padding: 7px 6px;
+        color: #53625c;
+        font-size: 10px;
+        font-weight: 700;
+        text-align: left;
+    }
+
+    .transaction-table td {
+        height: 30px;
+        padding: 6px;
+        border-bottom: 1px solid #edf0ed;
+        color: #46534c;
+        font-size: 10px;
+    }
+
+    .transaction-table tbody tr:hover {
+        background-color: #f5faf6;
+    }
+
+.transaction-status {
+    display: inline-block;
+    padding: 4px 7px;
+    border-radius: 4px;
+    background-color: #d8f0e2;
+    color: #28764b;
+    font-size: 9px;
+}
+
+    .transaction-status.pending {
+        background-color: #fff0d5;
+        color: #946c24;
+    }
+
+    .transaction-status.rejected {
+        background-color: #f9e0df;
+        color: #ad4545;
+    }
+
+.transaction-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 115px;
+    color: #929e98;
+    font-size: 11px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 950px) {
+    .tenant-wallet-top,
+    .tenant-wallet-bottom {
+        grid-template-columns: 1fr 1.2fr;
+    }
+
+    .bank-transfer-panel {
+        grid-template-columns: 100px minmax(0, 1fr);
+    }
+
+    .bank-qr-placeholder {
+        width: 90px;
+        height: 90px;
+    }
+
+        .bank-qr-placeholder span {
+            width: 55px;
+            height: 55px;
+        }
+}
+
+@media (max-width: 750px) {
+    .tenant-wallet-top,
+    .tenant-wallet-bottom {
+        grid-template-columns: 1fr;
+    }
+
+    .wallet-balance-card {
+        min-height: 120px;
+    }
+
+    .bank-transfer-panel {
+        grid-template-columns: 125px minmax(0, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .tenant-wallet-content {
+        padding: 14px 10px;
+    }
+
+    .wallet-page-header h1 {
+        font-size: 24px;
+    }
+
+    .bank-transfer-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .bank-qr-placeholder {
+        width: 112px;
+        height: 112px;
+    }
+
+        .bank-qr-placeholder span {
+            width: 65px;
+            height: 65px;
+        }
+
+    .topup-amount-options {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

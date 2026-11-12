@@ -1,0 +1,204 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Tổng quan";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item active">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content">
+
+            <div class="page-header">
+                <h1>Tổng quan</h1>
+                <p>Tổng quan tình hình hoạt động nhà trọ</p>
+            </div>
+
+
+            <!-- Các thẻ thống kê -->
+            <section class="statistics">
+
+                <div class="stat-card">
+                    <span class="stat-label empty">Trống</span>
+                    <h2></h2>
+                    <p>Phòng</p>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label deposit">Đã cọc</span>
+                    <h2></h2>
+                    <p>Phòng</p>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label rented">Đang thuê</span>
+                    <h2></h2>
+                    <p>Phòng</p>
+                </div>
+
+                <div class="stat-card">
+                    <span class="stat-label maintenance">Bảo trì</span>
+                    <h2></h2>
+                    <p>Phòng</p>
+                </div>
+
+            </section>
+
+
+            <!-- Khu vực hóa đơn và việc cần làm -->
+            <section class="dashboard-grid">
+
+                <!-- Hóa đơn chưa thu -->
+                <div class="panel invoice-panel">
+
+                    <div class="panel-header">
+                        <h3>Hóa đơn chưa thu tháng này</h3>
+                        <a href="#">Xem tất cả hóa đơn</a>
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Phòng</th>
+                                    <th>Người thuê</th>
+                                    <th>Số tiền</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Việc cần làm và lối tắt -->
+                <div class="panel task-panel">
+
+                    <h3>Việc cần làm</h3>
+
+                    <div class="task-list">
+
+                        <div class="task-item">
+                            <span>Yêu cầu nạp tiền chờ duyệt</span>
+                            <a href="#">Xem</a>
+                        </div>
+
+                        <div class="task-item">
+                            <span>Nhập số điện nước kỳ hiện tại</span>
+                            <a href="#">Xem</a>
+                        </div>
+
+                        <div class="task-empty">
+                            <!-- Trạng thái khi không có công việc -->
+                        </div>
+
+                    </div>
+
+
+                    <h3 class="shortcut-title">Lối tắt</h3>
+
+                    <div class="shortcut-list">
+
+                        <a href="/Landlord/MeterReading" class="shortcut-button primary">
+                            Nhập chỉ số điện nước
+                        </a>
+
+                        <a href="/Landlord/DepositReceipt" class="shortcut-button">
+                            Lập phiếu thu cọc
+                        </a>
+
+                        <a href="/Landlord/ContractForm" class="shortcut-button">
+                            Lập hợp đồng
+                        </a>
+
+                        <a href="/Landlord/RoomForm" class="shortcut-button">
+                            Thêm phòng
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="~/js/landlord-dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Nhập chỉ số điện nước";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/landlord-meter-reading.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item active">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content meter-reading-content">
+
+            <div class="page-header meter-page-header">
+
+                <div class="header-title">
+                    <a href="/Landlord/Invoices" class="back-button">
+                        <span></span>
+                    </a>
+
+                    <div>
+                        <h1>Nhập chỉ số điện nước</h1>
+                        <p>Ghi chỉ số theo kỳ và đơn giá dịch vụ</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <form id="meterReadingForm">
+
+                <div class="meter-reading-layout">
+
+                    <!-- =================================
+                         CHỈ SỐ ĐIỆN NƯỚC
+                    ================================== -->
+                    <section class="reading-panel">
+
+                        <h3>Chỉ số điện nước theo kỳ</h3>
+
+                        <div class="reading-form-grid">
+
+                            <div class="form-group">
+                                <label for="roomSelect">
+                                    Phòng <span class="required">*</span>
+                                </label>
+
+                                <select id="roomSelect" required>
+                                    <option value="">Chọn phòng</option>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="billingPeriod">
+                                    Kỳ ghi <span class="required">*</span>
+                                </label>
+
+                                <input type="month"
+                                       id="billingPeriod"
+                                       required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="oldElectricReading">
+                                    Chỉ số điện cũ (kWh)
+                                </label>
+
+                                <input type="number"
+                                       id="oldElectricReading"
+                                       min="0"
+                                       step="any"
+                                       placeholder="Chỉ số kỳ trước"
+                                       readonly>
+
+                                <small>Lấy từ chỉ số mới của kỳ trước.</small>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="newElectricReading">
+                                    Chỉ số điện mới (kWh)
+                                    <span class="required">*</span>
+                                </label>
+
+                                <input type="number"
+                                       id="newElectricReading"
+                                       min="0"
+                                       step="any"
+                                       placeholder="Nhập chỉ số mới"
+                                       required>
+
+                                <small>Phải lớn hơn hoặc bằng chỉ số cũ.</small>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="tenantCount">Số người ở</label>
+
+                                <input type="number"
+                                       id="tenantCount"
+                                       min="0"
+                                       step="1"
+                                       placeholder="Nhập số người">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="vehicleCount">
+                                    Số xe điện đăng ký
+                                </label>
+
+                                <input type="number"
+                                       id="vehicleCount"
+                                       min="0"
+                                       step="1"
+                                       placeholder="Nhập số xe">
+                            </div>
+
+                        </div>
+
+
+                        <!-- Điện tiêu thụ -->
+                        <div class="electricity-summary">
+
+                            <strong>Điện tiêu thụ</strong>
+
+                            <strong id="electricityUsage">—</strong>
+
+                        </div>
+
+
+                        <!-- Cảnh báo tiêu thụ -->
+                        <p class="electricity-warning" id="electricityWarning">
+                        </p>
+
+
+                        <!-- Tạm tính hóa đơn -->
+                        <div class="invoice-calculation">
+
+                            <h4 id="calculationTitle">
+                                Tạm tính hóa đơn
+                            </h4>
+
+                            <div class="calculation-row">
+                                <span>Tiền phòng</span>
+                                <strong id="previewRoomFee">—</strong>
+                            </div>
+
+                            <div class="calculation-row">
+                                <span id="electricityDescription">
+                                    Tiền điện
+                                </span>
+                                <strong id="previewElectricityFee">—</strong>
+                            </div>
+
+                            <div class="calculation-row">
+                                <span id="waterDescription">Tiền nước</span>
+                                <strong id="previewWaterFee">—</strong>
+                            </div>
+
+                            <div class="calculation-row">
+                                <span id="internetDescription">Internet</span>
+                                <strong id="previewInternetFee">—</strong>
+                            </div>
+
+                            <div class="calculation-row">
+                                <span id="cleaningDescription">
+                                    Thang máy và vệ sinh chung
+                                </span>
+                                <strong id="previewCleaningFee">—</strong>
+                            </div>
+
+                            <div class="calculation-row">
+                                <span id="washingDescription">Máy giặt</span>
+                                <strong id="previewWashingFee">—</strong>
+                            </div>
+
+                            <div class="calculation-row">
+                                <span id="parkingDescription">Sạc xe điện</span>
+                                <strong id="previewParkingFee">—</strong>
+                            </div>
+
+                            <div class="calculation-total">
+                                <strong>Tổng cộng (VNĐ)</strong>
+                                <strong id="previewTotal">—</strong>
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- =================================
+                         ĐƠN GIÁ DỊCH VỤ
+                    ================================== -->
+                    <section class="service-price-panel">
+
+                        <h3>Đơn giá dịch vụ</h3>
+
+                        <div class="service-price-list">
+
+                            <div class="service-price-item">
+                                <label for="electricPrice">
+                                    Điện VNĐ/KWH
+                                </label>
+
+                                <input type="text"
+                                       id="electricPrice"
+                                       inputmode="numeric"
+                                       placeholder="Đơn giá">
+                            </div>
+
+
+                            <div class="service-price-item">
+                                <label for="waterPrice">
+                                    Nước VNĐ/người
+                                </label>
+
+                                <input type="text"
+                                       id="waterPrice"
+                                       inputmode="numeric"
+                                       placeholder="Đơn giá">
+                            </div>
+
+
+                            <div class="service-price-item">
+                                <label for="internetPrice">
+                                    Internet VNĐ/người
+                                </label>
+
+                                <input type="text"
+                                       id="internetPrice"
+                                       inputmode="numeric"
+                                       placeholder="Đơn giá">
+                            </div>
+
+
+                            <div class="service-price-item">
+                                <label for="cleaningPrice">
+                                    Thang máy và vệ sinh chung VNĐ/người
+                                </label>
+
+                                <input type="text"
+                                       id="cleaningPrice"
+                                       inputmode="numeric"
+                                       placeholder="Đơn giá">
+                            </div>
+
+
+                            <div class="service-price-item">
+                                <label for="washingPrice">
+                                    Máy giặt chung VNĐ/người
+                                </label>
+
+                                <input type="text"
+                                       id="washingPrice"
+                                       inputmode="numeric"
+                                       placeholder="Đơn giá">
+                            </div>
+
+
+                            <div class="service-price-item">
+                                <label for="parkingPrice">
+                                    Sạc xe điện VNĐ/xe
+                                </label>
+
+                                <input type="text"
+                                       id="parkingPrice"
+                                       inputmode="numeric"
+                                       placeholder="Đơn giá">
+                            </div>
+
+                        </div>
+
+
+                        <p class="service-price-note">
+                            Đơn giá mới chỉ áp dụng cho kỳ ghi nhận tiếp theo.
+                            Hóa đơn đã lập giữ nguyên đơn giá cũ.
+                        </p>
+
+
+                        <button type="button"
+                                class="save-price-button">
+                            Lưu đơn giá
+                        </button>
+
+                    </section>
+
+                </div>
+
+
+                <!-- Nút thao tác cuối trang -->
+                <div class="meter-reading-actions">
+
+                    <a href="/Landlord/Invoices" class="cancel-button">
+                        Hủy
+                    </a>
+
+                    <button type="button" class="save-reading-button">
+                        Lưu thay đổi
+                    </button>
+
+                </div>
+
+            </form>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-meter-reading.js"></script>
+
+</body>
+</html>

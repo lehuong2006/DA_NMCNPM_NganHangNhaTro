@@ -1,0 +1,564 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Giao dịch ví";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/landlord-wallet-transactions.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item active">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content wallet-content">
+
+            <div class="page-header">
+                <h1>Giao dịch ví</h1>
+                <p>Duyệt yêu cầu nạp tiền, xem lịch sử giao dịch và công nợ của người thuê.</p>
+            </div>
+
+
+            <!-- Thống kê -->
+            <section class="wallet-statistics">
+
+                <div class="wallet-stat-card">
+                    <span class="stat-label pending">Chờ duyệt</span>
+                    <h2></h2>
+                    <p>Yêu cầu nạp tiền</p>
+                </div>
+
+                <div class="wallet-stat-card">
+                    <span class="stat-label balance">Số dư</span>
+                    <h2></h2>
+                    <p>Tổng số dư các ví (VNĐ)</p>
+                </div>
+
+                <div class="wallet-stat-card">
+                    <span class="stat-label monthly">Tháng</span>
+                    <h2></h2>
+                    <p>Đã nạp trong tháng (VNĐ)</p>
+                </div>
+
+                <div class="wallet-stat-card">
+                    <span class="stat-label debt">Công nợ</span>
+                    <h2></h2>
+                    <p>Còn phải thu (VNĐ)</p>
+                </div>
+
+            </section>
+
+
+            <!-- Các tab chức năng -->
+            <section class="wallet-workspace">
+
+                <div class="wallet-main-section">
+
+                    <div class="wallet-tabs" role="tablist">
+
+                        <button type="button"
+                                class="wallet-tab active"
+                                data-tab="topup"
+                                role="tab"
+                                aria-selected="true">
+                            Yêu cầu nạp tiền
+                            <span class="tab-count"></span>
+                        </button>
+
+                        <button type="button"
+                                class="wallet-tab"
+                                data-tab="history"
+                                role="tab"
+                                aria-selected="false">
+                            Lịch sử giao dịch
+                        </button>
+
+                        <button type="button"
+                                class="wallet-tab"
+                                data-tab="debt"
+                                role="tab"
+                                aria-selected="false">
+                            Công nợ
+                        </button>
+
+                        <button type="button"
+                                class="wallet-tab"
+                                data-tab="auto-deduct"
+                                role="tab"
+                                aria-selected="false">
+                            Trừ tiền tự động
+                        </button>
+
+                    </div>
+
+
+                    <!-- =================================
+                         TAB 1: YÊU CẦU NẠP TIỀN
+                    ================================== -->
+                    <div class="wallet-tab-content active"
+                         id="topupTab"
+                         role="tabpanel">
+
+                        <div class="section-heading">
+                            <h3>Yêu cầu chờ duyệt</h3>
+                        </div>
+
+                        <div class="wallet-table-wrapper">
+
+                            <table class="wallet-table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Mã</th>
+                                        <th>Phòng</th>
+                                        <th>Người thuê</th>
+                                        <th>Số tiền</th>
+                                        <th>Gửi lúc</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="topupTableBody">
+                                    <!-- Yêu cầu nạp tiền sẽ được tích hợp từ database -->
+                                </tbody>
+
+                            </table>
+
+                            <div class="wallet-empty">
+                                Chưa có yêu cầu nạp tiền.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- =================================
+                         TAB 2: LỊCH SỬ GIAO DỊCH
+                    ================================== -->
+                    <div class="wallet-tab-content"
+                         id="historyTab"
+                         role="tabpanel"
+                         hidden>
+
+                        <div class="section-heading">
+                            <h3>Lịch sử giao dịch</h3>
+                        </div>
+
+                        <div class="wallet-filter">
+
+                            <select id="transactionType">
+                                <option value="">Tất cả giao dịch</option>
+                                <option value="TOPUP">Nạp tiền</option>
+                                <option value="AUTO_DEDUCT">Tự động trừ tiền</option>
+                            </select>
+
+                            <div class="transaction-date-range">
+
+                                <div class="date-filter-group">
+                                    <label for="transactionStartDate">Từ ngày</label>
+                                    <input type="date" id="transactionStartDate">
+                                </div>
+
+                                <div class="date-filter-group">
+                                    <label for="transactionEndDate">Đến ngày</label>
+                                    <input type="date" id="transactionEndDate">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="wallet-table-wrapper">
+
+                            <table class="wallet-table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Mã giao dịch</th>
+                                        <th>Người thuê</th>
+                                        <th>Loại giao dịch</th>
+                                        <th>Số tiền</th>
+                                        <th>Thời gian</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="historyTableBody">
+                                    <!-- Lịch sử giao dịch sẽ được tích hợp từ database -->
+                                </tbody>
+
+                            </table>
+
+                            <div class="wallet-empty">
+                                Chưa có giao dịch.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =================================
+                         TAB 3: CÔNG NỢ
+                    ================================== -->
+                    <div class="wallet-tab-content"
+                         id="debtTab"
+                         role="tabpanel"
+                         hidden>
+
+                        <!-- Bộ lọc công nợ -->
+                        <div class="debt-filter-bar">
+
+                            <div class="debt-filter-group">
+                                <label for="debtPeriod">Kỳ thanh toán</label>
+
+                                <input type="month" id="debtPeriod">
+                            </div>
+
+                            <div class="debt-filter-group">
+                                <label for="debtRoom">Phòng</label>
+
+                                <select id="debtRoom">
+                                    <option value="">Tất cả phòng</option>
+                                </select>
+                            </div>
+
+                            <div class="debt-filter-group">
+                                <label for="debtStatus">Trạng thái</label>
+
+                                <select id="debtStatus">
+                                    <option value="">Tất cả trạng thái</option>
+                                    <option value="PENDING">Còn nợ</option>
+                                    <option value="OVERDUE">Quá hạn</option>
+                                    <option value="RESOLVED">Đã thanh toán</option>
+                                </select>
+                            </div>
+
+                            <div class="debt-total">
+                                <span>Tổng công nợ:</span>
+                                <strong id="totalDebtAmount">—</strong>
+                            </div>
+
+                        </div>
+
+                        <!-- Bảng công nợ -->
+                        <div class="debt-table-panel">
+
+                            <div class="wallet-table-wrapper">
+
+                                <table class="wallet-table debt-table">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Phòng</th>
+                                            <th>Khách thuê</th>
+                                            <th>Mã hóa đơn</th>
+                                            <th>Số tiền nợ</th>
+                                            <th>Hạn thanh toán</th>
+                                            <th>Trạng thái</th>
+                                            <th>Hành động</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="debtTableBody">
+                                        <!-- Dữ liệu công nợ sẽ được tích hợp từ database -->
+                                    </tbody>
+
+                                </table>
+
+                                <div class="wallet-empty">
+                                    Chưa có dữ liệu công nợ.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- =================================
+                         TAB 4: TRỪ TIỀN TỰ ĐỘNG
+                    ================================== -->
+                    <div class="wallet-tab-content"
+                         id="autoDeductTab"
+                         role="tabpanel"
+                         hidden>
+
+                        <!-- Cấu hình trừ tiền tự động -->
+                        <section class="auto-deduct-settings">
+
+                            <div class="auto-deduct-description">
+                                <h3>Cấu hình trừ tiền tự động</h3>
+
+                                <p>
+                                    Hệ thống sẽ tự động trừ tiền từ ví người thuê vào ngày
+                                    ấn định hàng tháng khi chốt hóa đơn.
+                                </p>
+                            </div>
+
+
+                            <div class="auto-deduct-controls">
+
+                                <div class="auto-deduct-schedule">
+
+                                    <label for="deductDay">
+                                        Ngày trừ hàng tháng:
+                                    </label>
+
+                                    <select id="deductDay">
+                                        <option value="">Chọn ngày</option>
+                                        <option value="1">Ngày 1</option>
+                                        <option value="5">Ngày 5</option>
+                                        <option value="10">Ngày 10</option>
+                                        <option value="15">Ngày 15</option>
+                                        <option value="20">Ngày 20</option>
+                                        <option value="25">Ngày 25</option>
+                                        <option value="28">Ngày 28</option>
+                                    </select>
+
+                                </div>
+
+
+                                <div class="auto-deduct-actions">
+
+                                    <label class="auto-deduct-toggle">
+
+                                        <input type="checkbox" id="autoDeductEnabled">
+
+                                        <span class="toggle-slider"></span>
+
+                                        <span class="toggle-text" id="toggleStatus">
+                                            ĐANG TẮT
+                                        </span>
+
+                                    </label>
+
+
+                                    <button type="button"
+                                            class="run-deduct-button"
+                                            id="runDeductButton">
+                                        <span></span>
+                                        Trừ thủ công ngay
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- Lịch sử các lần chạy -->
+                        <section class="auto-deduct-history">
+
+                            <h3>Kết quả các lần chạy trừ tiền tự động gần nhất</h3>
+
+                            <div class="wallet-table-wrapper">
+
+                                <table class="wallet-table auto-deduct-table">
+
+                                    <thead>
+                                        <tr>
+                                            <th>Thời gian thực hiện</th>
+                                            <th>Kỳ hóa đơn</th>
+                                            <th>Số phòng</th>
+                                            <th>Trừ thành công</th>
+                                            <th>Tổng tiền đã trừ</th>
+                                            <th>Trạng thái lần chạy</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody id="autoDeductTableBody">
+                                        <!-- Lịch sử chạy sẽ được tích hợp từ backend -->
+                                    </tbody>
+
+                                </table>
+
+                                <div class="wallet-empty">
+                                    Chưa có lịch sử chạy trừ tiền tự động.
+                                </div>
+
+                            </div>
+
+                        </section>
+
+                    </div>
+
+
+                </div>
+
+                <!-- =================================
+                     CHI TIẾT YÊU CẦU NẠP TIỀN
+                ================================== -->
+                <aside class="wallet-detail-panel">
+
+                    <div class="detail-header">
+                        <h3>Chi tiết yêu cầu</h3>
+                        <span class="detail-status">Chưa chọn</span>
+                    </div>
+
+
+                    <div class="detail-information">
+
+                        <div class="detail-row">
+                            <span>Mã yêu cầu:</span>
+                            <strong id="detailRequestCode">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Người thuê:</span>
+                            <strong id="detailTenant">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Phòng:</span>
+                            <strong id="detailRoom">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Số tiền nạp:</span>
+                            <strong id="detailAmount">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Nội dung CK:</span>
+                            <strong id="detailTransactionCode">—</strong>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Gửi lúc:</span>
+                            <strong id="detailCreatedAt">—</strong>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Chứng từ chuyển khoản -->
+                    <div class="receipt-image-section">
+
+                        <h4>Chứng từ thanh toán</h4>
+
+                        <div class="receipt-image-placeholder"
+                             id="receiptImagePlaceholder">
+                            Chưa có hình ảnh chứng từ.
+                        </div>
+
+                        <img id="receiptImage"
+                             class="receipt-image"
+                             src=""
+                             alt="Chứng từ chuyển khoản"
+                             hidden>
+
+                    </div>
+
+
+                    <!-- Lý do từ chối -->
+                    <div class="reject-reason-section">
+
+                        <label for="rejectReason">
+                            Lý do từ chối (chỉ bắt buộc khi từ chối)
+                        </label>
+
+                        <textarea id="rejectReason"
+                                  maxlength="500"
+                                  placeholder="Nhập lý do từ chối nếu cần..."></textarea>
+
+                    </div>
+
+
+                    <!-- Nút duyệt / từ chối -->
+                    <div class="approval-actions">
+
+                        <button type="button"
+                                class="reject-button"
+                                id="rejectButton"
+                                disabled>
+                            Từ chối
+                        </button>
+
+                        <button type="button"
+                                class="approve-button"
+                                id="approveButton"
+                                disabled>
+                            Phê duyệt
+                        </button>
+
+                    </div>
+
+                    <p class="approval-note">
+                        Chỉ phê duyệt khi số tiền và chứng từ hợp lệ.
+                        Yêu cầu đã xử lý sẽ không thể xử lý lại.
+                    </p>
+
+                </aside>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-wallet-transactions.js"></script>
+
+</body>
+</html>

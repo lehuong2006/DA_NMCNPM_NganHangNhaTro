@@ -1,0 +1,329 @@
+﻿/* ==============================
+   TRANG PHÂN QUYỀN
+================================ */
+
+.admin-roles-content {
+    min-width: 0;
+    padding: 20px 18px;
+    background-color: #f4f5f3;
+}
+
+
+/* ==============================
+   TIÊU ĐỀ
+================================ */
+
+.roles-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 12px;
+}
+
+    .roles-page-header h1 {
+        margin: 0 0 5px;
+        color: #222c28;
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+    .roles-page-header p {
+        margin: 0;
+        color: #69766f;
+        font-size: 11px;
+    }
+
+
+/* ==============================
+   NÚT THÊM VAI TRÒ
+================================ */
+
+.add-role-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 105px;
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #176b5d;
+    border-radius: 6px;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+    .add-role-button:hover {
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   THANH TÌM KIẾM
+================================ */
+
+.roles-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 13px;
+}
+
+.role-search {
+    box-sizing: border-box;
+    width: min(340px, 65%);
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid #dce4df;
+    border-radius: 6px;
+    outline: none;
+    background-color: #ffffff;
+    color: #46534c;
+    font-family: inherit;
+    font-size: 10px;
+}
+
+    .role-search:focus {
+        border-color: #176b5d;
+    }
+
+    .role-search::placeholder {
+        color: #89958e;
+    }
+
+.role-filter-button {
+    min-width: 55px;
+    height: 34px;
+    padding: 0 14px;
+    border: 1px solid #176b5d;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #176b5d;
+    font-family: inherit;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .role-filter-button:hover,
+    .role-filter-button.active {
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+
+/* ==============================
+   THỐNG KÊ
+================================ */
+
+.role-statistics {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 143px));
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.role-stat-card {
+    min-width: 0;
+    min-height: 58px;
+    padding: 8px;
+    border: 1px solid #dce4df;
+    border-radius: 7px;
+    background-color: #ffffff;
+}
+
+    .role-stat-card > span {
+        display: block;
+        color: #59665f;
+        font-size: 9px;
+    }
+
+    .role-stat-card h2 {
+        min-height: 17px;
+        margin: 3px 0;
+        color: #303d38;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    .role-stat-card p {
+        margin: 0;
+        color: #7c8982;
+        font-size: 9px;
+    }
+
+
+/* ==============================
+   DANH SÁCH VAI TRÒ
+================================ */
+
+.role-list-panel {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #dce4df;
+    border-radius: 9px;
+    background-color: #ffffff;
+}
+
+    .role-list-panel > h2 {
+        margin: 0 0 10px;
+        color: #35463f;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+.role-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.role-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+
+/* ==============================
+   BẢNG PHÂN QUYỀN
+================================ */
+
+.permission-panel {
+    width: 100%;
+    box-sizing: border-box;
+    min-width: 0;
+    margin-top: 16px;
+    padding: 14px;
+    border: 1px solid #dce4df;
+    border-radius: 9px;
+    background-color: #ffffff;
+}
+
+.permission-panel-header {
+    margin-bottom: 10px;
+}
+
+    .permission-panel-header h2 {
+        margin: 0 0 5px;
+        color: #35463f;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .permission-panel-header p {
+        margin: 0;
+        color: #77847d;
+        font-size: 10px;
+    }
+
+.permission-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.permission-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+    .permission-table th:first-child,
+    .permission-table td:first-child {
+        width: 30%;
+        text-align: left;
+    }
+
+    .permission-table th,
+    .permission-table td {
+        height: 34px;
+        padding: 6px 10px;
+        border-bottom: 1px solid #e9eeea;
+        color: #53625c;
+        font-size: 10px;
+        text-align: center;
+    }
+
+
+/* ==============================
+   NÚT HỦY VÀ LƯU
+================================ */
+
+.permission-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 9px;
+}
+
+    .permission-actions button {
+        min-width: 58px;
+        height: 25px;
+        padding: 0 10px;
+        border-radius: 5px;
+        font-family: inherit;
+        font-size: 9px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+.permission-cancel-button {
+    border: 1px solid #d3dad5;
+    background-color: #ffffff;
+    color: #53625c;
+}
+
+    .permission-cancel-button:hover {
+        background-color: #edf1ee;
+    }
+
+.permission-save-button {
+    border: 1px solid #176b5d;
+    background-color: #176b5d;
+    color: #ffffff;
+}
+
+    .permission-save-button:hover {
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 750px) {
+    .admin-roles-content {
+        padding: 15px 12px;
+    }
+
+    .permission-panel {
+        margin-top: 25px;
+    }
+}
+
+@media (max-width: 480px) {
+    .roles-page-header {
+        align-items: flex-start;
+    }
+
+        .roles-page-header h1 {
+            font-size: 22px;
+        }
+
+    .role-statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .role-list-panel,
+    .permission-panel {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}

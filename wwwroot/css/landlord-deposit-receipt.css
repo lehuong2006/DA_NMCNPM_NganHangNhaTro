@@ -1,0 +1,527 @@
+﻿
+/* ==============================
+   TRANG LẬP PHIẾU THU CỌC
+================================ */
+
+.deposit-content {
+    min-width: 0;
+}
+
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 10px;
+    color: #87938d;
+    font-size: 11px;
+}
+
+    .breadcrumb a {
+        color: #87938d;
+        text-decoration: none;
+    }
+
+        .breadcrumb a:hover {
+            color: #176b5d;
+        }
+
+.deposit-content .page-header {
+    margin-bottom: 20px;
+}
+
+    .deposit-content .page-header h1 {
+        margin-bottom: 5px;
+        font-size: 23px;
+    }
+
+    .deposit-content .page-header p {
+        margin: 0;
+        color: #7d8983;
+        font-size: 12px;
+    }
+
+
+/* ==============================
+   BỐ CỤC CHÍNH
+================================ */
+
+.deposit-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.95fr);
+    align-items: start;
+    gap: 20px;
+}
+
+.deposit-form-panel,
+.receipt-preview-panel {
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #dce5e1;
+    border-radius: 9px;
+    background-color: #ffffff;
+}
+
+
+/* ==============================
+   CÁC NHÓM FORM
+================================ */
+
+.form-section {
+    margin-bottom: 13px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e6ebe8;
+}
+
+    .form-section h3 {
+        margin: 0 0 10px;
+        color: #35463f;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+.form-group {
+    min-width: 0;
+    margin-bottom: 10px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #53625c;
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+.required {
+    color: #dc5d55;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    display: block;
+    width: 100%;
+    height: 36px;
+    padding: 0 9px;
+    border: 1px solid #d5dfda;
+    border-radius: 6px;
+    outline: none;
+    background-color: #ffffff;
+    color: #40534d;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+.form-group textarea {
+    height: 66px;
+    padding: 9px;
+    resize: vertical;
+}
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #176b5d;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #a0aaa5;
+    }
+
+
+/* ==============================
+   THÔNG TIN PHÒNG
+================================ */
+
+.room-information {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 38px;
+    padding: 7px 10px;
+    border: 1px solid #e1e8e4;
+    border-radius: 6px;
+    background-color: #f5f8f6;
+}
+
+.room-status {
+    padding: 4px 9px;
+    border-radius: 20px;
+    background-color: #e1f3e8;
+    color: #28764b;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.room-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    color: #68766f;
+    font-size: 10px;
+}
+
+    .room-details strong {
+        color: #40534d;
+    }
+
+
+/* ==============================
+   CHỌN NGƯỜI ĐẶT CỌC
+================================ */
+
+.tenant-mode {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.tenant-mode-button {
+    height: 35px;
+    padding: 0 8px;
+    border: 1px solid #d5dfda;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #53625c;
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .tenant-mode-button.active {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+    .tenant-mode-button:not(.active):hover {
+        background-color: #f0f6f3;
+    }
+
+#newTenantSection[hidden] {
+    display: none;
+}
+
+
+/* ==============================
+   KHOẢN CỌC
+================================ */
+
+.deposit-input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.money-input {
+    position: relative;
+}
+
+    .money-input input {
+        padding-right: 45px;
+    }
+
+    .money-input > span {
+        position: absolute;
+        top: 0;
+        right: 9px;
+        display: flex;
+        align-items: center;
+        height: 36px;
+        color: #87938d;
+        font-size: 10px;
+    }
+
+.deposit-hint {
+    margin: -3px 0 12px;
+    color: #87938d;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+
+/* ==============================
+   HÌNH THỨC THU
+================================ */
+
+.payment-methods {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+}
+
+.payment-method {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    height: 36px;
+    margin: 0 !important;
+    border: 1px solid #d5dfda;
+    border-radius: 7px;
+    background-color: #ffffff;
+    color: #53625c;
+    font-size: 11px !important;
+    cursor: pointer;
+}
+
+    .payment-method input {
+        width: 14px;
+        height: 14px;
+        margin: 0;
+        accent-color: #176b5d;
+    }
+
+    .payment-method.active {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+        .payment-method.active input {
+            accent-color: #ffffff;
+        }
+
+
+/* ==============================
+   GHI CHÚ
+================================ */
+
+.note-group {
+    margin-bottom: 0;
+}
+
+
+/* ==============================
+   NÚT THAO TÁC
+================================ */
+
+.deposit-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 3px;
+}
+
+.cancel-button,
+.save-draft-button,
+.save-print-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 72px;
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #d5dfda;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #53625c;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .cancel-button:hover {
+        background-color: #edf1ef;
+    }
+
+    .save-draft-button:hover {
+        border-color: #176b5d;
+        color: #176b5d;
+    }
+
+.save-print-button {
+    border-color: #176b5d;
+    background-color: #176b5d;
+    color: #ffffff;
+}
+
+    .save-print-button:hover {
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   XEM TRƯỚC PHIẾU THU
+================================ */
+
+.receipt-preview-panel {
+    padding: 14px;
+}
+
+.preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+    .preview-header h3 {
+        margin: 0;
+        color: #35463f;
+        font-size: 14px;
+    }
+
+.draft-label {
+    padding: 5px 9px;
+    border-radius: 20px;
+    background-color: #ffebc9;
+    color: #986b20;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.receipt-paper {
+    padding: 18px 15px;
+    border: 1px solid #e1e5e2;
+    background-color: #ffffff;
+    color: #35463f;
+}
+
+.receipt-property {
+    margin-bottom: 20px;
+    font-size: 10px;
+}
+
+    .receipt-property strong {
+        font-size: 11px;
+    }
+
+    .receipt-property p {
+        margin: 6px 0 0;
+        color: #7d8983;
+    }
+
+.receipt-title {
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+    .receipt-title h2 {
+        margin: 0 0 5px;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .receipt-title p {
+        margin: 0;
+        color: #7d8983;
+        font-size: 10px;
+    }
+
+.receipt-information {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+    margin-bottom: 20px;
+}
+
+.receipt-row {
+    display: grid;
+    grid-template-columns: minmax(105px, 0.9fr) minmax(0, 1.1fr);
+    gap: 8px;
+    align-items: start;
+    font-size: 10px;
+}
+
+    .receipt-row span {
+        color: #7d8983;
+    }
+
+    .receipt-row strong {
+        color: #35463f;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+    }
+
+.receipt-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    min-height: 42px;
+    padding: 9px;
+    border: 1px solid #53625c;
+    color: #35463f;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+    .receipt-total strong {
+        font-size: 12px;
+    }
+
+.receipt-note {
+    margin: 10px 0 25px;
+    color: #7d8983;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.receipt-signatures {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    min-height: 70px;
+    text-align: center;
+}
+
+    .receipt-signatures div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .receipt-signatures strong {
+        color: #40534d;
+        font-size: 10px;
+    }
+
+    .receipt-signatures span {
+        color: #929e98;
+        font-size: 9px;
+    }
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+    .deposit-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .receipt-preview-panel {
+        max-width: 650px;
+    }
+}
+
+@media (max-width: 700px) {
+    .deposit-input-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .deposit-actions {
+        justify-content: stretch;
+    }
+
+        .deposit-actions > * {
+            flex: 1;
+        }
+
+    .receipt-paper {
+        padding: 15px 10px;
+    }
+}

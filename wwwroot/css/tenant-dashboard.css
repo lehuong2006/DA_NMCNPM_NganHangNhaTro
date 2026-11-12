@@ -1,0 +1,480 @@
+﻿
+/* ==============================
+   TRANG CHỦ KHÁCH THUÊ
+================================ */
+
+.tenant-content {
+    min-width: 0;
+    padding: 20px 16px;
+    background-color: #f4f5f3;
+}
+
+
+/* ==============================
+   LỜI CHÀO
+================================ */
+
+.tenant-welcome {
+    margin-bottom: 18px;
+}
+
+    .tenant-welcome h1 {
+        margin: 0;
+        color: #222c28;
+        font-size: 31px;
+        font-weight: 500;
+    }
+
+
+/* ==============================
+   THỐNG KÊ
+================================ */
+
+.tenant-statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.tenant-stat-card {
+    min-width: 0;
+    min-height: 108px;
+    padding: 13px 14px;
+    border: 1px solid #e2e7e3;
+    border-radius: 27px;
+    background-color: #ffffff;
+}
+
+.tenant-stat-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #53625c;
+    font-size: 11px;
+}
+
+.tenant-stat-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+}
+
+    .tenant-stat-icon::before {
+        font-size: 15px;
+    }
+
+.room-icon {
+    background-color: #d9f1e5;
+    color: #17865d;
+}
+
+    .room-icon::before {
+        content: "⌂";
+        font-size: 21px;
+    }
+
+.invoice-icon {
+    background-color: #e0ebff;
+    color: #2878df;
+}
+
+    .invoice-icon::before {
+        content: "▤";
+    }
+
+.paid-icon {
+    background-color: #fff0d2;
+    color: #e8a323;
+}
+
+    .paid-icon::before {
+        content: "✓";
+        font-weight: 700;
+    }
+
+.service-icon {
+    background-color: #e9e2ff;
+    color: #7954d8;
+}
+
+    .service-icon::before {
+        content: "⚒";
+    }
+
+.tenant-stat-card h2 {
+    min-height: 24px;
+    margin: 8px 0 3px 14px;
+    color: #303d38;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.tenant-stat-card p {
+    min-height: 12px;
+    margin: 0 0 0 14px;
+    color: #68766f;
+    font-size: 10px;
+}
+
+
+/* ==============================
+   BỐ CỤC NỘI DUNG
+================================ */
+
+.tenant-dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(190px, 0.75fr);
+    grid-template-areas:
+        "invoice right"
+        "notification right";
+    align-items: start;
+    gap: 12px;
+}
+
+.tenant-panel {
+    min-width: 0;
+    padding: 11px;
+    border: 1px solid #e1e7e3;
+    background-color: #ffffff;
+}
+
+.tenant-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .tenant-panel-title h3 {
+        margin: 0;
+        color: #35463f;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+.panel-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 27px;
+    height: 27px;
+    flex-shrink: 0;
+}
+
+    .panel-icon::before {
+        font-size: 20px;
+    }
+
+
+/* ==============================
+   HÓA ĐƠN
+================================ */
+
+.tenant-invoice-panel {
+    grid-area: invoice;
+}
+
+.tenant-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+    .tenant-panel-header .tenant-panel-title {
+        margin-bottom: 0;
+    }
+
+.invoice-panel-icon {
+    color: #278a72;
+}
+
+    .invoice-panel-icon::before {
+        content: "▤";
+        font-size: 25px;
+        font-weight: 700;
+    }
+
+.tenant-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tenant-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+    .tenant-table thead {
+        background-color: #e9e6e6;
+    }
+
+    .tenant-table th {
+        height: 36px;
+        padding: 7px 8px;
+        color: #4e5652;
+        font-size: 10px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .tenant-table td {
+        height: 30px;
+        padding: 5px 8px;
+        border-bottom: 1px solid #edf0ed;
+        color: #4b5650;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .tenant-table tbody tr:hover {
+        background-color: #f5faf6;
+    }
+
+.invoice-status {
+    display: inline-block;
+    padding: 4px 10px;
+    border: 1px solid #e18b8b;
+    border-radius: 20px;
+    background-color: #ffdada;
+    color: #a83e3e;
+    font-size: 9px;
+    white-space: nowrap;
+}
+
+    .invoice-status.paid {
+        border-color: #a8d9bb;
+        background-color: #d8f0e2;
+        color: #28764b;
+    }
+
+.tenant-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 65px;
+    color: #929e98;
+    font-size: 11px;
+}
+
+.tenant-invoice-action {
+    display: flex;
+    justify-content: center;
+    margin-top: 9px;
+}
+
+.pay-invoice-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(215px, 80%);
+    height: 37px;
+    border: 1px solid #176b5d;
+    border-radius: 9px;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+    .pay-invoice-button:hover {
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   CỘT BÊN PHẢI
+================================ */
+
+.tenant-right-column {
+    grid-area: right;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+
+/* ==============================
+   THAO TÁC NHANH
+================================ */
+
+.quick-action-panel {
+    padding: 12px;
+}
+
+    .quick-action-panel .tenant-panel-title {
+        margin-bottom: 12px;
+    }
+
+.quick-action-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.tenant-shortcut-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 10px;
+    border: 1px solid #dce9e4;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #176b5d;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+    .tenant-shortcut-button:hover {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+    .tenant-shortcut-button.primary {
+        border-color: #176b5d;
+        background-color: #176b5d;
+        color: #ffffff;
+    }
+
+        .tenant-shortcut-button.primary:hover {
+            border-color: #105448;
+            background-color: #105448;
+        }
+
+
+/* ==============================
+   DỊCH VỤ ĐANG DÙNG
+================================ */
+
+.tenant-service-panel {
+    padding: 11px;
+}
+
+.service-panel-icon {
+    color: #278a72;
+}
+
+    .service-panel-icon::before {
+        content: "▣";
+    }
+
+.tenant-service-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.tenant-service-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 28px;
+    padding-left: 25px;
+    color: #53625c;
+    font-size: 11px;
+}
+
+.tenant-service-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 6px;
+    background-color: #e5f0ff;
+    color: #3986d9;
+}
+
+    .tenant-service-icon::before {
+        content: "●";
+        font-size: 11px;
+    }
+
+.service-empty {
+    min-height: 35px;
+}
+
+
+/* ==============================
+   THÔNG BÁO
+================================ */
+
+.tenant-notification-panel {
+    grid-area: notification;
+    min-height: 100px;
+}
+
+.tenant-notification-content {
+    margin-top: 12px;
+    color: #53625c;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.notification-empty {
+    justify-content: flex-start;
+    min-height: 35px;
+    padding-left: 10px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1050px) {
+    .tenant-dashboard-grid {
+        grid-template-columns: minmax(0, 1.5fr) minmax(180px, 0.8fr);
+    }
+
+    .tenant-statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 750px) {
+    .tenant-dashboard-grid {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "invoice"
+            "right"
+            "notification";
+    }
+
+    .tenant-right-column {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .tenant-content {
+        padding: 14px 10px;
+    }
+
+    .tenant-welcome h1 {
+        font-size: 25px;
+    }
+
+    .tenant-statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .tenant-right-column {
+        grid-template-columns: 1fr;
+    }
+}

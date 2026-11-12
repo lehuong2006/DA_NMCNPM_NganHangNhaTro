@@ -1,0 +1,496 @@
+﻿
+/* ==============================
+   1. Thiết lập chung
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    color: #263b36;
+    background-color: #f3f8f6;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+/* ==============================
+   2. Bố cục tổng thể
+============================== */
+
+.dashboard-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* ==============================
+   3. Thanh điều hướng
+============================== */
+
+.sidebar {
+    width: 220px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border-right: 1px solid #dce9e4;
+}
+
+.sidebar-brand {
+    padding: 25px 18px 20px;
+}
+
+    .sidebar-brand h2 {
+        font-size: 17px;
+        color: #176b5d;
+        margin-bottom: 6px;
+    }
+
+    .sidebar-brand p {
+        font-size: 11px;
+        color: #788b83;
+        line-height: 1.5;
+    }
+
+
+/* Menu */
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    padding: 0 12px;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 42px;
+    padding: 0 13px;
+    border-radius: 6px;
+    color: #40564e;
+    font-size: 14px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .nav-item span {
+        width: 18px;
+        text-align: center;
+        font-size: 17px;
+    }
+
+    .nav-item:hover {
+        background-color: #edf5f1;
+        color: #176b5d;
+    }
+
+    .nav-item.active {
+        background-color: #e5f1ec;
+        color: #176b5d;
+        font-weight: bold;
+    }
+
+
+/* Chân sidebar */
+
+.sidebar-footer {
+    margin-top: auto;
+    padding: 18px 12px;
+    border-top: 1px solid #edf0ee;
+    text-align: center;
+    font-size: 12px;
+}
+
+.user-role {
+    color: #52665e;
+    margin-bottom: 8px;
+}
+
+.sidebar-footer a {
+    color: #176b5d;
+}
+
+    .sidebar-footer a:hover {
+        text-decoration: underline;
+    }
+
+
+/* ==============================
+   4. Khu vực nội dung
+============================== */
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    padding: 28px 32px;
+    background-color: #f3f8f6;
+}
+
+.page-header {
+    margin-bottom: 22px;
+}
+
+    .page-header h1 {
+        font-size: 26px;
+        color: #24483e;
+        margin-bottom: 7px;
+    }
+
+    .page-header p {
+        font-size: 13px;
+        color: #75877f;
+    }
+
+
+/* ==============================
+   5. Thẻ thống kê
+============================== */
+
+.statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    min-height: 108px;
+    padding: 14px;
+    background-color: #ffffff;
+    border: 1px solid #dce9e4;
+    border-radius: 9px;
+    box-shadow: 0 2px 7px rgba(31, 91, 75, 0.04);
+}
+
+.stat-label {
+    display: inline-block;
+    min-width: 65px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.stat-card h2 {
+    margin-top: 9px;
+    font-size: 25px;
+    font-weight: 500;
+    color: #263b36;
+}
+
+.stat-card p {
+    margin-top: 2px;
+    font-size: 12px;
+    color: #819087;
+}
+
+.stat-label.empty {
+    background-color: #d9f0e3;
+    color: #28774e;
+}
+
+.stat-label.deposit {
+    background-color: #fff0d4;
+    color: #95651f;
+}
+
+.stat-label.rented {
+    background-color: #dce8fa;
+    color: #365c91;
+}
+
+.stat-label.maintenance {
+    background-color: #e9ebe9;
+    color: #59635e;
+}
+
+
+/* ==============================
+   6. Khu vực bảng và tác vụ
+============================== */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) minmax(250px, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+.panel {
+    background-color: #ffffff;
+    border: 1px solid #dce9e4;
+    border-radius: 9px;
+    box-shadow: 0 2px 7px rgba(31, 91, 75, 0.04);
+}
+
+
+/* ==============================
+   7. Bảng hóa đơn
+============================== */
+
+.invoice-panel {
+    overflow: hidden;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+}
+
+    .panel-header h3,
+    .task-panel h3 {
+        font-size: 15px;
+        color: #304d44;
+    }
+
+    .panel-header a {
+        font-size: 12px;
+        color: #176b5d;
+        white-space: nowrap;
+    }
+
+        .panel-header a:hover {
+            text-decoration: underline;
+        }
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+thead {
+    background-color: #f8faf9;
+}
+
+th {
+    padding: 12px 10px;
+    color: #71847c;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+}
+
+td {
+    padding: 13px 10px;
+    border-top: 1px solid #edf1ef;
+    color: #40564e;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+    .status.overdue {
+        background-color: #fce3e1;
+        color: #b64b43;
+    }
+
+    .status.debt {
+        background-color: #fff0d4;
+        color: #98651e;
+    }
+
+
+/* ==============================
+   8. Việc cần làm
+============================== */
+
+.task-panel {
+    padding: 16px;
+}
+
+    .task-panel > h3 {
+        margin-bottom: 12px;
+    }
+
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    margin-bottom: 9px;
+    padding: 8px 10px;
+    border: 1px solid #dce9e4;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-size: 11px;
+    color: #40564e;
+}
+
+    .task-item a {
+        color: #176b5d;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+        .task-item a:hover {
+            text-decoration: underline;
+        }
+
+
+/* ==============================
+   9. Lối tắt
+============================== */
+
+.task-panel .shortcut-title {
+    margin-top: 17px;
+    margin-bottom: 10px;
+}
+
+.shortcut-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.shortcut-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 39px;
+    padding: 8px;
+    border: 1px solid #cbded6;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #40564e;
+    font-size: 12px;
+    text-align: center;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+    .shortcut-button:hover {
+        background-color: #edf5f1;
+        color: #176b5d;
+    }
+
+    .shortcut-button.primary {
+        background-color: #176b5d;
+        border-color: #176b5d;
+        color: #ffffff;
+        font-weight: bold;
+    }
+
+        .shortcut-button.primary:hover {
+            background-color: #125548;
+        }
+
+
+/* ==============================
+   10. Responsive
+============================== */
+
+@media (max-width: 1000px) {
+    .sidebar {
+        width: 190px;
+        min-width: 190px;
+    }
+
+    .main-content {
+        padding: 24px 20px;
+    }
+
+    .statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .sidebar-brand {
+        padding: 16px;
+    }
+
+    .sidebar-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-bottom: 12px;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .main-content {
+        padding: 20px 14px;
+    }
+
+    .statistics {
+        gap: 10px;
+    }
+
+    .panel-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* ==============================
+   11. Nút đăng xuất
+============================== */
+
+.logout-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    height: 36px;
+    margin-top: 12px;
+    border: 1px solid #dce9e4;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #176b5d;
+    font-size: 12px;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+    .logout-button:hover {
+        background-color: #176b5d;
+        border-color: #176b5d;
+        color: #ffffff;
+    }
+
+    .logout-button span {
+        font-size: 16px;
+    }

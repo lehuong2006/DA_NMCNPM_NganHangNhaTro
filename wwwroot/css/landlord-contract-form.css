@@ -1,0 +1,402 @@
+﻿
+/* ==============================
+   TRANG LẬP HỢP ĐỒNG
+================================ */
+
+.contract-content {
+    min-width: 0;
+}
+
+    .contract-content .page-header {
+        margin-bottom: 15px;
+    }
+
+        .contract-content .page-header h1 {
+            margin-bottom: 5px;
+        }
+
+        .contract-content .page-header p {
+            margin: 0;
+        }
+
+
+/* ==============================
+   KHUNG THÔNG TIN CƠ BẢN
+================================ */
+
+.contract-basic-panel {
+    padding: 14px;
+    border: 1px solid #dce5e1;
+    border-radius: 9px;
+    background-color: #ffffff;
+}
+
+.contract-code {
+    margin-bottom: 14px;
+    color: #40534d;
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+}
+
+    .contract-code span {
+        color: #176b5d;
+    }
+
+.contract-basic-panel h3,
+.contract-cost-panel h3 {
+    margin: 0 0 13px;
+    color: #35463f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* ==============================
+   THÔNG TIN CHỦ TRỌ / NGƯỜI THUÊ
+================================ */
+
+.people-information {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.person-section {
+    min-width: 0;
+}
+
+    .person-section h4 {
+        margin: 0 0 12px;
+        color: #53625c;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+.person-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.required-note {
+    color: #d66b60;
+    font-size: 10px;
+}
+
+.form-grid {
+    display: grid;
+    gap: 11px 14px;
+}
+
+.two-columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-group {
+    min-width: 0;
+    margin-bottom: 0;
+}
+
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #53625c;
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+.required {
+    color: #df5b52;
+}
+
+.form-group input,
+.form-group select {
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 0 9px;
+    border: 1px solid #d5dfda;
+    border-radius: 5px;
+    outline: none;
+    background-color: #ffffff;
+    color: #40534d;
+    font-family: inherit;
+    font-size: 11px;
+}
+
+    .form-group input::placeholder {
+        color: #a0aaa5;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+        border-color: #176b5d;
+    }
+
+    .form-group input[readonly] {
+        background-color: #f4f7f5;
+        color: #7c8983;
+    }
+
+
+/* ==============================
+   THÔNG TIN PHÒNG / THỜI HẠN
+================================ */
+
+.contract-room-information {
+    display: grid;
+    grid-template-columns: 1.1fr 0.8fr 1.1fr 1.1fr 1.5fr;
+    align-items: end;
+    gap: 12px;
+    margin-top: 17px;
+}
+
+.contract-type-options {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 35px;
+}
+
+    .contract-type-options label {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin: 0;
+        color: #53625c;
+        font-size: 11px;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .contract-type-options input {
+        width: 14px;
+        height: 14px;
+        margin: 0;
+        accent-color: #176b5d;
+    }
+
+
+/* ==============================
+   KHUNG CHI PHÍ VÀ BÊN PHẢI
+================================ */
+
+.contract-bottom-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.65fr) minmax(210px, 0.9fr);
+    gap: 18px;
+    margin-top: 10px;
+    align-items: stretch;
+}
+
+.contract-cost-panel,
+.contract-side-panel {
+    min-width: 0;
+    padding: 13px;
+    border: 1px solid #dce5e1;
+    border-radius: 9px;
+    background-color: #ffffff;
+}
+
+.cost-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px 15px;
+}
+
+    .cost-grid .form-group input {
+        height: 35px;
+    }
+
+
+/* ==============================
+   ĐIỀU KHOẢN HỢP ĐỒNG
+================================ */
+
+.contract-side-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.terms-section {
+    overflow: hidden;
+    border: 1px solid #dce5e1;
+    border-radius: 6px;
+}
+
+.terms-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 42px;
+    padding: 0 10px;
+    background-color: #e2f5e9;
+}
+
+    .terms-header h3 {
+        margin: 0;
+        color: #40534d;
+        font-size: 12px;
+    }
+
+    .terms-header button {
+        padding: 4px 0;
+        border: none;
+        background: none;
+        color: #176b5d;
+        font-size: 11px;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+.terms-placeholder {
+    min-height: 75px;
+    padding: 12px;
+    background-color: #f3faf5;
+    color: #8b9992;
+    font-size: 11px;
+}
+
+
+/* ==============================
+   TỔNG TIỀN CỌC
+================================ */
+
+.deposit-summary {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 100px;
+    padding: 14px;
+    border: 1px solid #cfe7d7;
+    border-radius: 6px;
+    background-color: #e2f7e8;
+}
+
+.deposit-icon {
+    position: relative;
+    width: 28px;
+    height: 30px;
+    flex-shrink: 0;
+    border: 2px solid #176b5d;
+    border-radius: 3px;
+}
+
+    .deposit-icon::before {
+        position: absolute;
+        top: 5px;
+        left: 4px;
+        width: 16px;
+        height: 2px;
+        background-color: #176b5d;
+        box-shadow: 0 6px 0 #176b5d, 0 12px 0 #176b5d;
+        content: "";
+    }
+
+.deposit-summary p {
+    margin: 0 0 5px;
+    color: #53625c;
+    font-size: 11px;
+}
+
+.deposit-summary h2 {
+    margin: 0;
+    color: #176b5d;
+    font-size: 21px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==============================
+   NÚT HỦY / LƯU
+================================ */
+
+.contract-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.cancel-button,
+.save-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 90px;
+    height: 37px;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.cancel-button {
+    border: 1px solid #d5dfda;
+    background-color: #ffffff;
+    color: #53625c;
+}
+
+    .cancel-button:hover {
+        background-color: #edf1ef;
+    }
+
+.save-button {
+    border: 1px solid #176b5d;
+    background-color: #176b5d;
+    color: #ffffff;
+}
+
+    .save-button:hover {
+        background-color: #105448;
+    }
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1100px) {
+    .contract-room-information {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .contract-type-group {
+        grid-column: span 2;
+    }
+
+    .contract-bottom-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .people-information {
+        grid-template-columns: 1fr;
+    }
+
+    .two-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .contract-room-information {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .contract-type-group {
+        grid-column: 1 / -1;
+    }
+
+    .cost-grid {
+        grid-template-columns: 1fr;
+    }
+}

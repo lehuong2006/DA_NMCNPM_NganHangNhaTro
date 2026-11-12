@@ -1,0 +1,227 @@
+﻿
+/* ==============================
+   1. Thiết lập chung
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+    background-color: #f3f8f6;
+    font-family: Arial, sans-serif;
+    color: #263b36;
+}
+
+
+/* ==============================
+   2. Khung đăng nhập
+============================== */
+
+.login-container {
+    width: 420px;
+    max-width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dce9e4;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(31, 91, 75, 0.07);
+}
+
+
+/* ==============================
+   3. Phần tiêu đề
+============================== */
+
+.login-header {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+/* ==============================
+   4. Nội dung đăng nhập
+============================== */
+
+.login-content {
+    padding: 28px 32px 30px;
+}
+
+    .login-content h2 {
+        margin-bottom: 26px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #24483e;
+    }
+
+
+/* ==============================
+   5. Các trường nhập liệu
+============================== */
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+    .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #304d44;
+    }
+
+.field-icon {
+    display: inline-block;
+    font-size: 15px;
+}
+
+
+.form-group input:not([type="checkbox"]) {
+    width: 100%;
+    height: 40px;
+    padding: 0 11px;
+    border: 1px solid #cbded6;
+    border-radius: 6px;
+    background-color: #ffffff;
+    outline: none;
+    font-size: 13px;
+    color: #263b36;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .form-group input:focus {
+        border-color: #176b5d;
+        box-shadow: 0 0 0 3px rgba(23, 107, 93, 0.10);
+    }
+
+    .form-group input::placeholder {
+        color: #9aaea5;
+    }
+
+
+/* ==============================
+   6. Ô mật khẩu
+============================== */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+    .password-wrapper input {
+        width: 100%;
+        padding-right: 38px;
+    }
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: #58766c;
+    cursor: pointer;
+}
+
+
+/* ==============================
+   7. Nút đăng nhập
+============================== */
+
+.login-button {
+    display: block;
+    width: 100%;
+    height: 43px;
+    margin: 28px auto 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .login-button:hover {
+        background-color: #125548;
+    }
+
+    .login-button:active {
+        background-color: #10483e;
+    }
+
+
+/* ==============================
+   8. Liên kết đăng ký
+============================== */
+
+.register-link {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 13px;
+    color: #58766c;
+}
+
+    .register-link a {
+        color: #176b5d;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+
+/* ==============================
+   9. Responsive
+============================== */
+
+@media (max-width: 480px) {
+    .login-content {
+        padding: 24px 20px 26px;
+    }
+
+        .login-content h2 {
+            font-size: 22px;
+        }
+}
+
+/* Checkbox ghi nhớ đăng nhập */
+.remember-me input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    padding: 0;
+    flex-shrink: 0;
+    accent-color: #176b5d;
+    cursor: pointer;
+}
+
+.remember-me label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0;
+    cursor: pointer;
+}

@@ -1,0 +1,314 @@
+﻿/* ==============================
+   TRANG HỢP ĐỒNG VÀ HÓA ĐƠN
+================================ */
+
+.tenant-contract-content {
+    min-width: 0;
+    padding: 20px 18px;
+    background-color: #f4f5f3;
+}
+
+/* ==============================
+   TIÊU ĐỀ
+================================ */
+
+.contract-page-header {
+    margin-bottom: 18px;
+}
+
+    .contract-page-header h1 {
+        margin: 0;
+        color: #222c28;
+        font-size: 27px;
+        font-weight: 500;
+    }
+
+
+/* ==============================
+   THÔNG TIN HỢP ĐỒNG
+================================ */
+
+.contract-information-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(190px, 0.8fr);
+    align-items: center;
+    gap: 22px;
+    min-height: 172px;
+    padding: 20px 25px;
+    border-radius: 30px;
+    background-color: #ffffff;
+}
+
+.contract-main-information {
+    min-width: 0;
+}
+
+.contract-section-title,
+.invoice-section-title {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.contract-section-title {
+    margin-bottom: 15px;
+}
+
+    .contract-section-title h2,
+    .invoice-section-title h2 {
+        margin: 0;
+        color: #303d38;
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+.contract-title-icon,
+.invoice-title-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background-color: #d9f1e5;
+    color: #168b70;
+}
+
+    .contract-title-icon::before {
+        content: "▤";
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+.contract-details-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 18px;
+    row-gap: 10px;
+}
+
+.contract-detail-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+}
+
+.detail-label {
+    color: #59665f;
+    font-size: 10px;
+}
+
+.contract-detail-item strong {
+    min-height: 18px;
+    color: #303d38;
+    font-size: 13px;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+}
+
+
+/* ==============================
+   ĐỊA CHỈ PHÒNG
+================================ */
+
+.room-address-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 108px;
+    padding: 14px;
+    border: 1px solid #aab9b1;
+    background-color: #f1f9f5;
+}
+
+.room-address-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+    .room-address-heading h3 {
+        margin: 0;
+        color: #35463f;
+        font-size: 13px;
+        font-weight: 500;
+    }
+
+.room-address-icon {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    color: #168b70;
+}
+
+    .room-address-icon::before {
+        content: "⌂";
+        font-size: 25px;
+    }
+
+.room-address-number {
+    margin-left: 27px;
+    color: #303d38;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.room-address-card p {
+    margin: 10px 0 0 27px;
+    color: #7c8982;
+    font-size: 9px;
+}
+
+
+/* ==============================
+   DANH SÁCH HÓA ĐƠN
+================================ */
+
+.tenant-invoices-panel {
+    min-width: 0;
+    min-height: 285px;
+    margin-top: 14px;
+    padding: 15px 20px 20px;
+    border-radius: 30px;
+    background-color: #ffffff;
+}
+
+.invoice-section-title {
+    margin-bottom: 12px;
+}
+
+.invoice-title-icon {
+    border-radius: 6px;
+}
+
+    .invoice-title-icon::before {
+        content: "▣";
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+.tenant-invoices-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.tenant-invoices-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+    .tenant-invoices-table thead {
+        background-color: #f0f6f3;
+    }
+
+    .tenant-invoices-table th {
+        height: 34px;
+        padding: 7px 9px;
+        border: 1px solid #aebdb5;
+        color: #46534c;
+        font-size: 10px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .tenant-invoices-table td {
+        height: 36px;
+        padding: 7px 9px;
+        border-bottom: 1px solid #edf0ed;
+        color: #46534c;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .tenant-invoices-table tbody tr:hover {
+        background-color: #f5faf6;
+    }
+
+
+/* ==============================
+   TRẠNG THÁI HÓA ĐƠN
+================================ */
+
+.tenant-invoice-status {
+    font-size: 10px;
+    font-weight: 500;
+}
+
+    .tenant-invoice-status.unpaid {
+        color: #e34b4b;
+    }
+
+    .tenant-invoice-status.paid {
+        color: #19ae50;
+    }
+
+    .tenant-invoice-status.overdue {
+        color: #c77b20;
+    }
+
+
+/* ==============================
+   TRẠNG THÁI RỖNG
+================================ */
+
+.tenant-invoices-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 155px;
+    color: #929e98;
+    font-size: 12px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 950px) {
+    .contract-information-panel {
+        grid-template-columns: minmax(0, 1fr) 190px;
+        gap: 15px;
+        padding: 18px;
+    }
+
+    .contract-details-grid {
+        column-gap: 10px;
+    }
+}
+
+@media (max-width: 750px) {
+    .tenant-contract-content {
+        padding: 15px 12px;
+    }
+
+    .contract-information-panel {
+        grid-template-columns: 1fr;
+        border-radius: 18px;
+    }
+
+    .room-address-card {
+        min-height: 100px;
+    }
+
+    .tenant-invoices-panel {
+        border-radius: 18px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .contract-page-header h1 {
+        font-size: 23px;
+    }
+
+    .contract-details-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

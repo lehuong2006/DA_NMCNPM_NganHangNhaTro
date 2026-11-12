@@ -1,0 +1,213 @@
+﻿
+/* ==============================
+   1. Thiết lập chung
+============================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+    background-color: #f3f8f6;
+    font-family: Arial, sans-serif;
+    color: #263b36;
+}
+
+
+/* ==============================
+   2. Khung đăng ký
+============================== */
+
+.register-container {
+    width: 420px;
+    max-width: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dce9e4;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(31, 91, 75, 0.07);
+}
+
+
+/* ==============================
+   3. Phần tiêu đề
+============================== */
+
+.register-header {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+/* ==============================
+   4. Nội dung đăng ký
+============================== */
+
+.register-content {
+    padding: 24px 32px 28px;
+}
+
+    .register-content h2 {
+        margin-bottom: 22px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        color: #24483e;
+    }
+
+
+/* ==============================
+   5. Các trường nhập liệu
+============================== */
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+    .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 7px;
+        font-size: 14px;
+        font-weight: 600;
+        color: #304d44;
+    }
+
+.field-icon {
+    display: inline-block;
+    font-size: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 39px;
+    padding: 0 11px;
+    border: 1px solid #cbded6;
+    border-radius: 6px;
+    background-color: #ffffff;
+    outline: none;
+    font-size: 13px;
+    color: #263b36;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+    .form-group input:focus {
+        border-color: #176b5d;
+        box-shadow: 0 0 0 3px rgba(23, 107, 93, 0.10);
+    }
+
+
+/* ==============================
+   6. Ô mật khẩu
+============================== */
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+    .password-wrapper input {
+        width: 100%;
+        padding-right: 38px;
+    }
+
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    font-size: 13px;
+    color: #58766c;
+    cursor: pointer;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 6px;
+    color: #71847c;
+    font-size: 11px;
+}
+
+
+/* ==============================
+   7. Nút đăng ký
+============================== */
+
+.register-button {
+    display: block;
+    width: 100%;
+    height: 43px;
+    margin: 24px auto 0;
+    border: none;
+    border-radius: 6px;
+    background-color: #176b5d;
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+    .register-button:hover {
+        background-color: #125548;
+    }
+
+    .register-button:active {
+        background-color: #10483e;
+    }
+
+
+/* ==============================
+   8. Responsive
+============================== */
+
+@media (max-width: 480px) {
+    body {
+        align-items: flex-start;
+    }
+
+    .register-content {
+        padding: 22px 20px 26px;
+    }
+
+        .register-content h2 {
+            font-size: 22px;
+        }
+}
+
+/* ==============================
+   9. Liên kết đăng nhập
+============================== */
+
+.login-link {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 13px;
+    color: #58766c;
+}
+
+    .login-link a {
+        color: #176b5d;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }

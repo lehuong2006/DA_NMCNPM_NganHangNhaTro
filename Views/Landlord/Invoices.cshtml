@@ -1,0 +1,304 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Hóa đơn hàng tháng";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/landlord-invoices.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item active">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content invoices-content">
+
+            <div class="invoice-page-header">
+
+                <div class="page-header">
+                    <h1>Hóa đơn hàng tháng</h1>
+                    <p>Theo dõi hóa đơn từng phòng, xác nhận thanh toán và in phiếu thu</p>
+                </div>
+
+                <a href="/Landlord/MeterReading" class="meter-reading-button">
+                    Nhập chỉ số điện nước
+                </a>
+
+            </div>
+
+
+            <!-- Thống kê hóa đơn -->
+            <section class="invoice-statistics">
+
+                <div class="invoice-stat-card">
+                    <p>Số hóa đơn trong kỳ</p>
+                    <h2></h2>
+                </div>
+
+                <div class="invoice-stat-card">
+                    <p>Đã thu (VNĐ)</p>
+                    <h2></h2>
+                </div>
+
+                <div class="invoice-stat-card">
+                    <p>Còn phải thu (VNĐ)</p>
+                    <h2></h2>
+                </div>
+
+            </section>
+
+
+            <!-- Khu vực danh sách và phiếu thu -->
+            <section class="invoice-main-grid">
+
+                <!-- Bên trái -->
+                <div class="invoice-list-section">
+
+                    <!-- Bộ lọc -->
+                    <div class="invoice-filters">
+
+                        <div class="filter-group">
+                            <label for="billingPeriod">Kỳ hóa đơn</label>
+
+                            <input type="month" id="billingPeriod">
+                        </div>
+
+                        <div class="filter-group">
+                            <label for="invoiceStatus">Trạng thái</label>
+
+                            <select id="invoiceStatus">
+                                <option value="">Tất cả</option>
+                                <option value="unpaid">Chưa thanh toán</option>
+                                <option value="paid">Đã thanh toán</option>
+                                <option value="partial">Còn nợ</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group search-filter">
+                            <label for="invoiceSearch">Tìm phòng hoặc khách thuê</label>
+
+                            <input type="text"
+                                   id="invoiceSearch"
+                                   placeholder="Ví dụ: P101">
+                        </div>
+
+                    </div>
+
+
+                    <!-- Bảng hóa đơn -->
+                    <div class="invoice-table-panel">
+
+                        <div class="table-wrapper">
+
+                            <table class="invoice-table">
+
+                                <thead>
+                                    <tr>
+                                        <th>Phòng</th>
+                                        <th>Khách thuê</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Còn lại</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="invoiceTableBody">
+                                    <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                                </tbody>
+
+                            </table>
+
+                            <div class="invoice-empty">
+                                Chưa có dữ liệu hóa đơn.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Bên phải: Xem trước phiếu thu -->
+                <div class="receipt-preview-panel">
+
+                    <div class="receipt-preview-header">
+                        <h3>Phiếu thu</h3>
+                        <span class="preview-status">Chưa chọn</span>
+                    </div>
+
+                    <div class="receipt-paper">
+
+                        <div class="receipt-heading">
+
+                            <div>
+                                <strong>NHÀ TRỌ SỐ 8 NGUYỄN AN NINH</strong>
+                                <p>Địa chỉ: ....................................</p>
+                            </div>
+
+                            <div class="receipt-code">
+                                <span>Mã HĐ</span>
+                                <strong id="previewInvoiceCode">—</strong>
+
+                                <span>Ngày lập</span>
+                                <strong id="previewCreatedDate">—</strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="receipt-title">
+                            <h2>PHIẾU THU TIỀN TRỌ</h2>
+                            <p>Kỳ thanh toán: <span id="previewBillingPeriod">—</span></p>
+                        </div>
+
+
+                        <div class="receipt-tenant-information">
+
+                            <div>
+                                <span>Khách thuê:</span>
+                                <strong id="previewTenant">—</strong>
+                            </div>
+
+                            <div>
+                                <span>Phòng:</span>
+                                <strong id="previewRoom">—</strong>
+                            </div>
+
+                            <div>
+                                <span>Hạn thanh toán:</span>
+                                <strong id="previewDueDate">—</strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="receipt-items" id="receiptItems">
+
+                            <!-- Chi tiết các khoản phí sẽ được tích hợp từ database -->
+
+                            <div class="receipt-item-empty">
+                                Chọn một hóa đơn để xem chi tiết.
+                            </div>
+
+                        </div>
+
+
+                        <div class="receipt-grand-total">
+                            <strong>Tổng cộng (VNĐ)</strong>
+                            <strong id="previewTotal">0</strong>
+                        </div>
+
+                        <p class="receipt-amount-words">
+                            Bằng chữ: <span id="previewAmountWords">—</span>
+                        </p>
+
+
+                        <div class="receipt-signatures">
+
+                            <div>
+                                <strong>Người nộp tiền</strong>
+                                <span>(Ký ghi rõ họ tên)</span>
+                            </div>
+
+                            <div>
+                                <strong>Chủ trọ</strong>
+                                <span>(Ký ghi rõ họ tên)</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="receipt-actions">
+
+                            <button type="button"
+                                    class="print-receipt-button"
+                                    id="printReceiptButton">
+                                In phiếu thu
+                            </button>
+
+                            <button type="button"
+                                    class="download-pdf-button"
+                                    id="downloadPdfButton">
+                                Tải PDF
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-invoices.js"></script>
+
+</body>
+</html>

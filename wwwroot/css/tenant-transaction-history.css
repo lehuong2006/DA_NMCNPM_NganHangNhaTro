@@ -1,0 +1,309 @@
+﻿/* ==============================
+   TRANG LỊCH SỬ GIAO DỊCH
+================================ */
+
+.tenant-history-content {
+    min-width: 0;
+    padding: 20px 18px;
+    background-color: #f4f5f3;
+}
+
+
+/* ==============================
+   TIÊU ĐỀ
+================================ */
+
+.history-page-header {
+    margin-bottom: 20px;
+}
+
+    .history-page-header h1 {
+        margin: 0;
+        color: #222c28;
+        font-size: 29px;
+        font-weight: 500;
+    }
+
+/* ==============================
+   THỐNG KÊ
+================================ */
+
+.history-statistics {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.history-stat-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    min-height: 104px;
+    padding: 13px 14px;
+    border: 1px solid #dce9e4;
+    border-radius: 14px;
+    background-color: #ffffff;
+}
+
+/* Nhãn dạng pill */
+
+.history-stat-label {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 31px;
+    padding: 0 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Màu từng nhãn */
+
+.balance-label {
+    background-color: #d9f1e5;
+    color: #28764b;
+}
+
+.deposit-label {
+    background-color: #fff0d2;
+    color: #a56a16;
+}
+
+.expense-label {
+    background-color: #f9dddd;
+    color: #b34b4b;
+}
+
+.count-label {
+    background-color: #e0eaff;
+    color: #3268ad;
+}
+
+/* Giá trị thống kê */
+
+.history-stat-card h2 {
+    min-height: 25px;
+    margin: 8px 0 0;
+    color: #303d38;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+/* ==============================
+   BỘ LỌC
+================================ */
+
+.history-filters {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.2fr) minmax(140px, 1fr) minmax(140px, 1fr) minmax(150px, 1.2fr);
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.history-date-filter {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+    .history-date-filter label {
+        display: none;
+    }
+
+    .history-date-filter span {
+        color: #77847d;
+        font-size: 11px;
+    }
+
+    .history-date-filter input,
+    .history-filters select,
+    .history-filters input[type="search"] {
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+        height: 34px;
+        padding: 0 8px;
+        border: 1px solid #bfc8c2;
+        border-radius: 2px;
+        outline: none;
+        background-color: #ffffff;
+        color: #46534c;
+        font-family: inherit;
+        font-size: 10px;
+    }
+
+        .history-date-filter input:focus,
+        .history-filters select:focus,
+        .history-filters input[type="search"]:focus {
+            border-color: #176b5d;
+        }
+
+.history-filters input::placeholder {
+    color: #89958e;
+}
+
+
+/* ==============================
+   BẢNG GIAO DỊCH
+================================ */
+
+.history-table-panel {
+    min-width: 0;
+    min-height: 260px;
+    padding: 15px 16px;
+    border: 1px solid #8f9992;
+    background-color: #ffffff;
+}
+
+    .history-table-panel > h2 {
+        margin: 0 0 9px;
+        color: #35463f;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+.history-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+    .history-table thead {
+        background-color: #d2d2d2;
+    }
+
+    .history-table th {
+        height: 34px;
+        padding: 7px 8px;
+        border: 1px solid #aeb4b0;
+        color: #303a34;
+        font-size: 10px;
+        font-weight: 600;
+        text-align: center;
+    }
+
+    .history-table td {
+        height: 34px;
+        padding: 6px 8px;
+        border-bottom: 1px solid #edf0ed;
+        color: #46534c;
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .history-table tbody tr:hover {
+        background-color: #f5faf6;
+    }
+
+
+/* Loại giao dịch */
+
+.transaction-type {
+    font-weight: 600;
+}
+
+    .transaction-type.topup {
+        color: #19a94a;
+    }
+
+    .transaction-type.payment {
+        color: #2585d4;
+    }
+
+
+/* Trạng thái */
+
+.history-status {
+    font-size: 10px;
+    font-weight: 600;
+}
+
+    .history-status.success {
+        color: #16b957;
+    }
+
+    .history-status.pending {
+        color: #c38a26;
+    }
+
+    .history-status.rejected {
+        color: #d84b4b;
+    }
+
+
+/* Số tiền */
+
+.transaction-amount.income {
+    color: #159b48;
+    font-weight: 600;
+}
+
+.transaction-amount.expense {
+    color: #46534c;
+}
+
+
+/* Trạng thái rỗng */
+
+.history-empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 145px;
+    color: #929e98;
+    font-size: 12px;
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1050px) {
+    .history-filters {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .history-statistics {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 750px) {
+    .tenant-history-content {
+        padding: 15px 12px;
+    }
+
+    .history-filters {
+        grid-template-columns: 1fr;
+    }
+
+    .history-date-filter {
+        min-height: 34px;
+    }
+}
+
+@media (max-width: 480px) {
+    .history-statistics {
+        grid-template-columns: 1fr;
+    }
+
+    .history-page-header h1 {
+        font-size: 24px;
+    }
+
+    .history-table-panel {
+        padding: 10px;
+    }
+}

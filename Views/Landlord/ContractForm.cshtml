@@ -1,0 +1,397 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Lập hợp đồng";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/landlord-contract-form.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item active">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content contract-content">
+
+            <div class="page-header">
+                <h1>Lập hợp đồng</h1>
+                <p>Tạo hợp đồng thuê phòng giữa chủ trọ và người thuê</p>
+            </div>
+
+
+            <!-- Thông tin cơ bản -->
+            <section class="contract-basic-panel">
+
+                <div class="contract-code">
+                    Mã hợp đồng:
+                    <span>Chưa cấp</span>
+                </div>
+
+                <h3>Thông tin cơ bản</h3>
+
+                <div class="people-information">
+
+                    <!-- Thông tin chủ trọ -->
+                    <div class="person-section">
+
+                        <h4>Thông tin chủ trọ</h4>
+
+                        <div class="form-grid two-columns">
+
+                            <div class="form-group">
+                                <label for="landlordName">
+                                    Chủ trọ <span class="required">*</span>
+                                </label>
+                                <input type="text"
+                                       id="landlordName"
+                                       placeholder="Tên chủ trọ"
+                                       readonly>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="landlordPhone">Số điện thoại</label>
+                                <input type="text"
+                                       id="landlordPhone"
+                                       placeholder="Số điện thoại"
+                                       readonly>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="landlordIdentity">CCCD</label>
+                                <input type="text"
+                                       id="landlordIdentity"
+                                       placeholder="Số CCCD"
+                                       readonly>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Thông tin người thuê -->
+                    <div class="person-section">
+
+                        <div class="person-heading">
+                            <h4>Thông tin người thuê</h4>
+                            <span class="required-note">* Bắt buộc</span>
+                        </div>
+
+                        <div class="form-grid two-columns">
+
+                            <div class="form-group">
+                                <label for="tenantName">
+                                    Người thuê <span class="required">*</span>
+                                </label>
+                                <input type="text"
+                                       id="tenantName"
+                                       maxlength="100"
+                                       placeholder="Nhập họ và tên">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tenantPhone">
+                                    Số điện thoại <span class="required">*</span>
+                                </label>
+                                <input type="text"
+                                       id="tenantPhone"
+                                       inputmode="numeric"
+                                       maxlength="10"
+                                       placeholder="Nhập số điện thoại">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="tenantIdentity">
+                                    CCCD <span class="required">*</span>
+                                </label>
+                                <input type="text"
+                                       id="tenantIdentity"
+                                       inputmode="numeric"
+                                       maxlength="12"
+                                       placeholder="Nhập số CCCD">
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="tenantAddress">
+                                    Địa chỉ thường trú <span class="required">*</span>
+                                </label>
+                                <input type="text"
+                                       id="tenantAddress"
+                                       maxlength="255"
+                                       placeholder="Nhập địa chỉ thường trú">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Thông tin phòng và thời hạn -->
+                <div class="contract-room-information">
+
+                    <div class="form-group room-code-group">
+                        <label for="roomSelect">
+                            Mã phòng <span class="required">*</span>
+                        </label>
+                        <select id="roomSelect">
+                            <option value="">Chọn phòng còn trống</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group room-area-group">
+                        <label for="roomArea">Diện tích</label>
+                        <input type="text"
+                               id="roomArea"
+                               placeholder="m²"
+                               readonly>
+                    </div>
+
+                    <div class="form-group date-group">
+                        <label for="startDate">
+                            Ngày bắt đầu <span class="required">*</span>
+                        </label>
+                        <input type="date" id="startDate">
+                    </div>
+
+                    <div class="form-group date-group">
+                        <label for="endDate">
+                            Ngày kết thúc <span class="required">*</span>
+                        </label>
+                        <input type="date" id="endDate">
+                    </div>
+
+                    <div class="form-group contract-type-group">
+                        <label>Loại hợp đồng</label>
+
+                        <div class="contract-type-options">
+                            <label>
+                                <input type="radio"
+                                       name="contractType"
+                                       value="monthly"
+                                       checked>
+                                Theo tháng
+                            </label>
+
+                            <label>
+                                <input type="radio"
+                                       name="contractType"
+                                       value="yearly">
+                                Theo năm
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Chi tiết chi phí và điều khoản -->
+            <section class="contract-bottom-grid">
+
+                <!-- Chi tiết chi phí -->
+                <div class="contract-cost-panel">
+
+                    <h3>Chi tiết chi phí</h3>
+
+                    <div class="cost-grid">
+
+                        <div class="form-group">
+                            <label for="rentalPrice">
+                                Tiền thuê (VNĐ/tháng)
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text"
+                                   id="rentalPrice"
+                                   inputmode="numeric"
+                                   placeholder="Nhập tiền thuê">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="depositAmount">
+                                Tiền cọc (VNĐ)
+                                <span class="required">*</span>
+                            </label>
+                            <input type="text"
+                                   id="depositAmount"
+                                   inputmode="numeric"
+                                   placeholder="Nhập tiền cọc">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="electricPrice">Điện (VNĐ/số)</label>
+                            <input type="text"
+                                   id="electricPrice"
+                                   inputmode="numeric"
+                                   placeholder="Đơn giá điện">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="waterPrice">Nước (VNĐ/người)</label>
+                            <input type="text"
+                                   id="waterPrice"
+                                   inputmode="numeric"
+                                   placeholder="Đơn giá nước">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="washingPrice">Máy giặt (VNĐ/người)</label>
+                            <input type="text"
+                                   id="washingPrice"
+                                   inputmode="numeric"
+                                   placeholder="Đơn giá máy giặt">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cleaningPrice">
+                                Thang máy + vệ sinh (VNĐ/người)
+                            </label>
+                            <input type="text"
+                                   id="cleaningPrice"
+                                   inputmode="numeric"
+                                   placeholder="Đơn giá dịch vụ">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="internetPrice">
+                                Mạng Internet (VNĐ/người)
+                            </label>
+                            <input type="text"
+                                   id="internetPrice"
+                                   inputmode="numeric"
+                                   placeholder="Đơn giá Internet">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="parkingPrice">
+                                Sạc xe điện (VNĐ/xe)
+                            </label>
+                            <input type="text"
+                                   id="parkingPrice"
+                                   inputmode="numeric"
+                                   placeholder="Đơn giá sạc xe">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Điều khoản và tiền cọc -->
+                <div class="contract-side-panel">
+
+                    <div class="terms-section">
+
+                        <div class="terms-header">
+                            <h3>Điều khoản hợp đồng</h3>
+                            <button type="button" id="viewTermsButton">
+                                Xem
+                            </button>
+                        </div>
+
+                        <div class="terms-placeholder">
+                            Nội dung điều khoản hợp đồng
+                        </div>
+
+                    </div>
+
+
+                    <div class="deposit-summary">
+
+                        <div class="deposit-icon"></div>
+
+                        <div>
+                            <p>Tiền cọc cần đóng</p>
+                            <h2 id="depositDisplay">0 VNĐ</h2>
+                        </div>
+
+                    </div>
+
+                    <div class="contract-actions">
+
+                        <a href="/Landlord/Tenants" class="cancel-button">
+                            Hủy
+                        </a>
+
+                        <button type="button" class="save-button">
+                            Lưu
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-contract-form.js"></script>
+
+</body>
+</html>

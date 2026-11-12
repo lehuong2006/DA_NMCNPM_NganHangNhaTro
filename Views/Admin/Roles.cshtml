@@ -1,0 +1,253 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Phân quyền";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/admin-roles.css" />
+</head>
+
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Admin/Accounts" class="nav-item">
+                    <span></span>
+                    Quản lý tài khoản
+                </a>
+
+                <a href="/Admin/Roles" class="nav-item active">
+                    <span></span>
+                    Phân quyền
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Quản Trị Viên</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content admin-roles-content">
+
+            <!-- Tiêu đề -->
+            <div class="roles-page-header">
+
+                <div>
+                    <h1>Phân quyền</h1>
+                    <p>Tình hình nhà trọ tháng hiện tại</p>
+                </div>
+
+                <a href="#" class="add-role-button">
+                    + Thêm vai trò
+                </a>
+
+            </div>
+
+
+            <!-- Tìm kiếm và lọc -->
+            <section class="roles-toolbar">
+
+                <input type="search"
+                       id="roleSearch"
+                       class="role-search"
+                       placeholder="Tìm tên vai trò...">
+
+                <button type="button"
+                        class="role-filter-button active"
+                        id="allRolesButton">
+                    Tất cả
+                </button>
+
+            </section>
+
+
+            <!-- Thống kê -->
+            <section class="role-statistics">
+
+                <div class="role-stat-card">
+                    <span>Tổng số vai trò</span>
+                    <h2></h2>
+                    <p>Vai trò hệ thống</p>
+                </div>
+
+                <div class="role-stat-card">
+                    <span>Tài khoản đang hoạt động</span>
+                    <h2></h2>
+                    <p>Tài khoản được phân quyền</p>
+                </div>
+
+            </section>
+
+
+            <!-- Danh sách vai trò -->
+            <section class="role-list-panel">
+
+                <h2>Danh sách vai trò</h2>
+
+                <div class="role-table-wrapper">
+
+                    <table class="role-table">
+
+                        <thead>
+                            <tr>
+                                <th>Vai trò</th>
+                                <th>Số tài khoản</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="roleTableBody">
+                            <!-- Danh sách vai trò sẽ được tích hợp từ backend -->
+                        </tbody>
+
+                    </table>
+
+                    <div class="role-list-empty">
+                        Chưa có dữ liệu vai trò.
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Ma trận phân quyền -->
+            <section class="permission-panel">
+
+                <div class="permission-panel-header">
+
+                    <div>
+                        <h2>Phân quyền hệ thống</h2>
+
+                        <p>
+                            Vai trò đang chọn:
+                            <strong id="selectedRoleName">Chưa chọn</strong>
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="permission-table-wrapper">
+
+                    <table class="permission-table">
+
+                        <thead>
+                            <tr>
+                                <th>Chức năng</th>
+                                <th>Xem</th>
+                                <th>Thêm</th>
+                                <th>Sửa</th>
+                                <th>Xóa</th>
+                                <th>Duyệt</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Phòng</td>
+                                <td><input type="checkbox" name="roomView" checked></td>
+                                <td><input type="checkbox" name="roomCreate" checked></td>
+                                <td><input type="checkbox" name="roomEdit" checked></td>
+                                <td><input type="checkbox" name="roomDelete" checked></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Người thuê</td>
+                                <td><input type="checkbox" name="tenantView" checked></td>
+                                <td><input type="checkbox" name="tenantCreate" checked></td>
+                                <td><input type="checkbox" name="tenantEdit" checked></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Hợp đồng</td>
+                                <td><input type="checkbox" name="contractView" checked></td>
+                                <td><input type="checkbox" name="contractCreate" checked></td>
+                                <td><input type="checkbox" name="contractEdit" checked></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Hóa đơn</td>
+                                <td><input type="checkbox" name="invoiceView" checked></td>
+                                <td><input type="checkbox" name="invoiceCreate" checked></td>
+                                <td><input type="checkbox" name="invoiceEdit" checked></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Giao dịch ví</td>
+                                <td><input type="checkbox" name="walletView" checked></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                                <td><span class="permission-unavailable">—</span></td>
+                                <td><input type="checkbox" name="walletApprove" checked></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <div class="permission-actions">
+
+                    <button type="button"
+                            class="permission-cancel-button"
+                            id="cancelPermissionButton">
+                        Hủy
+                    </button>
+
+                    <button type="button"
+                            class="permission-save-button"
+                            id="savePermissionButton">
+                        Lưu phân quyền
+                    </button>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/admin-roles.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Danh sách phòng";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <!-- Tái sử dụng CSS Sidebar từ trang Dashboard -->
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+
+    <!-- CSS riêng của trang Danh sách phòng -->
+    <link rel="stylesheet" href="~/css/landlord-rooms.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item active">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content">
+
+            <div class="page-header">
+                <h1>Danh sách phòng</h1>
+                <p>Quản lý thông tin và tình trạng các phòng trọ</p>
+            </div>
+
+
+            <!-- Thanh tìm kiếm và bộ lọc -->
+            <section class="room-toolbar">
+
+                <div class="search-box">
+                    <input type="text"
+                           id="searchRoom"
+                           placeholder="Tìm kiếm phòng..." />
+                </div>
+
+                <div class="filter-group">
+
+                    <select id="statusFilter">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="available">Trống</option>
+                        <option value="rented">Đang thuê</option>
+                        <option value="maintenance">Bảo trì</option>
+                    </select>
+
+                    <select id="floorFilter">
+                        <option value="">Tất cả các tầng</option>
+                        <option value="1">Tầng 1</option>
+                        <option value="2">Tầng 2</option>
+                        <option value="3">Tầng 3</option>
+                    </select>
+
+                </div>
+
+                <a href="/Landlord/RoomForm" class="add-room-button">
+                    + Thêm phòng
+                </a>
+
+            </section>
+
+
+            <!-- Danh sách phòng -->
+            <section class="room-list" id="roomList">
+
+                <!--
+                    Các thẻ phòng sẽ được tích hợp dữ liệu từ database.
+                    Không tạo dữ liệu phòng mẫu tại giao diện.
+                -->
+
+                <div class="room-empty">
+                    <h3>Chưa có dữ liệu phòng</h3>
+                    <p>Danh sách phòng sẽ được hiển thị tại đây.</p>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-rooms.js"></script>
+
+</body>
+</html>

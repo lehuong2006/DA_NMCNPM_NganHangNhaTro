@@ -1,0 +1,253 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Thêm / sửa phòng";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>@ViewData["Title"]</title>
+
+    <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
+    <link rel="stylesheet" href="~/css/landlord-room-form.css" />
+</head>
+<body>
+
+    <div class="dashboard-layout">
+
+        <!-- Thanh điều hướng -->
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <h2>Ngân hàng nhà trọ</h2>
+                <p>Nhà trọ số 8 Nguyễn An Ninh</p>
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="/Landlord/Dashboard" class="nav-item">
+                    <span></span>
+                    Tổng quan
+                </a>
+
+                <a href="/Landlord/Rooms" class="nav-item active">
+                    <span></span>
+                    Phòng
+                </a>
+
+                <a href="/Landlord/Tenants" class="nav-item">
+                    <span></span>
+                    Người thuê
+                </a>
+
+                <a href="/Landlord/ContractForm" class="nav-item">
+                    <span></span>
+                    Hợp đồng
+                </a>
+
+                <a href="/Landlord/Invoices" class="nav-item">
+                    <span></span>
+                    Hóa đơn
+                </a>
+
+                <a href="/Landlord/WalletTransactions" class="nav-item">
+                    <span></span>
+                    Giao dịch ví
+                </a>
+
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-role">Chủ trọ</div>
+
+                <a href="/Account/Login" class="logout-button">
+                    <span></span>
+                    Đăng xuất
+                </a>
+            </div>
+
+        </aside>
+
+
+        <!-- Nội dung chính -->
+        <main class="main-content room-form-content">
+
+            <div class="page-header">
+                <h1>
+                    <a href="/Landlord/Rooms" class="back-button">←</a>
+                    Thêm / sửa phòng
+                </h1>
+                <p>Quản lý thông tin phòng trọ trong hệ thống</p>
+            </div>
+
+
+            <section class="room-form-grid">
+
+                <!-- Thông tin phòng -->
+                <div class="form-panel">
+
+                    <h3>Thông tin phòng</h3>
+
+                    <div class="form-group">
+                        <label for="roomCode">
+                            Mã phòng <span class="required">*</span>
+                        </label>
+                        <input type="text"
+                               id="roomCode"
+                               placeholder="Nhập mã phòng">
+                        <small>Mã phòng phải là duy nhất.</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomFloor">
+                            Tầng <span class="required">*</span>
+                        </label>
+                        <select id="roomFloor">
+                            <option value="">Chọn tầng</option>
+                            <option value="1">Tầng 1</option>
+                            <option value="2">Tầng 2</option>
+                            <option value="3">Tầng 3</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomPrice">
+                            Giá thuê (VNĐ/tháng) <span class="required">*</span>
+                        </label>
+                        <input type="number"
+                               id="roomPrice"
+                               min="0"
+                               placeholder="Nhập giá thuê">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomStatus">
+                            Trạng thái <span class="required">*</span>
+                        </label>
+                        <select id="roomStatus">
+                            <option value="">Chọn trạng thái</option>
+                            <option value="available">Trống</option>
+                            <option value="rented">Đang thuê</option>
+                            <option value="maintenance">Bảo trì</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+                <!-- Chi tiết phòng -->
+                <div class="form-panel">
+
+                    <h3>Chi tiết phòng</h3>
+
+                    <div class="form-group">
+                        <label for="roomArea">Diện tích (m²)</label>
+                        <input type="number"
+                               id="roomArea"
+                               min="0"
+                               placeholder="Nhập diện tích">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxTenants">Số người tối đa</label>
+                        <input type="number"
+                               id="maxTenants"
+                               min="1"
+                               placeholder="Nhập số người tối đa">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomDescription">Mô tả</label>
+                        <textarea id="roomDescription"
+                                  maxlength="500"
+                                  placeholder="Nhập mô tả phòng..."></textarea>
+                        <div class="textarea-counter">
+                            <span id="descriptionCount">0</span>/500
+                        </div>
+                    </div>
+
+                    <div class="form-group image-group">
+                        <label>Hình ảnh phòng (tối đa 5 ảnh)</label>
+
+                        <div class="image-list" id="imageList">
+
+                            <label class="add-image-button" for="roomImages">
+                                <span>+</span>
+                                <small>Thêm ảnh<br>JPG, PNG</small>
+                            </label>
+
+                        </div>
+
+                        <input type="file"
+                               id="roomImages"
+                               accept="image/jpeg,image/png"
+                               multiple>    
+                    </div>
+
+                </div>
+
+
+                <!-- Khu vực sửa phòng -->
+                <div class="form-panel edit-panel">
+
+                    <h3>Sửa phòng</h3>
+
+                    <div class="editing-room">
+                        Chưa chọn phòng
+                    </div>
+
+                    <div class="form-group">
+                        <label for="roomSearch">Chọn phòng cần sửa</label>
+                        <input type="text"
+                               id="roomSearch"
+                               placeholder="Tìm theo mã phòng">
+                    </div>
+
+                    <div class="room-selection-list" id="roomSelectionList">
+                        <!-- Danh sách phòng sẽ được tích hợp từ database -->
+                        <div class="selection-empty">
+                            Danh sách phòng sẽ hiển thị tại đây.
+                        </div>
+                    </div>
+
+                    <button type="button" class="add-another-room">
+                        + Thêm phòng mới
+                    </button>
+
+                    <button type="button" class="delete-room-button" disabled>
+                        Xóa phòng
+                    </button>
+
+                    <small class="delete-note">
+                        Không thể xóa phòng còn hợp đồng hiệu lực.
+                    </small>
+
+                </div>
+
+            </section>
+
+
+            <!-- Nút thao tác -->
+            <div class="form-actions">
+
+                <a href="/Landlord/Rooms" class="cancel-button">
+                    Hủy
+                </a>
+
+                <button type="button" class="save-button">
+                    Lưu
+                </button>
+
+            </div>
+
+        </main>
+
+    </div>
+
+    <script src="~/js/landlord-room-form.js"></script>
+
+</body>
+</html>
