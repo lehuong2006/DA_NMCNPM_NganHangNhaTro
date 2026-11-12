@@ -1,11 +1,14 @@
 # BTL_NganHangNhaTro
-TÀI KHOẢN
-Khách thuê
+## TÀI KHOẢN KIỂM THỬ
+-Khách thuê
 sđt: 0868847280
 mk: thang123
-Chủ trọ:
+-Chủ trọ:
 sđt: 0825611111
 mk: quan123456
-Quản trị viên:
+-Quản trị viên:
 sđt: 0856798765
 mk: anh123456
+
+## KẾT NỐI
+-Cấu hình kết nối SQL Server trong appsettings.json
