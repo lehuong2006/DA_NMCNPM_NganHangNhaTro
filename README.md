@@ -4,8 +4,8 @@
 sđt: 0868847280
 mk: thang123
 - Khách thuê 2
-  sđt: 0348714727
-  mk: huong1234
+sđt: 0348714727
+mk: huong1234
 -Chủ trọ:
 sđt: 0825611111
 mk: quan123456
