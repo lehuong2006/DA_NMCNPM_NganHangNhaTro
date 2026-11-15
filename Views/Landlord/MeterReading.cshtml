@@ -1,6 +1,15 @@
-﻿@{
+@{
     Layout = null;
     ViewData["Title"] = "Nhập chỉ số điện nước";
+    var activeContracts = ViewBag.ActiveContracts as IEnumerable<BTL_NganHangNhaTro.Models.Contract> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.Contract>();
+    var servicePrices = ViewBag.ServicePrices as IEnumerable<BTL_NganHangNhaTro.Models.ServicePrice> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.ServicePrice>();
+    
+    var elecPrice = servicePrices.FirstOrDefault(s => s.ServiceCode == "ELECTRIC")?.UnitPrice ?? 3500;
+    var waterPrice = servicePrices.FirstOrDefault(s => s.ServiceCode == "WATER")?.UnitPrice ?? 50000;
+    var internetPrice = servicePrices.FirstOrDefault(s => s.ServiceCode == "INTERNET")?.UnitPrice ?? 50000;
+    var cleaningPrice = servicePrices.FirstOrDefault(s => s.ServiceCode == "CLEANING")?.UnitPrice ?? 100000;
+    var washingPrice = servicePrices.FirstOrDefault(s => s.ServiceCode == "WASHING")?.UnitPrice ?? 50000;
+    var parkingPrice = servicePrices.FirstOrDefault(s => s.ServiceCode == "PARKING")?.UnitPrice ?? 100000;
 }
 
 <!DOCTYPE html>
@@ -61,9 +70,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -111,9 +120,16 @@
 
                                 <select id="roomSelect" required>
                                     <option value="">Chọn phòng</option>
+                                    @foreach (var c in activeContracts)
+                                    {
+                                        <option value="@c.RoomId" 
+                                                data-price="@c.RentalPrice" 
+                                                data-tenant="@(c.Tenant?.FullName ?? "")">
+                                            @(c.Room?.RoomCode ?? "P" + c.RoomId) - @(c.Tenant?.FullName ?? "Chưa rõ")
+                                        </option>
+                                    }
                                 </select>
                             </div>
-
 
                             <div class="form-group">
                                 <label for="billingPeriod">
@@ -122,6 +138,7 @@
 
                                 <input type="month"
                                        id="billingPeriod"
+                                       value="@DateTime.Now.ToString("yyyy-MM")"
                                        required>
                             </div>
 
@@ -135,10 +152,10 @@
                                        id="oldElectricReading"
                                        min="0"
                                        step="any"
-                                       placeholder="Chỉ số kỳ trước"
-                                       readonly>
+                                       value="0"
+                                       placeholder="Chỉ số kỳ trước">
 
-                                <small>Lấy từ chỉ số mới của kỳ trước.</small>
+                                <small>Chỉ số kỳ trước (có thể chỉnh sửa nếu lần đầu ghi).</small>
                             </div>
 
 
@@ -273,6 +290,7 @@
                                 <input type="text"
                                        id="electricPrice"
                                        inputmode="numeric"
+                                       value="@elecPrice.ToString("N0")"
                                        placeholder="Đơn giá">
                             </div>
 
@@ -285,6 +303,7 @@
                                 <input type="text"
                                        id="waterPrice"
                                        inputmode="numeric"
+                                       value="@waterPrice.ToString("N0")"
                                        placeholder="Đơn giá">
                             </div>
 
@@ -297,6 +316,7 @@
                                 <input type="text"
                                        id="internetPrice"
                                        inputmode="numeric"
+                                       value="@internetPrice.ToString("N0")"
                                        placeholder="Đơn giá">
                             </div>
 
@@ -309,6 +329,7 @@
                                 <input type="text"
                                        id="cleaningPrice"
                                        inputmode="numeric"
+                                       value="@cleaningPrice.ToString("N0")"
                                        placeholder="Đơn giá">
                             </div>
 
@@ -321,6 +342,7 @@
                                 <input type="text"
                                        id="washingPrice"
                                        inputmode="numeric"
+                                       value="@washingPrice.ToString("N0")"
                                        placeholder="Đơn giá">
                             </div>
 
@@ -333,6 +355,7 @@
                                 <input type="text"
                                        id="parkingPrice"
                                        inputmode="numeric"
+                                       value="@parkingPrice.ToString("N0")"
                                        placeholder="Đơn giá">
                             </div>
 

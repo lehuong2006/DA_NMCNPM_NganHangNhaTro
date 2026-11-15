@@ -1,6 +1,18 @@
-﻿@{
+@using BTL_NganHangNhaTro.Models
+@using BTL_NganHangNhaTro.Models.ViewModels
+@{
     Layout = null;
     ViewData["Title"] = "Giao dịch ví";
+    var transactions = Model as IEnumerable<BTL_NganHangNhaTro.Models.Transaction> ?? new List<BTL_NganHangNhaTro.Models.Transaction>();
+    var pendingTopups = ViewBag.PendingTopups as IEnumerable<BTL_NganHangNhaTro.Models.TopupRequest> ?? new List<BTL_NganHangNhaTro.Models.TopupRequest>();
+    var unpaidInvoices = ViewBag.UnpaidInvoices as IEnumerable<BTL_NganHangNhaTro.Models.Invoice> ?? new List<BTL_NganHangNhaTro.Models.Invoice>();
+    var autoDeductHistory = ViewBag.AutoDeductHistory as IEnumerable<BTL_NganHangNhaTro.Models.ViewModels.AutoDeductItemViewModel> ?? new List<BTL_NganHangNhaTro.Models.ViewModels.AutoDeductItemViewModel>();
+    long totalWalletsBalance = ViewBag.TotalWalletsBalance != null ? (long)ViewBag.TotalWalletsBalance : 0;
+
+    long totalTopupThisMonth = transactions
+        .Where(t => t.Type == "TOPUP" && t.CreatedAt.ToString("yyyy-MM") == DateTime.Now.ToString("yyyy-MM"))
+        .Sum(t => t.Amount);
+    long totalDebt = unpaidInvoices.Sum(i => i.RemainingAmount);
 }
 
 <!DOCTYPE html>
@@ -61,9 +73,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -86,25 +98,25 @@
 
                 <div class="wallet-stat-card">
                     <span class="stat-label pending">Chờ duyệt</span>
-                    <h2></h2>
+                    <h2>@pendingTopups.Count()</h2>
                     <p>Yêu cầu nạp tiền</p>
                 </div>
 
                 <div class="wallet-stat-card">
                     <span class="stat-label balance">Số dư</span>
-                    <h2></h2>
+                    <h2>@totalWalletsBalance.ToString("N0")</h2>
                     <p>Tổng số dư các ví (VNĐ)</p>
                 </div>
 
                 <div class="wallet-stat-card">
                     <span class="stat-label monthly">Tháng</span>
-                    <h2></h2>
+                    <h2>@totalTopupThisMonth.ToString("N0")</h2>
                     <p>Đã nạp trong tháng (VNĐ)</p>
                 </div>
 
                 <div class="wallet-stat-card">
                     <span class="stat-label debt">Công nợ</span>
-                    <h2></h2>
+                    <h2>@totalDebt.ToString("N0")</h2>
                     <p>Còn phải thu (VNĐ)</p>
                 </div>
 
@@ -180,7 +192,28 @@
                                 </thead>
 
                                 <tbody id="topupTableBody">
-                                    <!-- Yêu cầu nạp tiền sẽ được tích hợp từ database -->
+                                    @if (pendingTopups.Any())
+                                    {
+                                        @foreach (var req in pendingTopups)
+                                        {
+                                            var tenant = req.Wallet?.User;
+                                            <tr class="topup-row"
+                                                data-id="@req.Id"
+                                                data-code="YC-@req.Id"
+                                                data-tenant="@(tenant?.FullName ?? "—")"
+                                                data-room="—"
+                                                data-amount="@req.Amount"
+                                                data-transaction-code="@(req.TransactionCode ?? "—")"
+                                                data-created-at="@req.CreatedAt.ToString("dd/MM/yyyy HH:mm")"
+                                                data-receipt-image="">
+                                                <td>YC-@req.Id</td>
+                                                <td>@(tenant?.FullName ?? "—")</td>
+                                                <td>—</td>
+                                                <td>@req.Amount.ToString("N0") VNĐ</td>
+                                                <td>@req.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
 
                             </table>
@@ -245,7 +278,24 @@
                                 </thead>
 
                                 <tbody id="historyTableBody">
-                                    <!-- Lịch sử giao dịch sẽ được tích hợp từ database -->
+                                    @if (transactions.Any())
+                                    {
+                                        @foreach (var tx in transactions)
+                                        {
+                                            var txUser = tx.Wallet?.User;
+                                            string typeLabel = tx.Type == "TOPUP" ? "Nạp tiền" : tx.Type == "PAYMENT" ? "Thanh toán" : tx.Type;
+                                            <tr class="history-row"
+                                                data-type="@tx.Type"
+                                                data-date="@tx.CreatedAt.ToString("yyyy-MM-dd")">
+                                                <td>@tx.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                <td>@(txUser?.FullName ?? "—")</td>
+                                                <td><span class="badge @(tx.Type == "TOPUP" ? "badge-success" : "badge-primary")">@typeLabel</span></td>
+                                                <td>@tx.Amount.ToString("N0") VNĐ</td>
+                                                <td>@tx.BalanceAfter.ToString("N0") VNĐ</td>
+                                                <td>@(tx.Description ?? "—")</td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
 
                             </table>
@@ -321,7 +371,30 @@
                                     </thead>
 
                                     <tbody id="debtTableBody">
-                                        <!-- Dữ liệu công nợ sẽ được tích hợp từ database -->
+                                        @if (unpaidInvoices.Any())
+                                        {
+                                            @foreach (var inv in unpaidInvoices)
+                                            {
+                                                var invTenant = inv.Contract?.Tenant;
+                                                <tr class="debt-row"
+                                                    data-status="PENDING"
+                                                    data-period="@inv.MonthYear"
+                                                    data-room="@(inv.Room?.RoomCode ?? "")"
+                                                    data-amount="@inv.RemainingAmount"
+                                                    data-tenant="@(invTenant?.FullName ?? "—")">
+                                                    <td>@(inv.InvoiceCode)</td>
+                                                    <td>@(invTenant?.FullName ?? "—")</td>
+                                                    <td>@(inv.Room?.RoomCode ?? "—")</td>
+                                                    <td>@inv.MonthYear</td>
+                                                    <td>@inv.TotalAmount.ToString("N0") VNĐ</td>
+                                                    <td>@inv.RemainingAmount.ToString("N0") VNĐ</td>
+                                                    <td><span class="badge badge-warning">Chưa TT</span></td>
+                                                    <td>
+                                                        <button class="debt-action-button remind" title="Nhắc thanh toán">Nhắc</button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
                                     </tbody>
 
                                 </table>
@@ -429,12 +502,29 @@
                                     </thead>
 
                                     <tbody id="autoDeductTableBody">
-                                        <!-- Lịch sử chạy sẽ được tích hợp từ backend -->
+                                        @if (autoDeductHistory.Any())
+                                        {
+                                            @foreach (var h in autoDeductHistory)
+                                            {
+                                                <tr>
+                                                    <td>@h.ExecutedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                                    <td>@h.InvoicePeriod</td>
+                                                    <td>@h.RoomCode</td>
+                                                    <td>1 phòng (@h.TenantName)</td>
+                                                    <td>@h.Amount.ToString("N0") VNĐ</td>
+                                                    <td>
+                                                        <span class="badge badge-success">
+                                                            @h.Status
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
                                     </tbody>
 
                                 </table>
 
-                                <div class="wallet-empty">
+                                <div class="wallet-empty" style="@(autoDeductHistory.Any() ? "display:none;" : "")">
                                     Chưa có lịch sử chạy trừ tiền tự động.
                                 </div>
 

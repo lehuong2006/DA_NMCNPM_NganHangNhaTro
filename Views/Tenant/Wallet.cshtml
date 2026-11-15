@@ -1,6 +1,13 @@
-﻿@{
+@using BTL_NganHangNhaTro.Models
+@{
     Layout = null;
     ViewData["Title"] = "Ví và Nạp tiền";
+    var wallet = ViewBag.Wallet as BTL_NganHangNhaTro.Models.Wallet;
+    var transactions = wallet?.Transactions?.OrderByDescending(t => t.CreatedAt).ToList()
+                       ?? new List<BTL_NganHangNhaTro.Models.Transaction>();
+    var landlord = ViewBag.Landlord as BTL_NganHangNhaTro.Models.User;
+    var landlordName = landlord != null ? landlord.FullName.Replace(" - Chủ trọ", "") : "Nguyễn Văn Quân";
+    var landlordPhone = landlord?.PhoneNumber ?? "0825611111";
 }
 
 <!DOCTYPE html>
@@ -52,9 +59,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Khách thuê</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Khách thuê")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -79,14 +86,14 @@
                 <!-- Thẻ số dư -->
                 <div class="wallet-balance-card">
 
-                    <div class="wallet-balance-user"></div>
+                    <div class="wallet-balance-user">@(User.Identity?.Name ?? "")</div>
 
                     <div class="wallet-balance-label">
                         Số dư hiện tại:
                     </div>
 
                     <div class="wallet-balance-amount">
-                        <span></span>
+                        <span>@((wallet?.Balance ?? 0).ToString("N0"))</span>
                         <span>VNĐ</span>
                     </div>
 
@@ -97,12 +104,10 @@
                 <div class="bank-transfer-panel">
 
                     <div class="bank-qr-area">
-
-                        <div class="bank-qr-placeholder">
-                            <span></span>
-                            <p>Mã QR chuyển khoản</p>
-                        </div>
-
+                        <img id="bankQrImage"
+                             src="https://img.vietqr.io/image/MB-@landlordPhone-compact2.png?amount=0&accountName=@Uri.EscapeDataString(landlordName.ToUpper())"
+                             alt="Mã QR chuyển khoản"
+                             style="width: 112px; height: 112px; object-fit: contain; border-radius: 6px; border: 1px solid #dce5e0; background: #fff;" />
                     </div>
 
                     <div class="bank-transfer-information">
@@ -111,17 +116,22 @@
 
                         <div class="bank-information-row">
                             <span>Ngân hàng:</span>
-                            <strong></strong>
+                            <strong>MB Bank (Quân Đội)</strong>
                         </div>
 
                         <div class="bank-information-row">
                             <span>STK:</span>
-                            <strong></strong>
+                            <strong style="color: #176b5d; font-size: 15px; letter-spacing: 0.5px;">@landlordPhone</strong>
                         </div>
 
                         <div class="bank-information-row">
                             <span>Chủ TK:</span>
-                            <strong></strong>
+                            <strong>@landlordName.ToUpper()</strong>
+                        </div>
+
+                        <div class="bank-information-row">
+                            <span>Nội dung:</span>
+                            <strong style="color: #c0392b; font-size: 11px;">NAP VI @User.Identity?.Name</strong>
                         </div>
 
                     </div>
@@ -227,12 +237,27 @@
                             </thead>
 
                             <tbody id="tenantTransactionTableBody">
-                                <!-- Dữ liệu giao dịch sẽ được tích hợp từ database -->
+                                @if (transactions.Any())
+                                {
+                                    @foreach (var tx in transactions)
+                                    {
+                                        string typeLabel = tx.Type == "TOPUP" ? "Nạp tiền" : tx.Type == "PAYMENT" ? "Thanh toán" : tx.Type;
+                                        string statusLabel = tx.Type == "TOPUP" ? "Hoàn thành" : "Đã trừ";
+                                        string badgeClass = tx.Type == "TOPUP" ? "badge-success" : "badge-primary";
+                                        <tr>
+                                            <td>@tx.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>GD-@tx.Id</td>
+                                            <td><span class="badge @badgeClass">@typeLabel</span></td>
+                                            <td>@tx.Amount.ToString("N0") VNĐ</td>
+                                            <td><span class="badge badge-success">@statusLabel</span></td>
+                                        </tr>
+                                    }
+                                }
                             </tbody>
 
                         </table>
 
-                        <div class="transaction-empty">
+                        <div class="transaction-empty" style="@(transactions.Any() ? "display:none;" : "")">
                             Chưa có giao dịch.
                         </div>
 

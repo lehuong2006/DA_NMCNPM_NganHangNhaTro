@@ -1,4 +1,4 @@
-﻿@{
+@{
     Layout = null;
     ViewData["Title"] = "Lập hợp đồng";
 }
@@ -61,9 +61,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -107,6 +107,7 @@
                                 <input type="text"
                                        id="landlordName"
                                        placeholder="Tên chủ trọ"
+                                       value="@(ViewBag.Landlord?.FullName ?? "Chủ trọ")"
                                        readonly>
                             </div>
 
@@ -115,6 +116,7 @@
                                 <input type="text"
                                        id="landlordPhone"
                                        placeholder="Số điện thoại"
+                                       value="@(ViewBag.Landlord?.PhoneNumber ?? "0825611111")"
                                        readonly>
                             </div>
 
@@ -123,6 +125,7 @@
                                 <input type="text"
                                        id="landlordIdentity"
                                        placeholder="Số CCCD"
+                                       value="@(ViewBag.Landlord?.IdentityCard ?? "001200000001")"
                                        readonly>
                             </div>
 
@@ -199,6 +202,16 @@
                         </label>
                         <select id="roomSelect">
                             <option value="">Chọn phòng còn trống</option>
+                            @if (ViewBag.AvailableRooms != null)
+                            {
+                                foreach (var r in (IEnumerable<BTL_NganHangNhaTro.Models.Room>)ViewBag.AvailableRooms)
+                                {
+                                    var isSelected = (ViewBag.SelectedRoomId != null && (long)ViewBag.SelectedRoomId == r.Id);
+                                    <option value="@r.Id" data-price="@r.Price" data-area="25" selected="@(isSelected ? "selected" : null)">
+                                        @r.RoomCode - @r.RoomName (@r.Price.ToString("N0") VNĐ)
+                                    </option>
+                                }
+                            }
                         </select>
                     </div>
 

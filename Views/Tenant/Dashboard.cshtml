@@ -1,6 +1,11 @@
-﻿@{
+@{
     Layout = null;
     ViewData["Title"] = "Trang chủ khách thuê";
+    var contract = ViewBag.Contract as BTL_NganHangNhaTro.Models.Contract;
+    var invoices = ViewBag.Invoices as IEnumerable<BTL_NganHangNhaTro.Models.Invoice> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.Invoice>();
+    var currentInvoice = ViewBag.CurrentInvoice as BTL_NganHangNhaTro.Models.Invoice;
+    var services = ViewBag.Services as IEnumerable<BTL_NganHangNhaTro.Models.ServicePrice> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.ServicePrice>();
+    var userFullName = User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Khách thuê";
 }
 
 <!DOCTYPE html>
@@ -55,9 +60,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Khách thuê</div>
+                <div class="user-role">@userFullName</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -71,7 +76,7 @@
 
             <!-- Tiêu đề -->
             <div class="tenant-welcome">
-                <h1>Xin chào bạn</h1>
+                <h1>Xin chào, @userFullName</h1>
             </div>
 
 
@@ -85,8 +90,8 @@
                         <span>Phòng đang ở</span>
                     </div>
 
-                    <h2></h2>
-                    <p></p>
+                    <h2>@(contract?.Room?.RoomCode ?? "Chưa thuê")</h2>
+                    <p>@(contract != null ? contract.RentalPrice.ToString("N0") + " đ/tháng" : "Liên hệ chủ trọ")</p>
 
                 </div>
 
@@ -98,8 +103,8 @@
                         <span>Hóa đơn tháng này</span>
                     </div>
 
-                    <h2></h2>
-                    <p></p>
+                    <h2>@(currentInvoice != null ? currentInvoice.TotalAmount.ToString("N0") + " đ" : "0 đ")</h2>
+                    <p>@(currentInvoice != null ? (currentInvoice.Status == "PAID" ? "Đã thanh toán" : "Chưa thanh toán") : "Chưa phát sinh")</p>
 
                 </div>
 
@@ -111,8 +116,8 @@
                         <span>Đã thanh toán</span>
                     </div>
 
-                    <h2></h2>
-                    <p></p>
+                    <h2>@(((long)(ViewBag.TotalPaid ?? 0)).ToString("N0")) đ</h2>
+                    <p>Tổng các kỳ</p>
 
                 </div>
 
@@ -124,8 +129,8 @@
                         <span>Dịch vụ đang dùng</span>
                     </div>
 
-                    <h2></h2>
-                    <p></p>
+                    <h2>@services.Count()</h2>
+                    <p>Dịch vụ phòng</p>
 
                 </div>
 
@@ -141,7 +146,7 @@
                     <div class="tenant-panel-header">
                         <div class="tenant-panel-title">
                             <span class="panel-icon invoice-panel-icon"></span>
-                            <h3>Hóa Đơn</h3>
+                            <h3>Hóa Đơn Của Tôi</h3>
                         </div>
                     </div>
 
@@ -152,8 +157,8 @@
 
                             <thead>
                                 <tr>
-                                    <th>Tháng</th>
-                                    <th>Loại phí</th>
+                                    <th>Kỳ</th>
+                                    <th>Mã HĐ</th>
                                     <th>Số tiền</th>
                                     <th>Hạn thanh toán</th>
                                     <th>Trạng thái</th>
@@ -161,12 +166,28 @@
                             </thead>
 
                             <tbody>
-                                <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                                @if (invoices.Any())
+                                {
+                                    foreach (var inv in invoices)
+                                    {
+                                        <tr>
+                                            <td>@inv.MonthYear</td>
+                                            <td>@inv.InvoiceCode</td>
+                                            <td><strong>@inv.TotalAmount.ToString("N0") đ</strong></td>
+                                            <td>@(inv.DueDate.HasValue ? inv.DueDate.Value.ToString("dd/MM/yyyy") : "—")</td>
+                                            <td>
+                                                <span class="invoice-status @inv.Status.ToLower()">
+                                                    @(inv.Status == "PAID" ? "Đã thanh toán" : "Chưa thanh toán")
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
                             </tbody>
 
                         </table>
 
-                        <div class="tenant-empty">
+                        <div class="tenant-empty" style="@(invoices.Any() ? "display:none;" : "")">
                             Chưa có hóa đơn.
                         </div>
 
@@ -174,8 +195,8 @@
 
 
                     <div class="tenant-invoice-action">
-                        <a href="#" class="pay-invoice-button">
-                            Thanh toán ngay
+                        <a href="/Tenant/ContractsAndInvoices" class="pay-invoice-button">
+                            Xem chi tiết &amp; Thanh toán
                         </a>
                     </div>
 
@@ -194,20 +215,16 @@
 
                         <div class="quick-action-list">
 
-                            <a href="#" class="tenant-shortcut-button primary">
+                            <a href="/Tenant/ContractsAndInvoices" class="tenant-shortcut-button primary">
                                 Thanh toán hóa đơn
                             </a>
 
-                            <a href="#" class="tenant-shortcut-button">
-                                Đăng ký dịch vụ
+                            <a href="/Tenant/Wallet" class="tenant-shortcut-button">
+                                Nạp tiền vào ví
                             </a>
 
-                            <a href="#" class="tenant-shortcut-button">
-                                Góp ý / Khiếu nại
-                            </a>
-
-                            <a href="#" class="tenant-shortcut-button">
-                                Cập nhật thông tin
+                            <a href="/Tenant/TransactionHistory" class="tenant-shortcut-button">
+                                Lịch sử giao dịch
                             </a>
 
                         </div>
@@ -221,35 +238,19 @@
 
                         <div class="tenant-panel-title">
                             <span class="panel-icon service-panel-icon"></span>
-                            <h3>Dịch vụ đang dùng</h3>
+                            <h3>Biểu phí dịch vụ</h3>
                         </div>
 
                         <div class="tenant-service-list">
-                            <!-- Danh sách dịch vụ sẽ được tích hợp từ database -->
+                            @foreach (var s in services)
+                            {
+                                <div style="display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #f0f4f2; font-size:12px;">
+                                    <span>@s.ServiceName:</span>
+                                    <strong>@s.UnitPrice.ToString("N0") đ / @s.Unit</strong>
+                                </div>
+                            }
                         </div>
 
-                        <div class="tenant-empty service-empty">
-                            Chưa có dịch vụ.
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <!-- Thông báo -->
-                <div class="tenant-panel tenant-notification-panel">
-
-                    <div class="tenant-panel-title">
-                        <h3>Thông Báo</h3>
-                    </div>
-
-                    <div class="tenant-notification-content">
-                        <!-- Nội dung thông báo sẽ được tích hợp từ backend -->
-                    </div>
-
-                    <div class="tenant-empty notification-empty">
-                        Chưa có thông báo.
                     </div>
 
                 </div>

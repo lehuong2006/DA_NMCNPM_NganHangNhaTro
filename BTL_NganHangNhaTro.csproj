@@ -18,4 +18,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="BTL_NganHangNhaTro.Tests\**" />
+    <Content Remove="BTL_NganHangNhaTro.Tests\**" />
+    <EmbeddedResource Remove="BTL_NganHangNhaTro.Tests\**" />
+    <None Remove="BTL_NganHangNhaTro.Tests\**" />
+  </ItemGroup>
+
 </Project>

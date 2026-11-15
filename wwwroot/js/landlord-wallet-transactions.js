@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     const walletTabs = document.querySelectorAll(".wallet-tab");
     const walletTabContents = document.querySelectorAll(".wallet-tab-content");
@@ -190,7 +190,7 @@
 
     });
 
-    approveButton.addEventListener("click", function () {
+    approveButton.addEventListener("click", async function () {
 
         const selectedRow =
             topupTableBody.querySelector(".topup-row.selected");
@@ -208,13 +208,38 @@
             return;
         }
 
-        alert(
-            "Đã kiểm tra thao tác. Chức năng phê duyệt và cộng tiền vào ví sẽ được tích hợp backend sau."
-        );
+        const topupId = selectedRow.dataset.id;
+        approveButton.disabled = true;
+        approveButton.textContent = "Đang xử lý...";
+
+        try {
+            const response = await fetch(
+                "/Landlord/ApproveTopup?topupRequestId=" + topupId,
+                { method: "POST" }
+            );
+            const result = await response.json();
+
+            if (result.success) {
+                alert("✅ " + result.message);
+                selectedRow.remove();
+                clearTopupSelection();
+                updateEmptyState(topupTableBody,
+                    topupTableBody.querySelectorAll(".topup-row").length);
+                // Tải lại trang để cập nhật lịch sử giao dịch
+                setTimeout(function () { location.reload(); }, 1000);
+            } else {
+                alert("❌ " + result.message);
+            }
+        } catch (err) {
+            alert("❌ Không thể kết nối đến máy chủ.");
+        } finally {
+            approveButton.disabled = false;
+            approveButton.textContent = "Duyệt";
+        }
 
     });
 
-    rejectButton.addEventListener("click", function () {
+    rejectButton.addEventListener("click", async function () {
 
         const selectedRow =
             topupTableBody.querySelector(".topup-row.selected");
@@ -240,9 +265,36 @@
             return;
         }
 
-        alert(
-            "Đã kiểm tra thao tác. Chức năng từ chối yêu cầu sẽ được tích hợp backend sau."
-        );
+        const topupId = selectedRow.dataset.id;
+        rejectButton.disabled = true;
+        rejectButton.textContent = "Đang xử lý...";
+
+        try {
+            const response = await fetch(
+                "/Landlord/RejectTopup?topupRequestId=" + topupId,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ reason: reason })
+                }
+            );
+            const result = await response.json();
+
+            if (result.success) {
+                alert("✅ " + result.message);
+                selectedRow.remove();
+                clearTopupSelection();
+                updateEmptyState(topupTableBody,
+                    topupTableBody.querySelectorAll(".topup-row").length);
+            } else {
+                alert("❌ " + result.message);
+            }
+        } catch (err) {
+            alert("❌ Không thể kết nối đến máy chủ.");
+        } finally {
+            rejectButton.disabled = false;
+            rejectButton.textContent = "Từ chối";
+        }
 
     });
 
@@ -294,10 +346,6 @@
     transactionType.addEventListener("change", filterHistory);
     transactionStartDate.addEventListener("change", filterHistory);
     transactionEndDate.addEventListener("change", filterHistory);
-
-
-    transactionType.addEventListener("change", filterHistory);
-    transactionPeriod.addEventListener("change", filterHistory);
 
     function filterDebts() {
 
@@ -438,19 +486,39 @@
 
     });
 
-    runDeductButton.addEventListener("click", function () {
+    runDeductButton.addEventListener("click", async function () {
 
         const confirmed = confirm(
-            "Bạn có chắc chắn muốn chạy trừ tiền tự động ngay bây giờ?"
+            "Bạn có chắc chắn muốn quét và trừ tiền tự động cho các hóa đơn chưa thanh toán ngay bây giờ?"
         );
 
         if (!confirmed) {
             return;
         }
 
-        alert(
-            "Chức năng trừ tiền tự động sẽ được tích hợp backend sau."
-        );
+        runDeductButton.disabled = true;
+        runDeductButton.textContent = "Đang xử lý...";
+
+        try {
+            const response = await fetch("/Landlord/RunAutoDeduct", {
+                method: "POST"
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                alert("✅ " + result.message);
+                location.reload();
+            } else {
+                alert("ℹ️ " + result.message);
+                location.reload();
+            }
+        } catch (err) {
+            console.error(err);
+            alert("❌ Đã xảy ra lỗi khi kết nối máy chủ.");
+        } finally {
+            runDeductButton.disabled = false;
+            runDeductButton.textContent = "Trừ thủ công ngay";
+        }
 
     });
 
@@ -459,10 +527,10 @@
 
     switchTab("topup");
 
-    updateEmptyState(topupTableBody, 0);
-    updateEmptyState(historyTableBody, 0);
-    updateEmptyState(debtTableBody, 0);
-    updateEmptyState(autoDeductTableBody, 0);
+    updateEmptyState(topupTableBody, topupTableBody ? topupTableBody.querySelectorAll(".topup-row").length : 0);
+    updateEmptyState(historyTableBody, historyTableBody ? historyTableBody.querySelectorAll(".history-row").length : 0);
+    updateEmptyState(debtTableBody, debtTableBody ? debtTableBody.querySelectorAll(".debt-row").length : 0);
+    updateEmptyState(autoDeductTableBody, autoDeductTableBody ? autoDeductTableBody.querySelectorAll("tr").length : 0);
 
     filterDebts();
     updateAutoDeductStatus();

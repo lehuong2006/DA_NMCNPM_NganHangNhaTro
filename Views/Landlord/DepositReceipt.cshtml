@@ -61,9 +61,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>

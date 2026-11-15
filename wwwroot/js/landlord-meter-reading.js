@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     const meterReadingForm = document.getElementById("meterReadingForm");
 
@@ -35,18 +35,16 @@
     };
 
     function getNumericValue(value) {
+        if (!value) return 0;
         const digits = String(value).replace(/\D/g, "");
-
-        return digits === "" ? null : Number(digits);
+        return digits === "" ? 0 : Number(digits);
     }
 
     function getNumberValue(value) {
         if (value === "" || value === null || value === undefined) {
             return null;
         }
-
         const number = Number(value);
-
         return Number.isFinite(number) ? number : null;
     }
 
@@ -54,44 +52,35 @@
         if (value === null || value === undefined) {
             return "—";
         }
-
-        return Math.round(value).toLocaleString("vi-VN");
+        return Math.round(value).toLocaleString("vi-VN") + " VNĐ";
     }
 
     function formatReading(value) {
         if (value === null || value === undefined) {
             return "—";
         }
-
         return Number(value).toLocaleString("vi-VN");
     }
 
     Object.values(servicePriceInputs).forEach(function (input) {
-
+        if (!input) return;
         input.addEventListener("input", function () {
-
             const digits = input.value.replace(/\D/g, "");
-
-            input.value = digits === ""
-                ? ""
-                : Number(digits).toLocaleString("vi-VN");
-
+            input.value = digits === "" ? "" : Number(digits).toLocaleString("vi-VN");
             calculateInvoice();
-
         });
-
     });
 
     function getServicePrice(input) {
+        if (!input) return 0;
         return getNumericValue(input.value);
     }
 
     function calculateElectricityUsage() {
-
-        const oldValue = getNumberValue(oldElectricReading.value);
+        const oldValue = getNumberValue(oldElectricReading.value) ?? 0;
         const newValue = getNumberValue(newElectricReading.value);
 
-        if (oldValue === null || newValue === null) {
+        if (newValue === null) {
             electricityUsage.textContent = "—";
             electricityWarning.textContent = "";
             return null;
@@ -99,251 +88,157 @@
 
         if (newValue < oldValue) {
             electricityUsage.textContent = "—";
-
-            electricityWarning.textContent =
-                "Chỉ số điện mới phải lớn hơn hoặc bằng chỉ số cũ.";
-
+            electricityWarning.textContent = "Chỉ số điện mới phải lớn hơn hoặc bằng chỉ số cũ.";
             return null;
         }
 
         const usage = newValue - oldValue;
-
-        electricityUsage.textContent =
-            formatReading(usage) + " kWh";
-
+        electricityUsage.textContent = formatReading(usage) + " kWh";
         electricityWarning.textContent = "";
-
         return usage;
-
     }
 
     function calculateInvoice() {
-
         const selectedRoom = roomSelect.selectedOptions[0];
-
         const hasRoom = roomSelect.value !== "";
-        const roomFee = hasRoom
-            ? getNumberValue(selectedRoom.dataset.rent)
-            : null;
+        const roomFee = (hasRoom && selectedRoom)
+            ? (Number(selectedRoom.dataset.price) || 0)
+            : 0;
 
-        const oldValue = getNumberValue(oldElectricReading.value);
+        const oldValue = getNumberValue(oldElectricReading.value) ?? 0;
         const newValue = getNumberValue(newElectricReading.value);
+        const usage = calculateElectricityUsage() ?? 0;
 
-        const usage = calculateElectricityUsage();
+        const people = getNumberValue(tenantCount.value) ?? 1;
+        const vehicles = getNumberValue(vehicleCount.value) ?? 0;
 
-        const people = getNumberValue(tenantCount.value);
-        const vehicles = getNumberValue(vehicleCount.value);
+        const electricityPrice = getServicePrice(servicePriceInputs.electricity) || 3500;
+        const waterPrice = getServicePrice(servicePriceInputs.water) || 50000;
+        const internetPrice = getServicePrice(servicePriceInputs.internet) || 50000;
+        const cleaningPrice = getServicePrice(servicePriceInputs.cleaning) || 100000;
+        const washingPrice = getServicePrice(servicePriceInputs.washing) || 50000;
+        const parkingPrice = getServicePrice(servicePriceInputs.parking) || 100000;
 
-        const electricityPrice = getServicePrice(
-            servicePriceInputs.electricity
-        );
+        const electricityFee = usage * electricityPrice;
+        const waterFee = people * waterPrice;
+        const internetFee = people * internetPrice;
+        const cleaningFee = people * cleaningPrice;
+        const washingFee = people * washingPrice;
+        const parkingFee = vehicles * parkingPrice;
 
-        const waterPrice = getServicePrice(
-            servicePriceInputs.water
-        );
+        previewElements.roomFee.textContent = formatMoney(roomFee);
+        previewElements.electricityFee.textContent = formatMoney(electricityFee);
+        previewElements.waterFee.textContent = formatMoney(waterFee);
+        previewElements.internetFee.textContent = formatMoney(internetFee);
+        previewElements.cleaningFee.textContent = formatMoney(cleaningFee);
+        previewElements.washingFee.textContent = formatMoney(washingFee);
+        previewElements.parkingFee.textContent = formatMoney(parkingFee);
 
-        const internetPrice = getServicePrice(
-            servicePriceInputs.internet
-        );
-
-        const cleaningPrice = getServicePrice(
-            servicePriceInputs.cleaning
-        );
-
-        const washingPrice = getServicePrice(
-            servicePriceInputs.washing
-        );
-
-        const parkingPrice = getServicePrice(
-            servicePriceInputs.parking
-        );
-
-
-        // Tiền điện
-        const electricityFee =
-            usage !== null && electricityPrice !== null
-                ? usage * electricityPrice
-                : null;
-
-
-        // Tiền nước
-        const waterFee =
-            people !== null && waterPrice !== null
-                ? people * waterPrice
-                : null;
-
-
-        // Internet
-        const internetFee =
-            people !== null && internetPrice !== null
-                ? people * internetPrice
-                : null;
-
-
-        // Thang máy và vệ sinh
-        const cleaningFee =
-            people !== null && cleaningPrice !== null
-                ? people * cleaningPrice
-                : null;
-
-
-        // Máy giặt
-        const washingFee =
-            people !== null && washingPrice !== null
-                ? people * washingPrice
-                : null;
-
-
-        // Sạc xe điện
-        const parkingFee =
-            vehicles !== null && parkingPrice !== null
-                ? vehicles * parkingPrice
-                : null;
-
-
-        // Hiển thị chi tiết
-        previewElements.roomFee.textContent =
-            roomFee === null ? "—" : formatMoney(roomFee);
-
-        previewElements.electricityFee.textContent =
-            electricityFee === null ? "—" : formatMoney(electricityFee);
-
-        previewElements.waterFee.textContent =
-            waterFee === null ? "—" : formatMoney(waterFee);
-
-        previewElements.internetFee.textContent =
-            internetFee === null ? "—" : formatMoney(internetFee);
-
-        previewElements.cleaningFee.textContent =
-            cleaningFee === null ? "—" : formatMoney(cleaningFee);
-
-        previewElements.washingFee.textContent =
-            washingFee === null ? "—" : formatMoney(washingFee);
-
-        previewElements.parkingFee.textContent =
-            parkingFee === null ? "—" : formatMoney(parkingFee);
-
-
-        // Chỉ tính tổng khi các khoản phí cần thiết đã có dữ liệu
-        const feeValues = [
-            roomFee,
-            electricityFee,
-            waterFee,
-            internetFee,
-            cleaningFee,
-            washingFee,
-            parkingFee
-        ];
-
-        const hasCompleteData =
-            hasRoom &&
-            oldValue !== null &&
-            newValue !== null &&
-            usage !== null &&
-            people !== null &&
-            vehicles !== null &&
-            feeValues.every(function (value) {
-                return value !== null;
-            });
-
-        if (hasCompleteData) {
-
-            const total = feeValues.reduce(function (sum, value) {
-                return sum + value;
-            }, 0);
-
-            previewElements.total.textContent = formatMoney(total);
-
-        } else {
-
-            previewElements.total.textContent = "—";
-
-        }
-
+        const total = roomFee + electricityFee + waterFee + internetFee + cleaningFee + washingFee + parkingFee;
+        previewElements.total.textContent = formatMoney(total);
     }
 
-    roomSelect.addEventListener("change", function () {
-
-        const selectedRoom = roomSelect.selectedOptions[0];
-
-        if (!roomSelect.value) {
-
-            oldElectricReading.value = "";
-            tenantCount.value = "";
-            vehicleCount.value = "";
-
-            calculateInvoice();
-            return;
-
-        }
-
-        // Các giá trị này sẽ được backend truyền qua data-*.
-        oldElectricReading.value =
-            selectedRoom.dataset.oldReading || "";
-
-        tenantCount.value =
-            selectedRoom.dataset.tenantCount || "";
-
-        vehicleCount.value =
-            selectedRoom.dataset.vehicleCount || "";
-
-        calculateInvoice();
-
-    });
-
-    [
-        newElectricReading,
-        tenantCount,
-        vehicleCount,
-        oldElectricReading
-    ].forEach(function (input) {
-
+    [oldElectricReading, newElectricReading, tenantCount, vehicleCount].forEach(function (input) {
+        if (!input) return;
         input.addEventListener("input", calculateInvoice);
-
     });
 
-    billingPeriod.addEventListener("change", function () {
+    roomSelect.addEventListener("change", calculateInvoice);
+    billingPeriod.addEventListener("change", calculateInvoice);
 
-        calculateInvoice();
+    // Lưu đơn giá dịch vụ
+    const savePriceBtn = document.querySelector(".save-price-button");
+    if (savePriceBtn) {
+        savePriceBtn.addEventListener("click", async function () {
+            const prices = [
+                { serviceCode: "ELECTRIC", unitPrice: getServicePrice(servicePriceInputs.electricity) },
+                { serviceCode: "WATER", unitPrice: getServicePrice(servicePriceInputs.water) },
+                { serviceCode: "INTERNET", unitPrice: getServicePrice(servicePriceInputs.internet) },
+                { serviceCode: "CLEANING", unitPrice: getServicePrice(servicePriceInputs.cleaning) },
+                { serviceCode: "WASHING", unitPrice: getServicePrice(servicePriceInputs.washing) },
+                { serviceCode: "PARKING", unitPrice: getServicePrice(servicePriceInputs.parking) }
+            ];
 
-    });
-
-    document.querySelector(".save-price-button")
-        .addEventListener("click", function () {
-
-            alert("Chức năng lưu đơn giá sẽ được tích hợp backend sau.");
-
+            try {
+                const res = await fetch("/Landlord/SaveServicePrices", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(prices)
+                });
+                const data = await res.json();
+                alert(data.message || "Đã lưu đơn giá thành công!");
+            } catch (err) {
+                console.error(err);
+                alert("Lỗi khi lưu đơn giá dịch vụ.");
+            }
         });
+    }
 
-    document.querySelector(".save-reading-button")
-        .addEventListener("click", function () {
-
-            if (!meterReadingForm.reportValidity()) {
-                return;
-            }
-
+    // Lưu chỉ số và tạo hóa đơn
+    const saveReadingBtn = document.querySelector(".save-reading-button");
+    if (saveReadingBtn) {
+        saveReadingBtn.addEventListener("click", async function () {
             if (!roomSelect.value) {
-                alert("Vui lòng chọn phòng.");
+                alert("Vui lòng chọn phòng để ghi chỉ số điện nước.");
+                roomSelect.focus();
                 return;
             }
 
-            const oldValue = getNumberValue(oldElectricReading.value);
+            const oldValue = getNumberValue(oldElectricReading.value) ?? 0;
             const newValue = getNumberValue(newElectricReading.value);
 
-            if (oldValue === null) {
-                alert("Chưa có chỉ số điện cũ của phòng.");
+            if (newValue === null) {
+                alert("Vui lòng nhập chỉ số điện mới.");
+                newElectricReading.focus();
                 return;
             }
 
             if (newValue < oldValue) {
                 alert("Chỉ số điện mới không được nhỏ hơn chỉ số cũ.");
+                newElectricReading.focus();
                 return;
             }
 
-            alert("Giao diện đã kiểm tra dữ liệu. Chức năng lưu database sẽ được tích hợp sau.");
+            const payload = {
+                roomId: Number(roomSelect.value),
+                monthYear: billingPeriod.value,
+                elecOld: oldValue,
+                elecNew: newValue,
+                tenantCount: getNumberValue(tenantCount.value) ?? 1,
+                vehicleCount: getNumberValue(vehicleCount.value) ?? 0,
+                electricPrice: getServicePrice(servicePriceInputs.electricity) || 3500,
+                waterPrice: getServicePrice(servicePriceInputs.water) || 50000,
+                internetPrice: getServicePrice(servicePriceInputs.internet) || 50000,
+                cleaningPrice: getServicePrice(servicePriceInputs.cleaning) || 100000,
+                washingPrice: getServicePrice(servicePriceInputs.washing) || 50000,
+                parkingPrice: getServicePrice(servicePriceInputs.parking) || 100000
+            };
 
+            saveReadingBtn.disabled = true;
+            saveReadingBtn.textContent = "Đang lưu...";
+
+            try {
+                const res = await fetch("/Landlord/SaveMeterReading", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    alert(data.message || "Lưu chỉ số và tạo hóa đơn thành công!");
+                    window.location.href = "/Landlord/Invoices";
+                } else {
+                    alert(data.message || "Lưu chỉ số thất bại.");
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Đã xảy ra lỗi khi lưu chỉ số điện nước.");
+            } finally {
+                saveReadingBtn.disabled = false;
+                saveReadingBtn.textContent = "Lưu thay đổi";
+            }
         });
+    }
 
     calculateInvoice();
-
 });

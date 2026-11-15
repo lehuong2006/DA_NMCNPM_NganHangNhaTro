@@ -1,4 +1,4 @@
-﻿
+
 using BTL_NganHangNhaTro.Data;
 using BTL_NganHangNhaTro.Models;
 using BTL_NganHangNhaTro.Models.ViewModels;
@@ -206,6 +206,15 @@ namespace BTL_NganHangNhaTro.Controllers
         public IActionResult AccessDenied()
         {
             return Content("Bạn không có quyền truy cập chức năng này.");
+        }
+
+        // GET or POST: Account/Logout
+        [HttpGet]
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login", "Account");
         }
     }
 }

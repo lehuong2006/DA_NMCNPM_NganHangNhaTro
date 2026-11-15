@@ -1,4 +1,5 @@
-﻿@{
+@model IEnumerable<BTL_NganHangNhaTro.Models.Room>
+@{
     Layout = null;
     ViewData["Title"] = "Danh sách phòng";
 }
@@ -64,9 +65,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -121,15 +122,74 @@
             <!-- Danh sách phòng -->
             <section class="room-list" id="roomList">
 
-                <!--
-                    Các thẻ phòng sẽ được tích hợp dữ liệu từ database.
-                    Không tạo dữ liệu phòng mẫu tại giao diện.
-                -->
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var room in Model)
+                    {
+                        var statusCls = room.Status.ToLower();
+                        var statusName = room.Status == "RENTED" ? "Đang thuê" : (room.Status == "MAINTENANCE" ? "Bảo trì" : (room.Status == "DEPOSIT" ? "Đã cọc" : "Trống"));
+                        var activeContract = room.Contracts.FirstOrDefault(c => c.Status == "ACTIVE");
+                        var tenantName = activeContract?.Tenant?.FullName;
+                        // Xác định tầng theo tên mã phòng, ví dụ P101 -> 1, P201 -> 2
+                        var floor = "1";
+                        if (room.RoomCode.Length >= 2 && char.IsDigit(room.RoomCode[1]))
+                        {
+                            floor = room.RoomCode[1].ToString();
+                        }
 
-                <div class="room-empty">
-                    <h3>Chưa có dữ liệu phòng</h3>
-                    <p>Danh sách phòng sẽ được hiển thị tại đây.</p>
-                </div>
+                        <div class="room-card" 
+                             data-name="@room.RoomCode @room.RoomName"
+                             data-status="@statusCls"
+                             data-floor="@floor">
+                            
+                            <div class="room-card-header">
+                                <h3 class="room-name">@room.RoomCode</h3>
+                                <span class="room-status @statusCls">@statusName</span>
+                            </div>
+
+                            <div class="room-info">
+                                <p><strong>Giá:</strong> @room.Price.ToString("N0") VNĐ/tháng</p>
+                                <p><strong>Tối đa:</strong> @room.MaxTenants người</p>
+                                @if (!string.IsNullOrEmpty(tenantName))
+                                {
+                                    <p><strong>Người thuê:</strong> @tenantName</p>
+                                }
+                                else
+                                {
+                                    <p style="color:#888;">Chưa có người thuê</p>
+                                }
+                            </div>
+
+                            <div style="margin-top: 10px; display:flex; gap: 8px; align-items:center;">
+                                <a href="/Landlord/RoomForm?id=@room.Id" style="font-size:12px; color:#176b5d; text-decoration:none; font-weight:600;">Sửa</a>
+                                @if (room.Status == "AVAILABLE")
+                                {
+                                    <a href="/Landlord/ContractForm?roomId=@room.Id" style="font-size:12px; color:#237343; text-decoration:none; font-weight:600;">Lập HĐ</a>
+                                }
+                                @if (activeContract != null)
+                                {
+                                    <button type="button" 
+                                            class="btn-terminate"
+                                            data-contract-id="@activeContract.Id"
+                                            data-room-id="@room.Id"
+                                            data-room-code="@room.RoomCode"
+                                            data-tenant-name="@(tenantName ?? "người thuê")"
+                                            style="background:none; border:none; padding:0; font-size:12px; color:#dc3545; font-weight:600; cursor:pointer;">
+                                        Chấm dứt HĐ
+                                    </button>
+                                }
+                            </div>
+
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="room-empty">
+                        <h3>Chưa có dữ liệu phòng</h3>
+                        <p>Danh sách phòng sẽ được hiển thị tại đây.</p>
+                    </div>
+                }
 
             </section>
 

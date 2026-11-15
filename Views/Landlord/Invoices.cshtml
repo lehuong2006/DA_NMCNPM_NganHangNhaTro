@@ -1,6 +1,8 @@
-﻿@{
+@model IEnumerable<BTL_NganHangNhaTro.Models.Invoice>
+@{
     Layout = null;
     ViewData["Title"] = "Hóa đơn hàng tháng";
+    var activeContracts = ViewBag.ActiveContracts as IEnumerable<BTL_NganHangNhaTro.Models.Contract> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.Contract>();
 }
 
 <!DOCTYPE html>
@@ -13,6 +15,106 @@
 
     <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
     <link rel="stylesheet" href="~/css/landlord-invoices.css" />
+    <style>
+        .invoice-actions-top {
+            display: flex;
+            gap: 10px;
+        }
+        .btn-create-invoice {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 16px;
+            background-color: #176b5d;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        .btn-create-invoice:hover {
+            background-color: #105448;
+        }
+        /* Modal tạo hóa đơn cho phòng */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.45);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-dialog {
+            background: #fff;
+            border-radius: 8px;
+            width: 480px;
+            max-width: 92%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e5ede9;
+            background: #f7faf8;
+        }
+        .modal-header h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #176b5d;
+        }
+        .modal-close-btn {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #888;
+        }
+        .modal-body {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid #e5ede9;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            background: #f7faf8;
+        }
+        .form-row-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .form-row-group label {
+            font-size: 12px;
+            font-weight: 600;
+            color: #35463f;
+        }
+        .form-row-group input, .form-row-group select {
+            padding: 8px 10px;
+            border: 1px solid #d5dfda;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+        .form-row-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -61,9 +163,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -82,9 +184,14 @@
                     <p>Theo dõi hóa đơn từng phòng, xác nhận thanh toán và in phiếu thu</p>
                 </div>
 
-                <a href="/Landlord/MeterReading" class="meter-reading-button">
-                    Nhập chỉ số điện nước
-                </a>
+                <div class="invoice-actions-top">
+                    <button type="button" class="btn-create-invoice" id="openCreateInvoiceModalBtn">
+                        + Tạo hóa đơn cho phòng
+                    </button>
+                    <a href="/Landlord/MeterReading" class="meter-reading-button">
+                        Nhập chỉ số điện nước
+                    </a>
+                </div>
 
             </div>
 
@@ -94,17 +201,17 @@
 
                 <div class="invoice-stat-card">
                     <p>Số hóa đơn trong kỳ</p>
-                    <h2></h2>
+                    <h2>@(ViewBag.TotalCount ?? 0)</h2>
                 </div>
 
                 <div class="invoice-stat-card">
                     <p>Đã thu (VNĐ)</p>
-                    <h2></h2>
+                    <h2>@(((long)(ViewBag.PaidAmount ?? 0)).ToString("N0"))</h2>
                 </div>
 
                 <div class="invoice-stat-card">
                     <p>Còn phải thu (VNĐ)</p>
-                    <h2></h2>
+                    <h2>@(((long)(ViewBag.RemainingAmount ?? 0)).ToString("N0"))</h2>
                 </div>
 
             </section>
@@ -121,13 +228,11 @@
 
                         <div class="filter-group">
                             <label for="billingPeriod">Kỳ hóa đơn</label>
-
                             <input type="month" id="billingPeriod">
                         </div>
 
                         <div class="filter-group">
                             <label for="invoiceStatus">Trạng thái</label>
-
                             <select id="invoiceStatus">
                                 <option value="">Tất cả</option>
                                 <option value="unpaid">Chưa thanh toán</option>
@@ -138,7 +243,6 @@
 
                         <div class="filter-group search-filter">
                             <label for="invoiceSearch">Tìm phòng hoặc khách thuê</label>
-
                             <input type="text"
                                    id="invoiceSearch"
                                    placeholder="Ví dụ: P101">
@@ -166,12 +270,68 @@
                                 </thead>
 
                                 <tbody id="invoiceTableBody">
-                                    <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        foreach (var inv in Model)
+                                        {
+                                            var roomCode = inv.Room?.RoomCode ?? "P" + inv.RoomId;
+                                            var tenantName = inv.Contract?.Tenant?.FullName ?? "Khách thuê";
+                                            var statusCls = inv.Status.ToLower();
+                                            var statusText = inv.Status == "PAID" ? "Đã thanh toán" : (inv.Status == "PARTIAL" ? "Còn nợ" : "Chưa thanh toán");
+
+                                            <tr class="invoice-row" 
+                                                data-room="@roomCode"
+                                                data-tenant="@tenantName"
+                                                data-period="@inv.MonthYear"
+                                                data-status="@statusCls"
+                                                data-code="@inv.InvoiceCode"
+                                                data-created-date="@inv.CreatedAt.ToString("yyyy-MM-dd")"
+                                                data-due-date="@(inv.DueDate.HasValue ? inv.DueDate.Value.ToString("yyyy-MM-dd") : "")"
+                                                data-total="@inv.TotalAmount"
+                                                data-amount-words="@(inv.TotalAmount.ToString("N0") + " đồng")">
+                                                <td><strong>@roomCode</strong></td>
+                                                <td>@tenantName</td>
+                                                <td>@inv.TotalAmount.ToString("N0") đ</td>
+                                                <td>@inv.RemainingAmount.ToString("N0") đ</td>
+                                                <td>
+                                                    <span class="invoice-status @statusCls">@statusText</span>
+                                                </td>
+                                                <td>
+                                                    <button type="button" class="invoice-action-button">Xem</button>
+                                                </td>
+                                                <td style="display:none;">
+                                                    @if (inv.InvoiceItems != null && inv.InvoiceItems.Any())
+                                                    {
+                                                        foreach (var item in inv.InvoiceItems)
+                                                        {
+                                                            <div class="invoice-item-data" data-name="@item.ItemName" data-amount="@item.Amount"></div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="invoice-item-data" data-name="Tiền phòng" data-amount="@inv.RoomFee"></div>
+                                                        @if (inv.ElecFee > 0)
+                                                        {
+                                                            <div class="invoice-item-data" data-name="Tiền điện" data-amount="@inv.ElecFee"></div>
+                                                        }
+                                                        @if (inv.WaterFee > 0)
+                                                        {
+                                                            <div class="invoice-item-data" data-name="Tiền nước" data-amount="@inv.WaterFee"></div>
+                                                        }
+                                                        @if (inv.ServiceFee > 0)
+                                                        {
+                                                            <div class="invoice-item-data" data-name="Dịch vụ khác" data-amount="@inv.ServiceFee"></div>
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
                                 </tbody>
 
                             </table>
 
-                            <div class="invoice-empty">
+                            <div class="invoice-empty" style="@(Model != null && Model.Any() ? "display:none;" : "display:flex;")">
                                 Chưa có dữ liệu hóa đơn.
                             </div>
 
@@ -196,7 +356,7 @@
 
                             <div>
                                 <strong>NHÀ TRỌ SỐ 8 NGUYỄN AN NINH</strong>
-                                <p>Địa chỉ: ....................................</p>
+                                <p>Địa chỉ: Số 8 Nguyễn An Ninh, Hà Nội</p>
                             </div>
 
                             <div class="receipt-code">
@@ -237,13 +397,9 @@
 
 
                         <div class="receipt-items" id="receiptItems">
-
-                            <!-- Chi tiết các khoản phí sẽ được tích hợp từ database -->
-
                             <div class="receipt-item-empty">
                                 Chọn một hóa đơn để xem chi tiết.
                             </div>
-
                         </div>
 
 
@@ -296,6 +452,67 @@
 
         </main>
 
+    </div>
+
+    <!-- MODAL TẠO HÓA ĐƠN THEO PHÒNG -->
+    <div class="modal-overlay" id="createInvoiceModal">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3>Tạo hóa đơn cho phòng</h3>
+                <button type="button" class="modal-close-btn" id="closeCreateInvoiceModalBtn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row-group">
+                    <label for="modalRoomSelect">Chọn phòng đang thuê *</label>
+                    <select id="modalRoomSelect" required>
+                        <option value="">-- Chọn phòng để tạo hóa đơn --</option>
+                        @foreach (var c in activeContracts)
+                        {
+                            <option value="@c.RoomId" data-price="@c.RentalPrice" data-tenant="@(c.Tenant?.FullName ?? "")">
+                                @(c.Room?.RoomCode ?? "P" + c.RoomId) - Khách: @(c.Tenant?.FullName ?? "Chưa rõ") (Tiền thuê: @c.RentalPrice.ToString("N0") đ)
+                            </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-row-2col">
+                    <div class="form-row-group">
+                        <label for="modalMonthYear">Kỳ hóa đơn (tháng/năm) *</label>
+                        <input type="month" id="modalMonthYear" value="@DateTime.Now.ToString("yyyy-MM")">
+                    </div>
+                    <div class="form-row-group">
+                        <label for="modalDueDate">Hạn nộp</label>
+                        <input type="date" id="modalDueDate" value="@DateTime.Today.AddDays(7).ToString("yyyy-MM-dd")">
+                    </div>
+                </div>
+
+                <div class="form-row-2col">
+                    <div class="form-row-group">
+                        <label for="modalRoomFee">Tiền phòng (VNĐ) *</label>
+                        <input type="text" id="modalRoomFee" placeholder="Nhập tiền phòng">
+                    </div>
+                    <div class="form-row-group">
+                        <label for="modalElecFee">Tiền điện (VNĐ)</label>
+                        <input type="text" id="modalElecFee" placeholder="0">
+                    </div>
+                </div>
+
+                <div class="form-row-2col">
+                    <div class="form-row-group">
+                        <label for="modalWaterFee">Tiền nước (VNĐ)</label>
+                        <input type="text" id="modalWaterFee" placeholder="0">
+                    </div>
+                    <div class="form-row-group">
+                        <label for="modalServiceFee">Dịch vụ khác (VNĐ)</label>
+                        <input type="text" id="modalServiceFee" placeholder="0">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="invoice-action-button" id="cancelModalBtn" style="height:34px; padding:0 15px;">Hủy</button>
+                <button type="button" class="btn-create-invoice" id="saveInvoiceModalBtn">Tạo hóa đơn</button>
+            </div>
+        </div>
     </div>
 
     <script src="~/js/landlord-invoices.js"></script>

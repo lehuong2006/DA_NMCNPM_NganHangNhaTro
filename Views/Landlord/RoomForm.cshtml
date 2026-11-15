@@ -1,6 +1,14 @@
-﻿@{
+@model BTL_NganHangNhaTro.Models.Room
+@{
     Layout = null;
     ViewData["Title"] = "Thêm / sửa phòng";
+    var existingRooms = ViewBag.ExistingRooms as IEnumerable<BTL_NganHangNhaTro.Models.Room> ?? new List<BTL_NganHangNhaTro.Models.Room>();
+    var isEditing = Model != null;
+    var currentFloor = "1";
+    if (isEditing && Model.RoomCode.Length >= 2 && char.IsDigit(Model.RoomCode[1]))
+    {
+        currentFloor = Model.RoomCode[1].ToString();
+    }
 }
 
 <!DOCTYPE html>
@@ -61,9 +69,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -90,6 +98,7 @@
                 <div class="form-panel">
 
                     <h3>Thông tin phòng</h3>
+                    <input type="hidden" id="roomId" value="@(Model?.Id ?? 0)" />
 
                     <div class="form-group">
                         <label for="roomCode">
@@ -97,6 +106,7 @@
                         </label>
                         <input type="text"
                                id="roomCode"
+                               value="@(Model?.RoomCode ?? "")"
                                placeholder="Nhập mã phòng">
                         <small>Mã phòng phải là duy nhất.</small>
                     </div>
@@ -107,9 +117,9 @@
                         </label>
                         <select id="roomFloor">
                             <option value="">Chọn tầng</option>
-                            <option value="1">Tầng 1</option>
-                            <option value="2">Tầng 2</option>
-                            <option value="3">Tầng 3</option>
+                            <option value="1" selected="@(currentFloor == "1" ? "selected" : null)">Tầng 1</option>
+                            <option value="2" selected="@(currentFloor == "2" ? "selected" : null)">Tầng 2</option>
+                            <option value="3" selected="@(currentFloor == "3" ? "selected" : null)">Tầng 3</option>
                         </select>
                     </div>
 
@@ -120,6 +130,7 @@
                         <input type="number"
                                id="roomPrice"
                                min="0"
+                               value="@(Model?.Price > 0 ? Model.Price : "")"
                                placeholder="Nhập giá thuê">
                     </div>
 
@@ -129,9 +140,9 @@
                         </label>
                         <select id="roomStatus">
                             <option value="">Chọn trạng thái</option>
-                            <option value="available">Trống</option>
-                            <option value="rented">Đang thuê</option>
-                            <option value="maintenance">Bảo trì</option>
+                            <option value="available" selected="@(Model?.Status == "AVAILABLE" ? "selected" : null)">Trống</option>
+                            <option value="rented" selected="@(Model?.Status == "RENTED" ? "selected" : null)">Đang thuê</option>
+                            <option value="maintenance" selected="@(Model?.Status == "MAINTENANCE" ? "selected" : null)">Bảo trì</option>
                         </select>
                     </div>
 
@@ -156,6 +167,7 @@
                         <input type="number"
                                id="maxTenants"
                                min="1"
+                               value="@(Model?.MaxTenants > 0 ? Model.MaxTenants : 2)"
                                placeholder="Nhập số người tối đa">
                     </div>
 
@@ -195,8 +207,8 @@
 
                     <h3>Sửa phòng</h3>
 
-                    <div class="editing-room">
-                        Chưa chọn phòng
+                    <div class="editing-room" id="editingBadge">
+                        @(isEditing ? $"Đang sửa: {Model.RoomCode}" : "Chưa chọn phòng")
                     </div>
 
                     <div class="form-group">
@@ -207,17 +219,43 @@
                     </div>
 
                     <div class="room-selection-list" id="roomSelectionList">
-                        <!-- Danh sách phòng sẽ được tích hợp từ database -->
-                        <div class="selection-empty">
-                            Danh sách phòng sẽ hiển thị tại đây.
-                        </div>
+                        @if (existingRooms.Any())
+                        {
+                            @foreach (var r in existingRooms)
+                            {
+                                var rFloor = (r.RoomCode.Length >= 2 && char.IsDigit(r.RoomCode[1])) ? r.RoomCode[1].ToString() : "1";
+                                var isSelected = isEditing && Model.Id == r.Id;
+                                var statusName = r.Status == "RENTED" ? "Đang thuê" : (r.Status == "MAINTENANCE" ? "Bảo trì" : "Trống");
+
+                                <div class="room-selection-item @(isSelected ? "selected" : "")"
+                                     data-id="@r.Id"
+                                     data-code="@r.RoomCode"
+                                     data-name="@r.RoomName"
+                                     data-price="@r.Price"
+                                     data-floor="@rFloor"
+                                     data-max="@r.MaxTenants"
+                                     data-status="@r.Status.ToLower()">
+                                    <div>
+                                        <strong>@r.RoomCode - @statusName</strong>
+                                        <small>Tầng @rFloor • @r.MaxTenants người</small>
+                                    </div>
+                                    <span>@r.Price.ToString("N0") đ</span>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="selection-empty">
+                                Chưa có phòng nào trong hệ thống.
+                            </div>
+                        }
                     </div>
 
-                    <button type="button" class="add-another-room">
+                    <button type="button" class="add-another-room" id="addAnotherRoom">
                         + Thêm phòng mới
                     </button>
 
-                    <button type="button" class="delete-room-button" disabled>
+                    <button type="button" class="delete-room-button" id="deleteRoomButton" @(!isEditing ? "disabled" : "")>
                         Xóa phòng
                     </button>
 

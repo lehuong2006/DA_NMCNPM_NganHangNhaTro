@@ -1,6 +1,11 @@
-﻿@{
+@using BTL_NganHangNhaTro.Models
+@{
     Layout = null;
     ViewData["Title"] = "Lịch sử giao dịch";
+    var transactions = (ViewBag.Transactions as IEnumerable<Transaction>) ?? new List<Transaction>();
+    long walletBalance = ViewBag.WalletBalance != null ? (long)ViewBag.WalletBalance : 0;
+    long totalTopup = ViewBag.TotalTopup != null ? (long)ViewBag.TotalTopup : 0;
+    long totalExpense = ViewBag.TotalExpense != null ? (long)ViewBag.TotalExpense : 0;
 }
 
 <!DOCTYPE html>
@@ -52,9 +57,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Khách thuê</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Khách thuê")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -79,28 +84,28 @@
                     <span class="history-stat-label balance-label">
                         Số tiền dư hiện tại
                     </span>
-                    <h2></h2>
+                    <h2>@walletBalance.ToString("N0") VNĐ</h2>
                 </div>
 
                 <div class="history-stat-card">
                     <span class="history-stat-label deposit-label">
                         Tổng nạp
                     </span>
-                    <h2></h2>
+                    <h2>@totalTopup.ToString("N0") VNĐ</h2>
                 </div>
 
                 <div class="history-stat-card">
                     <span class="history-stat-label expense-label">
                         Tổng chi
                     </span>
-                    <h2></h2>
+                    <h2>@totalExpense.ToString("N0") VNĐ</h2>
                 </div>
 
                 <div class="history-stat-card">
                     <span class="history-stat-label count-label">
                         Tổng giao dịch
                     </span>
-                    <h2></h2>
+                    <h2>@transactions.Count()</h2>
                 </div>
 
             </section>
@@ -127,7 +132,7 @@
                 <select id="transactionTypeFilter">
                     <option value="">Tất cả loại giao dịch</option>
                     <option value="TOPUP">Nạp tiền</option>
-                    <option value="AUTO_DEDUCT">Thanh toán</option>
+                    <option value="PAYMENT">Thanh toán</option>
                 </select>
 
 
@@ -168,12 +173,37 @@
                         </thead>
 
                         <tbody id="transactionTableBody">
-                            <!-- Dữ liệu giao dịch sẽ được tích hợp từ database -->
+                            @if (transactions.Any())
+                            {
+                                int stt = 1;
+                                foreach (var t in transactions)
+                                {
+                                    var typeText = t.Type == "TOPUP" ? "Nạp tiền" : (t.Type == "PAYMENT" ? "Thanh toán" : t.Type);
+                                    var typeBadge = t.Type == "TOPUP" ? "badge-success" : "badge-primary";
+                                    var amountPrefix = t.Type == "TOPUP" ? "+" : "-";
+                                    var amountColor = t.Type == "TOPUP" ? "#237343" : "#c0392b";
+
+                                    <tr data-date="@t.CreatedAt.ToString("yyyy-MM-dd")"
+                                        data-type="@t.Type"
+                                        data-status="SUCCESS"
+                                        data-search="@t.Description @typeText">
+                                        <td>@(stt++)</td>
+                                        <td>@t.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+                                        <td><span class="badge @typeBadge">@typeText</span></td>
+                                        <td>@(t.Description ?? "Giao dịch ví")</td>
+                                        <td style="font-weight:600; color:@amountColor;">
+                                            @amountPrefix@t.Amount.ToString("N0") VNĐ
+                                        </td>
+                                        <td><span class="badge badge-success">Thành công</span></td>
+                                        <td>Số dư sau GD: @t.BalanceAfter.ToString("N0") VNĐ</td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
 
                     </table>
 
-                    <div class="history-empty">
+                    <div class="history-empty" style="@(transactions.Any() ? "display:none;" : "")">
                         Chưa có giao dịch.
                     </div>
 

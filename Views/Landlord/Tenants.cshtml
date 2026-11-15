@@ -1,6 +1,9 @@
-﻿@{
+@model IEnumerable<BTL_NganHangNhaTro.Models.Contract>
+@{
     Layout = null;
     ViewData["Title"] = "Quản lý người thuê";
+    var rooms = ViewBag.Rooms as IEnumerable<BTL_NganHangNhaTro.Models.Room> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.Room>();
+    var today = DateOnly.FromDateTime(DateTime.Today);
 }
 
 <!DOCTYPE html>
@@ -61,9 +64,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -77,14 +80,12 @@
 
             <div class="page-header tenants-header">
                 <div>
-                    <h1>
-                        Quản lý người thuê
-                    </h1>
+                    <h1>Quản lý người thuê</h1>
                     <p>Danh sách người thuê và thông tin hợp đồng</p>
                 </div>
 
                 <a href="/Landlord/ContractForm" class="add-tenant-button">
-                    Thêm người thuê
+                    + Lập hợp đồng
                 </a>
             </div>
 
@@ -94,25 +95,25 @@
 
                 <div class="tenant-stat-card">
                     <span class="stat-label total">Tổng số người thuê</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.TotalTenants ?? 0)</h2>
                     <p>Đang thuê</p>
                 </div>
 
                 <div class="tenant-stat-card">
                     <span class="stat-label active">Đang hợp đồng</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.ActiveContracts ?? 0)</h2>
                     <p>Còn hiệu lực</p>
                 </div>
 
                 <div class="tenant-stat-card">
                     <span class="stat-label expiring">Sắp hết hạn</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.Expiring ?? 0)</h2>
                     <p>Trong 30 ngày</p>
                 </div>
 
                 <div class="tenant-stat-card">
                     <span class="stat-label expired">Đã hết hạn</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.Expired ?? 0)</h2>
                     <p>Cần xử lý</p>
                 </div>
 
@@ -131,6 +132,10 @@
 
                 <select id="roomFilter">
                     <option value="">Tất cả phòng</option>
+                    @foreach (var r in rooms)
+                    {
+                        <option value="@r.RoomCode">@r.RoomCode</option>
+                    }
                 </select>
 
                 <select id="statusFilter">
@@ -168,11 +173,50 @@
                         </thead>
 
                         <tbody id="tenantTableBody">
-                            <!-- Dữ liệu người thuê sẽ được tích hợp từ database -->
+                            @if (Model != null && Model.Any())
+                            {
+                                int stt = 1;
+                                foreach (var c in Model)
+                                {
+                                    var roomCode = c.Room?.RoomCode ?? "P" + c.RoomId;
+                                    var isTerminated = c.Status == "TERMINATED";
+                                    var isExpiring = c.Status == "ACTIVE" && c.EndDate.HasValue && c.EndDate.Value <= today.AddDays(30) && c.EndDate.Value >= today;
+                                    var isExpired = c.Status == "EXPIRED" || (c.Status == "ACTIVE" && c.EndDate.HasValue && c.EndDate.Value < today);
+
+                                    var statusKey = isTerminated ? "expired" : (isExpired ? "expired" : (isExpiring ? "expiring" : "active"));
+                                    var statusLabel = isTerminated ? "Đã trả phòng" : (isExpired ? "Đã hết hạn" : (isExpiring ? "Sắp hết hạn" : "Đang thuê"));
+
+                                    <tr data-room="@roomCode" data-status="@statusKey">
+                                        <td>@(stt++)</td>
+                                        <td><strong>@(c.Tenant?.FullName ?? "Chưa rõ")</strong></td>
+                                        <td>@(c.Tenant?.PhoneNumber ?? "—")</td>
+                                        <td>@roomCode</td>
+                                        <td>@c.StartDate.ToString("dd/MM/yyyy")</td>
+                                        <td>@(c.EndDate.HasValue ? c.EndDate.Value.ToString("dd/MM/yyyy") : "Vô thời hạn")</td>
+                                        <td>
+                                            <span class="tenant-status @statusKey">@statusLabel</span>
+                                        </td>
+                                        <td>
+                                            <a href="/Landlord/Invoices" style="font-size:11px; color:#176b5d; text-decoration:none; font-weight:600; margin-right:6px;">Hóa đơn</a>
+                                            @if (c.Status == "ACTIVE")
+                                            {
+                                                <button type="button" 
+                                                        class="btn-terminate-tenant"
+                                                        data-contract-id="@c.Id"
+                                                        data-room-code="@roomCode"
+                                                        data-tenant-name="@(c.Tenant?.FullName ?? "người thuê")"
+                                                        style="background:none; border:none; padding:0; font-size:11px; color:#dc3545; font-weight:600; cursor:pointer;">
+                                                    Chấm dứt
+                                                </button>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
                     </table>
 
-                    <div class="tenant-empty">
+                    <div class="tenant-empty" style="@(Model != null && Model.Any() ? "display:none;" : "display:flex;")">
                         Chưa có dữ liệu người thuê.
                     </div>
 

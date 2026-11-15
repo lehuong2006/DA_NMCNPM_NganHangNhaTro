@@ -1,6 +1,9 @@
-﻿@{
+@{
     Layout = null;
     ViewData["Title"] = "Hợp đồng và Hóa đơn";
+    var contract = ViewBag.Contract as BTL_NganHangNhaTro.Models.Contract;
+    var invoices = ViewBag.Invoices as IEnumerable<BTL_NganHangNhaTro.Models.Invoice> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.Invoice>();
+    var userFullName = User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Khách thuê";
 }
 
 <!DOCTYPE html>
@@ -13,6 +16,21 @@
 
     <link rel="stylesheet" href="~/css/landlord-dashboard.css" />
     <link rel="stylesheet" href="~/css/tenant-contracts-invoices.css" />
+    <style>
+        .pay-btn-inline {
+            background-color: #176b5d;
+            color: #ffffff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .pay-btn-inline:hover {
+            background-color: #105448;
+        }
+    </style>
 </head>
 
 <body>
@@ -52,9 +70,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Khách thuê</div>
+                <div class="user-role">@userFullName</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -81,37 +99,36 @@
                         <h2>Thông tin hợp đồng</h2>
                     </div>
 
-
                     <div class="contract-details-grid">
 
                         <div class="contract-detail-item">
                             <span class="detail-label">Mã hợp đồng</span>
-                            <strong></strong>
+                            <strong>@(contract != null ? "HD-" + contract.Id.ToString("D5") : "Chưa có")</strong>
                         </div>
 
                         <div class="contract-detail-item">
                             <span class="detail-label">Ngày bắt đầu</span>
-                            <strong></strong>
+                            <strong>@(contract != null ? contract.StartDate.ToString("dd/MM/yyyy") : "—")</strong>
                         </div>
 
                         <div class="contract-detail-item">
                             <span class="detail-label">Ngày kết thúc</span>
-                            <strong></strong>
+                            <strong>@(contract?.EndDate.HasValue == true ? contract.EndDate.Value.ToString("dd/MM/yyyy") : "Vô thời hạn")</strong>
                         </div>
 
                         <div class="contract-detail-item">
                             <span class="detail-label">Phòng</span>
-                            <strong></strong>
+                            <strong>@(contract?.Room?.RoomCode ?? "Chưa xếp phòng")</strong>
                         </div>
 
                         <div class="contract-detail-item">
-                            <span class="detail-label">Loại phòng</span>
-                            <strong></strong>
+                            <span class="detail-label">Tiền đặt cọc</span>
+                            <strong>@(contract != null ? contract.DepositAmount.ToString("N0") + " VNĐ" : "—")</strong>
                         </div>
 
                         <div class="contract-detail-item">
                             <span class="detail-label">Giá phòng</span>
-                            <strong></strong>
+                            <strong>@(contract != null ? contract.RentalPrice.ToString("N0") + " VNĐ/tháng" : "—")</strong>
                         </div>
 
                     </div>
@@ -127,7 +144,7 @@
                         <h3>Địa chỉ phòng</h3>
                     </div>
 
-                    <strong class="room-address-number"></strong>
+                    <strong class="room-address-number">@(contract?.Room?.RoomCode ?? "P...")</strong>
 
                     <p>Nhà trọ số 8 Nguyễn An Ninh</p>
 
@@ -141,7 +158,7 @@
 
                 <div class="invoice-section-title">
                     <span class="invoice-title-icon"></span>
-                    <h2>Hóa Đơn</h2>
+                    <h2>Danh Sách Hóa Đơn</h2>
                 </div>
 
 
@@ -151,22 +168,55 @@
 
                         <thead>
                             <tr>
-                                <th>Ngày lập</th>
+                                <th>Mã HĐ</th>
                                 <th>Kỳ thanh toán</th>
-                                <th>Loại đơn</th>
-                                <th>Số tiền</th>
+                                <th>Tiền phòng</th>
+                                <th>Tiền điện/nước/DV</th>
+                                <th>Tổng cộng</th>
                                 <th>Hạn thanh toán</th>
                                 <th>Trạng thái</th>
+                                <th>Thao tác</th>
                             </tr>
                         </thead>
 
                         <tbody id="tenantInvoicesTableBody">
-                            <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                            @if (invoices.Any())
+                            {
+                                foreach (var inv in invoices)
+                                {
+                                    var otherFees = inv.ElecFee + inv.WaterFee + inv.ServiceFee;
+                                    <tr>
+                                        <td><strong>@inv.InvoiceCode</strong></td>
+                                        <td>@inv.MonthYear</td>
+                                        <td>@inv.RoomFee.ToString("N0") đ</td>
+                                        <td>@otherFees.ToString("N0") đ</td>
+                                        <td><strong>@inv.TotalAmount.ToString("N0") đ</strong></td>
+                                        <td>@(inv.DueDate.HasValue ? inv.DueDate.Value.ToString("dd/MM/yyyy") : "—")</td>
+                                        <td>
+                                            <span class="invoice-status @inv.Status.ToLower()">
+                                                @(inv.Status == "PAID" ? "Đã thanh toán" : "Chưa thanh toán")
+                                            </span>
+                                        </td>
+                                        <td>
+                                            @if (inv.Status != "PAID")
+                                            {
+                                                <button type="button" class="pay-btn-inline" onclick="payInvoice(@inv.Id, '@inv.InvoiceCode', @inv.RemainingAmount)">
+                                                    Thanh toán ví
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <span style="color:#237343; font-size:11px;">Hoàn tất</span>
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
 
                     </table>
 
-                    <div class="tenant-invoices-empty">
+                    <div class="tenant-invoices-empty" style="@(invoices.Any() ? "display:none;" : "")">
                         Chưa có hóa đơn.
                     </div>
 
@@ -178,7 +228,29 @@
 
     </div>
 
-    <script src="~/js/tenant-contracts-invoices.js"></script>
+    <script>
+        async function payInvoice(invoiceId, code, amount) {
+            if (!confirm(`Bạn có chắc chắn muốn thanh toán hóa đơn ${code} với số tiền ${amount.toLocaleString('vi-VN')} VNĐ từ số dư ví không?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`/Tenant/PayInvoice?invoiceId=${invoiceId}`, {
+                    method: 'POST'
+                });
+                const res = await response.json();
+                if (res.success) {
+                    alert(res.message);
+                    window.location.reload();
+                } else {
+                    alert(res.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("Lỗi kết nối khi thanh toán.");
+            }
+        }
+    </script>
 
 </body>
 </html>

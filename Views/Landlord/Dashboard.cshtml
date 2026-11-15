@@ -1,6 +1,7 @@
-﻿@{
+@{
     Layout = null;
     ViewData["Title"] = "Tổng quan";
+    var unpaidInvoices = ViewBag.UnpaidInvoices as IEnumerable<BTL_NganHangNhaTro.Models.Invoice> ?? Enumerable.Empty<BTL_NganHangNhaTro.Models.Invoice>();
 }
 
 <!DOCTYPE html>
@@ -60,9 +61,9 @@
             </nav>
 
             <div class="sidebar-footer">
-                <div class="user-role">Chủ trọ</div>
+                <div class="user-role">@(User.Identity?.IsAuthenticated == true ? User.Identity.Name : "Chủ trọ")</div>
 
-                <a href="/Account/Login" class="logout-button">
+                <a href="/Account/Logout" class="logout-button">
                     <span></span>
                     Đăng xuất
                 </a>
@@ -85,25 +86,25 @@
 
                 <div class="stat-card">
                     <span class="stat-label empty">Trống</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.TotalEmpty ?? 0)</h2>
                     <p>Phòng</p>
                 </div>
 
                 <div class="stat-card">
                     <span class="stat-label deposit">Đã cọc</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.TotalDeposit ?? 0)</h2>
                     <p>Phòng</p>
                 </div>
 
                 <div class="stat-card">
                     <span class="stat-label rented">Đang thuê</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.TotalRented ?? 0)</h2>
                     <p>Phòng</p>
                 </div>
 
                 <div class="stat-card">
                     <span class="stat-label maintenance">Bảo trì</span>
-                    <h2></h2>
+                    <h2>@(ViewBag.TotalMaintenance ?? 0)</h2>
                     <p>Phòng</p>
                 </div>
 
@@ -118,7 +119,7 @@
 
                     <div class="panel-header">
                         <h3>Hóa đơn chưa thu tháng này</h3>
-                        <a href="#">Xem tất cả hóa đơn</a>
+                        <a href="/Landlord/Invoices">Xem tất cả hóa đơn</a>
                     </div>
 
                     <div class="table-wrapper">
@@ -134,7 +135,26 @@
                             </thead>
 
                             <tbody>
-                                <!-- Dữ liệu hóa đơn sẽ được tích hợp từ database -->
+                                @if (unpaidInvoices.Any())
+                                {
+                                    foreach (var inv in unpaidInvoices)
+                                    {
+                                        <tr>
+                                            <td>@(inv.Room?.RoomCode ?? "P" + inv.RoomId)</td>
+                                            <td>@(inv.Contract?.Tenant?.FullName ?? "Chưa rõ")</td>
+                                            <td>@inv.RemainingAmount.ToString("N0") VNĐ</td>
+                                            <td><span class="invoice-status unpaid">@(inv.Status == "PARTIAL" ? "Còn nợ" : "Chưa thanh toán")</span></td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" style="text-align: center; color: #888; padding: 20px;">
+                                            Không có hóa đơn nợ nào!
+                                        </td>
+                                    </tr>
+                                }
                             </tbody>
                         </table>
 
@@ -151,32 +171,27 @@
                     <div class="task-list">
 
                         <div class="task-item">
-                            <span>Yêu cầu nạp tiền chờ duyệt</span>
-                            <a href="#">Xem</a>
+                            <span>Nhập số điện nước kỳ hiện tại</span>
+                            <a href="/Landlord/MeterReading">Ghi chỉ số</a>
                         </div>
 
                         <div class="task-item">
-                            <span>Nhập số điện nước kỳ hiện tại</span>
-                            <a href="#">Xem</a>
-                        </div>
-
-                        <div class="task-empty">
-                            <!-- Trạng thái khi không có công việc -->
+                            <span>Tạo hóa đơn tháng mới cho các phòng</span>
+                            <a href="/Landlord/Invoices">Tạo hóa đơn</a>
                         </div>
 
                     </div>
-
 
                     <h3 class="shortcut-title">Lối tắt</h3>
 
                     <div class="shortcut-list">
 
-                        <a href="/Landlord/MeterReading" class="shortcut-button primary">
-                            Nhập chỉ số điện nước
+                        <a href="/Landlord/Invoices" class="shortcut-button primary">
+                            Tạo hóa đơn cho phòng
                         </a>
 
-                        <a href="/Landlord/DepositReceipt" class="shortcut-button">
-                            Lập phiếu thu cọc
+                        <a href="/Landlord/MeterReading" class="shortcut-button">
+                            Nhập chỉ số điện nước
                         </a>
 
                         <a href="/Landlord/ContractForm" class="shortcut-button">
@@ -196,9 +211,6 @@
         </main>
 
     </div>
-
-
-    <script src="~/js/landlord-dashboard.js"></script>
 
 </body>
 </html>

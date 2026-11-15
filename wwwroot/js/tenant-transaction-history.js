@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
     const tableBody = document.getElementById("transactionTableBody");
     const emptyMessage = document.querySelector(".history-empty");
@@ -75,7 +75,7 @@
                 matchesStatus &&
                 matchesKeyword;
 
-            row.hidden = !isVisible;
+            row.style.display = isVisible ? "" : "none";
 
             if (isVisible) {
                 visibleCount++;
@@ -83,7 +83,7 @@
 
         });
 
-        emptyMessage.hidden = visibleCount > 0;
+        emptyMessage.style.display = visibleCount > 0 ? "none" : "flex";
 
     }
 
