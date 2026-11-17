@@ -9,9 +9,6 @@ mk: huong1234
 -Chủ trọ:
 sđt: 0825611111
 mk: quan123456
--Quản trị viên:
-sđt: 0856798765
-mk: anh123456
 
 ## KẾT NỐI
 -Cấu hình kết nối SQL Server trong appsettings.json
